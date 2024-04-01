@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import "./RestaurantsHeader.scss";
 import { DownArrow } from "@/View/Photos";
 import { MultiRangeSlider, SingleDistanceSlider, RangeFilter } from "../..";
-// import {minAllPrice, maxAllPrice } from "@/data/MockData/Restaurants";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/Controller/redux/store/store";
+import { setFirstFilter, setSecondFilter } from "@/Controller/redux/slices/restaurantsPageSlice";
+import { useDispatch } from "react-redux";
+
 const buttonsData = [
   { name: "All", label: "All" },
   { name: "New", label: "New" },
@@ -17,81 +21,60 @@ const additionalButtonsData = [
   { name: "Rating", label: "Rating" },
 ];
 
-const RestaurantsHeader = ({onButtonClick, onAdditionalButtonClick }) => {
-  const [isPriceRangeOpen, setIsPriceRangeOpen] = useState(false);
-  const [isDistanceOpen, setIsDistanceOpen] = useState(false);
-  const [isRatingOpen, setIsRatingOpen] = useState(false);
+const RestaurantsHeader = ({ onButtonClick, onAdditionalButtonClick }) => {
+  const { restaurantsPrices } = useSelector((state: RootState) => state.restaurantsPage);
+  const { restaurantsDistances } = useSelector((state: RootState) => state.restaurantsPage);
+  const dispatch = useDispatch<AppDispatch>();
   const [activeButton, setActiveButton] = useState(buttonsData[0].name);
   const [activeAdditionalButton, setActiveAdditionalButton] = useState(null);
   const [lastClickedButton, setLastClickedButton] = useState(null);
+  const [isPopupsOpen, setIsPopupsOpen] = useState({
+    PriceRange: false,
+    Distance: false,
+    Rating: false,
+  });
   const popupsRef = useRef(null);
-  const minAllPrice=100;
-  const maxAllPrice =10;
-  useEffect(() => {
-    onButtonClick(activeButton);
-    document.addEventListener("click", handleOutsideClick);
 
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
+  useEffect(() => {
+    console.log("restaurantsPrices   ," , restaurantsPrices);
+    onButtonClick(activeButton);
   }, [activeButton]);
 
-  useEffect(() => {
-    if (!isPriceRangeOpen) {
-      setActiveAdditionalButton(null);
-    }
-  }, [isPriceRangeOpen]);
-
-  useEffect(() => {
-    if (!isDistanceOpen) {
-      setActiveAdditionalButton(null);
-    }
-  }, [isDistanceOpen]);
-
-  useEffect(() => {
-    if (!isRatingOpen) {
-      setActiveAdditionalButton(null);
-    }
-  }, []);
-
   const handleClick = (buttonName) => {
-    closePopups();
     const isMainButton = buttonsData.some((button) => button.name === buttonName);
     if (isMainButton) {
+      dispatch(setFirstFilter(buttonName));
       setActiveButton(buttonName);
-    }
-    onButtonClick(buttonName);
-    if (additionalButtonsData.some((button) => button.name === buttonName)) {
+      onButtonClick(buttonName);
+    } else {
+
+      setSecondFilter(buttonName);
       setActiveAdditionalButton(buttonName);
-      onAdditionalButtonClick(buttonName); // Call onAdditionalButtonClick when an additional button is clicked
+      onAdditionalButtonClick(buttonName);
+      togglePopup(buttonName);
     }
+
     // Add double click event listener to remove 'active' class and close popup
     if (buttonName === lastClickedButton) {
-      togglePopupBasedOnButtonName(buttonName);
       setLastClickedButton(null); // Reset lastClickedButton after handling double click
     } else {
       setLastClickedButton(buttonName);
     }
   };
 
-  const togglePopupBasedOnButtonName = (buttonName) => {
-    if (buttonName === "PriceRange") {
-      togglePopup(setIsPriceRangeOpen);
-    } else if (buttonName === "Distance") {
-      togglePopup(setIsDistanceOpen);
-    } else if (buttonName === "Rating") {
-      togglePopup(setIsRatingOpen);
-    }
-  };
-
-  const togglePopup = (setter) => {
-    setter((prevState) => !prevState);
+  const togglePopup = (buttonName) => {
+    setIsPopupsOpen((prevState) => ({
+      ...prevState,
+      [buttonName]: !prevState[buttonName],
+    }));
   };
 
   const closePopups = () => {
-    setIsPriceRangeOpen(false);
-    setIsDistanceOpen(false);
-    setIsRatingOpen(false);
+    setIsPopupsOpen({
+      PriceRange: false,
+      Distance: false,
+      Rating: false,
+    });
     setActiveAdditionalButton(null);
   };
 
@@ -131,25 +114,25 @@ const RestaurantsHeader = ({onButtonClick, onAdditionalButtonClick }) => {
           </button>
         ))}
       </div>
-      {isPriceRangeOpen && (
+      {isPopupsOpen.PriceRange && (
         <MultiRangeSlider
-          min={12}
-          max={357}
-          onChange={({ min, max }) => {}}
-          isOpen={isPriceRangeOpen}
-          togglePopup={() => togglePopup(setIsPriceRangeOpen)}
+          min={restaurantsPrices[0]}
+          max={restaurantsPrices[restaurantsPrices.length - 1]}
+          onChange={({ min, max }) => {}} // Placeholder onChange function
+          isOpen={isPopupsOpen.PriceRange}
+          togglePopup={() => togglePopup("PriceRange")}
         />
       )}
-      {isDistanceOpen && (
+      {isPopupsOpen.Distance && (
         <SingleDistanceSlider
           currentLocation="Your Location"
-          maxDistance={4}
-          onChange={(value) => {}}
-          isOpen={isDistanceOpen}
-          togglePopup={() => togglePopup(setIsDistanceOpen)}
+          maxDistance={restaurantsDistances[restaurantsDistances.length - 1]}
+          onChange={(value) => {}} // Placeholder onChange function
+          isOpen={isPopupsOpen.Distance}
+          togglePopup={() => togglePopup("Distance")}
         />
       )}
-      {isRatingOpen && <RangeFilter />}
+      {isPopupsOpen.Rating && <RangeFilter />}
     </div>
   );
 };

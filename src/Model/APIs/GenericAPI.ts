@@ -13,8 +13,9 @@ const axiosPrivate = axios.create({
 });
 
 class GenericAPI {
-  get = async <T>(url: string, headers?: AxiosRequestConfig["headers"], options: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> => {
-    return axiosInstance.get<T>(`${URL}${url}`, { ...options, headers });
+  get = async <T>(url: string, params?: AxiosRequestConfig["params"], headers?: AxiosRequestConfig["headers"], options: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> => {
+    
+    return axiosInstance.get<T>(`${URL}${url}`, { ...options, headers, params:params });
   };
 
   post = async <T>(

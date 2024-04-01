@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
           <button className="button">
             <img className="icon" src={SearchIcon} alt="Search Icon" />
           </button>
-          <input className="input" type="text" placeholder="Search for restaurant cuisine, chef" />
+          <input className="input" type="text" placeholder="Search for a restaurant, cuisine and chef" />
         </div>
       </div>
     </div>

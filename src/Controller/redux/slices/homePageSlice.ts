@@ -13,6 +13,7 @@ interface HomePageState {
   isModalOpen: boolean;
   selectedDish: Dish | null;
   isHomePage:boolean;
+  offset: number;
 }
 
 const initialState: HomePageState = {
@@ -34,7 +35,8 @@ const initialState: HomePageState = {
   selectedRestaurant: null,
   isModalOpen: false,
   selectedDish: null,
-  isHomePage:true
+  isHomePage:true, 
+  offset:0
 };
 
 const homePageSlice = createSlice({
@@ -43,6 +45,9 @@ const homePageSlice = createSlice({
   reducers: {
     setIsHomePage(state, action: PayloadAction<boolean>) {
       state.isHomePage = action.payload;
+    },
+    setOffset(state, action: PayloadAction<number>) {
+      state.offset = action.payload;
     },
     setPopularRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
       state.popularRestaurants = action.payload;
@@ -89,6 +94,7 @@ const homePageSlice = createSlice({
 });
 
 export const {
+  setOffset,
   setIsHomePage,
   setPopularRestaurantsData,
   setSignatureDishesData,

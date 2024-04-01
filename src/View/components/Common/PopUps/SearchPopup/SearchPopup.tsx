@@ -27,7 +27,7 @@ const SearchPopup: React.FC<SearchPopupProps> = ({ isOpen, togglePopup }) => {
           <button className="search-button" onClick={handleSearchButtonClick}>
             <img src={SearchIcon} alt="Search Icon" className='navbar-icon' />
           </button>
-          <input className="search-input" type="text" placeholder="Search for restaurant cuisine, chef" />
+          <input className="search-input" type="text" placeholder="Search for a restaurant, cuisine and chef" />
         </div>
       )}
     </div>

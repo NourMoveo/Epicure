@@ -5,13 +5,14 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { ChefCard, SwiperConfig } from '@/View/components';
+import { SwiperConfig } from '@/View/components';
 import { Chef } from "@/Model/Interfaces";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../../Controller/redux/store/store";
 import { fetchChefsPageData } from "../../../Controller/redux/thunks/chefsPageThunk";
 import { LoadingGif } from "@/View/Photos";
+const ChefCard = React.lazy(() => import("@/View/components/Shared/ChefCard/ChefCard"));
 
 const menuButtons = [
   { name: "All", label: "All" },
@@ -55,51 +56,67 @@ const ChefsPage = () => {
         return [];
     }
   };
-
+  function renderLoading() {
+    return (
+      <div className="loading-spinner">
+        <img className="loading" src={LoadingGif} alt="Loading..." />
+      </div>
+    );
+  }
   const chefsToShow = getChefsByButton(activeButton);
 
   return (
     <div className="chefs-page">
-      <h2 className="chefs-title">Chefs</h2>
-      <div className="header-container">
-        <div className="chefs-header">
-          {menuButtons.map(({ name, label }) => (
-            <button
-              key={name}
-              className={`menu-button ${activeButton === name ? "active" : ""}`}
-              onClick={() => handleClick(name)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
-      {isLoading ? (
-        <div className="loading-spinner">
-          <img className="loading" src={LoadingGif} alt="Loading..." />
-        </div>
-      ) : (
-        <div className="chefs-card">
-          <Fade>
-            <Swiper className="swiper" {...SwiperConfig("vertical")}>
-              {chefsToShow.map((chef: Chef) => (
-                <SwiperSlide className="swiper-slide" key={chef.fName}>
-                  <div>
-                    <ChefCard chef={chef} />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </Fade>
-          <div className="desktop-section">
-            {chefsToShow.map((chef: Chef) => (
-              <div key={chef.fName}>
-                <ChefCard chef={chef} />
-              </div>
+      <Suspense fallback={renderLoading()}>
+        <h2 className="chefs-title">Chefs</h2>
+        <div className="header-container">
+          <div className="chefs-header">
+            {menuButtons.map(({ name, label }) => (
+              <button
+                key={name}
+                className={`menu-button ${activeButton === name ? "active" : ""}`}
+                onClick={() => handleClick(name)}
+              >
+                {label}
+              </button>
             ))}
           </div>
         </div>
-      )}
+        {
+          isLoading && chefsToShow.length == 0 ? (
+            renderLoading()
+          ) :
+            chefsToShow && chefsToShow.length > 0 ?
+              (
+                <div className="chefs-card">
+                  <Fade>
+                    <Swiper className="swiper" {...SwiperConfig("vertical")}>
+                      {chefsToShow.map((chef: Chef) => (
+                        <SwiperSlide className="swiper-slide" key={chef.fName}>
+                          <div>
+                            <ChefCard chef={chef} />
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </Fade>
+                  <div className="desktop-section">
+                    {chefsToShow.map((chef: Chef) => (
+                      <div key={chef.fName}>
+                        <ChefCard chef={chef} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              )
+              : (
+                <div className="empty-data-message">
+                  <p>No Chefs found.</p>
+                </div>
+              )}
+      </Suspense>
+
     </div>
   );
 };

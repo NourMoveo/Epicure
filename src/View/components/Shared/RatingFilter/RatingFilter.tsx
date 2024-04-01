@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RatingComponent } from '@/View/components';
 import './RatingFilter.scss';
-import { Restaurant } from '@/Model/Interfaces';
+import { setData, setSelectedRating } from '@/Controller/redux/slices/restaurantsPageSlice';
+import { RootState } from '@/Controller/redux/store/store';
+import { restaurantAPI } from '@/Model/APIs/RestaurantAPI';
 
-interface RangeFilterPopupProps {
-  onFilterChange: (selectedRatings: number[]) => void;
-}
-
-const RatingFilter: React.FC<RangeFilterPopupProps> = ({ onFilterChange }) => {
-  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+const RatingFilter: React.FC = () => {
   const [popupHeight, setPopupHeight] = useState<number>(9.5); // Initial height
+  const dispatch = useDispatch();
+  const { selectedRating ,page ,limit,firstFilter } = useSelector((state: RootState) => state.restaurantsPage);
 
-  const handleRatingChange = (rating: number) => {
-    const updatedRatings = selectedRatings.includes(rating)
-      ? selectedRatings.filter((r) => r !== rating)
-      : [...selectedRatings, rating];
-    
-    setSelectedRatings(updatedRatings);
-    onFilterChange(updatedRatings); // Send updated ratings to the restaurant page
+  const handleRatingChange = async (rating: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    // Stop event propagation to prevent the popup from closing automatically
+    event.stopPropagation();
+
+    const updatedRatings = selectedRating.includes(rating)
+      ? selectedRating.filter((r: number) => r !== rating)
+      : [...selectedRating, rating];
+    console.log(updatedRatings);
+    console.log(await restaurantAPI.getRestaurantsByRatings(page,limit,updatedRatings,firstFilter));
+    dispatch(setSelectedRating(updatedRatings));
+    dispatch(setData(await restaurantAPI.getRestaurantsByRatings(page,limit,updatedRatings,firstFilter)));
+
   };
 
-  const handleClearFilter = () => {
-    setSelectedRatings([]);
-    onFilterChange([]); // Send an empty array to clear the filter
+  const handleClearFilter =  async () => {
+    dispatch(setSelectedRating([])); 
+    dispatch(setData(await restaurantAPI.getRestaurantsByRatings(page,limit,selectedRating,firstFilter)));
   };
 
   useEffect(() => {
-    if (selectedRatings.length > 0) {
+    // Adjust popup height based on selected ratings
+    if (selectedRating.length > 0) {
       setPopupHeight(26.5); // Increase height when checkboxes are selected
     } else {
       setPopupHeight(22.5); // Restore initial height when no checkboxes are selected
     }
-  }, [selectedRatings]);
+  }, [selectedRating]);
 
   return (
     <div className="range-checkbox-filter-popup" style={{ height: `${popupHeight}vw` }}>
@@ -41,8 +47,8 @@ const RatingFilter: React.FC<RangeFilterPopupProps> = ({ onFilterChange }) => {
           <div key={rating} className="checkbox-rating">
             <input
               type="checkbox"
-              checked={selectedRatings.includes(rating)}
-              onChange={() => handleRatingChange(rating)}
+              checked={selectedRating.includes(rating)}
+              onChange={(event) => handleRatingChange(rating, event)}
             />
             <div className="rating">
               <RatingComponent number={rating} />
@@ -51,7 +57,7 @@ const RatingFilter: React.FC<RangeFilterPopupProps> = ({ onFilterChange }) => {
         ))}
       </div>
       <div className="button-container">
-        {selectedRatings.length > 0 && (
+        {selectedRating.length > 0 && (
           <button className="clear-button" onClick={handleClearFilter}>
             Clear
           </button>
@@ -59,23 +65,6 @@ const RatingFilter: React.FC<RangeFilterPopupProps> = ({ onFilterChange }) => {
       </div>
     </div>
   );
-};
-
-export const mergeRestaurantsByRating = (arraysOfRestaurant: Restaurant[], selectedRatings: number[]): Restaurant[] => {
-  let mergedArray: Restaurant[] = []; // Initialize merged array
-
-  selectedRatings.forEach(index => {
-    // Check if the index is within the bounds of arraysOfRestaurant
-    if (index >= 0 && index < arraysOfRestaurant.length) {
-      // Check if arraysOfRestaurant[index] and arraysOfRestaurant[index].restaurants are defined
-      if (arraysOfRestaurant[index] ) {
-        // Concatenate the restaurants from arraysOfRestaurant at the given index to the merged array
-        mergedArray = mergedArray.concat(arraysOfRestaurant[index]);
-      }
-    }
-  });
-
-  return mergedArray;
 };
 
 export default RatingFilter;

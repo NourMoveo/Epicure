@@ -127,7 +127,7 @@ const Navbar: React.FC = () => {
                 <input
                   className="search-input"
                   type="text"
-                  placeholder="Search for restaurant, cuisine and chef"
+                  placeholder="Search for a restaurant, cuisine and chef"
                 />
                 <img className="navbar-icon" src={SearchIcon} alt="Search" />
               </div>

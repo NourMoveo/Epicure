@@ -91,3 +91,15 @@ export interface Order{
   arrivingTime: number;
   comment: string;
 }
+// Define the interface for paginated results
+interface PaginatedResults<T> {
+  next?: {
+    page: number;
+    limit: number;
+  };
+  previous?: {
+    page: number;
+    limit: number;
+  };
+  results: T[];
+}
