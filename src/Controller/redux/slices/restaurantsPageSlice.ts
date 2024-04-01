@@ -106,7 +106,6 @@ const restaurantsPageSlice = createSlice({
     },
     setFirstFilter(state, action: PayloadAction<string>) {
       state.firstFilter = action.payload;
-      console.log(" action.payload;  action.payload;  action.payload;  action.payload;", action.payload)
     },
     setSecondFilter(state, action: PayloadAction<string>) {
       state.secondFilter = action.payload;

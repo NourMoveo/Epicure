@@ -15,7 +15,6 @@ interface HomePageData {
 export const fetchHomePageData = createAsyncThunk("homePage/fetchData", async (): Promise<HomePageData> => {
   const restaurantData= await restaurantAPI.getPopularRestaurants();
   const signatureDishes= await dishAPI.getSignatureDishes();
-  console.log("signatureDishes  :",signatureDishes)
   const chefOfTheWeek = await chefAPI.getChefOfTheWeek();
 
   return {

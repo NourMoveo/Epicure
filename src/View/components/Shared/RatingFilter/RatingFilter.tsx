@@ -18,8 +18,6 @@ const RatingFilter: React.FC = () => {
     const updatedRatings = selectedRating.includes(rating)
       ? selectedRating.filter((r: number) => r !== rating)
       : [...selectedRating, rating];
-    console.log(updatedRatings);
-    console.log(await restaurantAPI.getRestaurantsByRatings(page,limit,updatedRatings,firstFilter));
     dispatch(setSelectedRating(updatedRatings));
     dispatch(setData(await restaurantAPI.getRestaurantsByRatings(page,limit,updatedRatings,firstFilter)));
 

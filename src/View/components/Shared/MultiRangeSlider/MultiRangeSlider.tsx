@@ -41,7 +41,6 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
         dispatch(setMin(minVal));
         dispatch(setData(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter)))
         // console.log("restaurantByPrices",await restaurantAPI.getRestaurantsByPriceRange(minVal, maxVal))
-        console.log("Fetching restaurants with price range:", minVal, "-", maxVal);
       } else {
         togglePopupHeight(11);
       }
@@ -62,7 +61,6 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
   }, [minVal, maxVal, onChange, min, max]);
 
   useEffect(() => {
-    console.log("restaurantByPrices:", restaurantByPrices);
   }, [restaurantByPrices]);
 
   const handleClear = async (event: React.MouseEvent<HTMLButtonElement>) => {

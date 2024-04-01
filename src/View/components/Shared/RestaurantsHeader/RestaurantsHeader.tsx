@@ -36,7 +36,6 @@ const RestaurantsHeader = ({ onButtonClick, onAdditionalButtonClick }) => {
   const popupsRef = useRef(null);
 
   useEffect(() => {
-    console.log("restaurantsPrices   ," , restaurantsPrices);
     onButtonClick(activeButton);
   }, [activeButton]);
 

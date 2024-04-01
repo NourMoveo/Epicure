@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../../Controller/redux/store/store";
 import { fetchRestaurantsPageData } from "../../../Controller/redux/thunks/restaurantsPageThunk";
-import { Map, LoadingGif } from "@/View/Photos";
+import { Map, LoadingGif ,SadChefIcon } from "@/View/Photos";
 import "./RestaurantsPage.scss";
 import { setIsHomePage } from "@/Controller/redux/slices/homePageSlice";
 import { setData, setFirstFilter, setPage, setSecondFilter } from "@/Controller/redux/slices/restaurantsPageSlice";
@@ -27,7 +27,6 @@ const RestaurantsPage = () => {
   const handleButtonClick = async (buttonName: string) => {
 
     if (isMainButton(buttonName)) {
-      console.log("firstFilter firstFilter firstFilter firstFilter ,", buttonName)
       dispatch(setFirstFilter(buttonName));
       setActiveButton(buttonName);
     } else {
@@ -38,11 +37,9 @@ const RestaurantsPage = () => {
 
     try {
       let newData: any[] = [];
-      console.log("firstFilter firstFilter firstFilter firstFilter ,", firstFilter)
       switch (buttonName) {
         case "All":
           newData = await restaurantAPI.getAllRestaurants(page, limit);
-          console.log("All new data: " )
           dispatch(setData(newData));
           break;
         case "New":
@@ -72,12 +69,8 @@ const RestaurantsPage = () => {
 
       // Dispatch action to update the data in the Redux store
       if (buttonName === pastButton) {
-        console.log("data ...", data );
-
-        console.log("new data .... ", newData);
         if (newData.length > 0) {
           if ((newData[newData.length-1] as Restaurant).title != (data[data.length-1]).title) {
-            console.log("yess")
             dispatch(setData(data.concat(newData)));
           } else {
             dispatch(setData(data));
@@ -194,11 +187,12 @@ const RestaurantsPage = () => {
                     layoutDirection="vertical"
                   />
                 )
-                :
-                (
+                :(
                   <div className="empty-data-message">
                     <p>No restaurants found.</p>
+                    <img className="sad-chef" src={SadChefIcon}/>
                   </div>
+                  
                 )}
           </div>
         )}

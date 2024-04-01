@@ -12,10 +12,6 @@ class RestaurantAPI {
       const response = await genericAPI.get<Restaurant[]>(
         `${RestaurantAPI.endpoint}?page=${page}&limit=${limit}`
       );
-      console.log(
-        "response.data response.data response.data , ",
-        response.data
-      );
       return response.data;
     } catch (error) {
       console.error("Error fetching popular restaurants:", error);
@@ -29,10 +25,6 @@ class RestaurantAPI {
       const response = await genericAPI.get<number[]>(
         `${RestaurantAPI.endpoint}/restaurant-prices`
       );
-      console.log(
-        "getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices , ",
-        response.data
-      );
       return response.data;
     } catch (error) {
       console.error("Error fetching popular restaurants:", error);
@@ -44,10 +36,6 @@ class RestaurantAPI {
     try {
       const response = await genericAPI.get<number[]>(
         `${RestaurantAPI.endpoint}/all-distances`
-      );
-      console.log(
-        "getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices getRestaurantsPrices , ",
-        response.data
       );
       return response.data;
     } catch (error) {
@@ -63,7 +51,6 @@ class RestaurantAPI {
       const response = await genericAPI.get<Restaurant[]>(
         `${RestaurantAPI.endpoint}/popular?page=${page}&limit=${limit}`
       );
-      console.log("response.data.results popular :", response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching popular restaurants:", error);
@@ -80,7 +67,6 @@ class RestaurantAPI {
       const response = await genericAPI.get<Restaurant[]>(
         `${RestaurantAPI.endpoint}/new?page=${page}&limit=${limit}`
       );
-      console.log(" new new new new new new new :", response);
       return response.data;
     } catch (error) {
       console.error("Error fetching new restaurants:", error);
@@ -96,7 +82,7 @@ class RestaurantAPI {
       const response = await genericAPI.get<Restaurant[]>(
         `${RestaurantAPI.endpoint}/open-now?page=${page}&limit=${limit}`
       );
-      console.log("response.data.results popular :", response.data);
+      
       return response.data;
     } catch (error) {
       console.error("Error fetching Open-now restaurants:", error);

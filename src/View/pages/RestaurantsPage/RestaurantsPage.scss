@@ -37,6 +37,19 @@
   .no-data{
     font-size: 1vw;
   }
+  .empty-data-message{
+display: flex;
+align-items: center;
+justify-content: center;
+  @include font-style;
+  font-size: 3vw;
+  font-weight: 400;
+  opacity: 0.6;
+  }
+  .sad-chef{
+    height: 20vw;
+    opacity: 0.6;
+  }
   }
   
 

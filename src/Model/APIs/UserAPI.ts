@@ -45,15 +45,9 @@ class UserAPI {
     try {
       // Retrieve the authentication token from the cookie
       const token = this.getToken();
-      console.log("token :",token)
-      console.log("email :",email)
-      console.log("newOrderData :",newOrderData)
       if (!token) {
         throw new Error("Authentication token is missing.");
       }
-      console.log("token :",token)
-      console.log("email :",email)
-      console.log("newOrderData :",newOrderData)
       // Set the request headers with the authentication token
       const headers: AxiosRequestConfig['headers'] = {
         Authorization: `Bearer ${token}`,
@@ -63,7 +57,6 @@ class UserAPI {
       await genericAPI.post(`${UserAPI.endpoint}/add-order`, { email, newOrderData }, headers);
 
       // Log success message
-      console.log('Order added successfully');
     } catch (error) {
       console.error("Error adding order to user:", error);
       throw new Error("Error adding order to user");

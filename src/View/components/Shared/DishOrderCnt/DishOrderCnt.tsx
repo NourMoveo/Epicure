@@ -64,7 +64,6 @@ const DishOrderContent: React.FC = () => {
         quantity: quantity,
       };
 
-      console.log(newDish);
       
       // Dispatch action to add new dish order
       dispatch(addDishOrder(newDish));

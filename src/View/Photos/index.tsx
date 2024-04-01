@@ -41,6 +41,7 @@ import Lumina from './Restaurants/Lumina.png';
 import TigerLilly from './Restaurants/TigerLilly.png';
 import KitchenMarket from './Restaurants/KitchenMarket.png';
 import Mashya from './Restaurants/Mashya.png';
+import SadChefIcon from './Icons/SadChef.png'
 // Export images
 export {
   // Chefs:
@@ -54,6 +55,7 @@ export {
   Map,
   // Icons
   ClockIcon,
+  SadChefIcon,
   appleLogo,
   ARArrow,
   BagIcon,
