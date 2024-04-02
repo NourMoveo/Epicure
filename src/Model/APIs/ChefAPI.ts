@@ -4,19 +4,49 @@ import { Chef } from "@/Model/Interfaces";
 class ChefAPI {
   static readonly endpoint = "/chefs";
 
-  async getAllChefs(): Promise<Chef[]> {
-    const response = await genericAPI.get<Chef[]>(`${ChefAPI.endpoint}`);
-    return response.data;
+  async getAllChefs(
+    page: number = 1,
+    limit: number = 3
+  ): Promise<Chef[]> {
+    try {
+      const response = await genericAPI.get<Chef[]>(
+        `${ChefAPI.endpoint}?page=${page}&limit=${limit}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching popular chefs:", error);
+      throw error;
+    }
   }
-
-  async getNewChefs(): Promise<Chef[]> {
-    const response = await genericAPI.get<Chef[]>(`${ChefAPI.endpoint}/new`);
-    return response.data;
+  async getNewChefs(
+    page: number = 1,
+    limit: number = 3
+  ): Promise<Chef[]> {
+    
+    try {
+      const response = await genericAPI.get<Chef[]>(
+        `${ChefAPI.endpoint}/new?page=${page}&limit=${limit}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching new chefs:", error);
+      throw error;
+    }
   }
-
-  async getMostViewedChefs(): Promise<Chef[]> {
-    const response = await genericAPI.get<Chef[]>(`${ChefAPI.endpoint}/most-viewed`);
-    return response.data;
+  async getMostViewedChefs(
+    page: number = 1,
+    limit: number = 3
+  ): Promise<Chef[]> {
+    
+    try {
+      const response = await genericAPI.get<Chef[]>(
+        `${ChefAPI.endpoint}/most-viewed?page=${page}&limit=${limit}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching new chefs:", error);
+      throw error;
+    }
   }
 
   async getChefOfTheWeek(): Promise<Chef> {

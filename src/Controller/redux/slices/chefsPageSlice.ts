@@ -7,7 +7,9 @@ interface ChefsPageState {
     newChefs: Chef[];
     mostViewedChefs: Chef[];
     selectedButton:string | " ";
-    offset:number;
+    page:number;
+    limit:number;
+    chefsToShow:Chef[];
 }
 
 const initialState: ChefsPageState = {
@@ -15,15 +17,24 @@ const initialState: ChefsPageState = {
   newChefs:[],
   mostViewedChefs: [],
   selectedButton: " ",
-  offset:0,
+  page:1,
+  chefsToShow:[],
+  limit:3,
 };
 
 const chefsPageSlice = createSlice({
   name: "chefsPage",
   initialState,
   reducers: {
-    setOffset(state, action: PayloadAction<number>){
-      state.offset=action.payload;
+    setPage(state, action: PayloadAction<number>){
+      state.page=action.payload;
+      if(action.payload==0){
+        state.page=1;
+      }
+    },setLimit(state, action: PayloadAction<number>){
+      state.limit=action.payload;
+    },setChefsToShow(state, action: PayloadAction<Chef[]>){
+      state.chefsToShow=[... action.payload];
     },
     setAllChefsData(state, action: PayloadAction<Chef[]>) {
         state.allChefs = action.payload;
@@ -44,6 +55,6 @@ const chefsPageSlice = createSlice({
   },
 });
 
-export const {setOffset, setAllChefsData, setNewChefsData, setMostViewedChefsData} = chefsPageSlice.actions;
+export const {setLimit,setPage,setChefsToShow, setAllChefsData, setNewChefsData, setMostViewedChefsData} = chefsPageSlice.actions;
 
 export default chefsPageSlice.reducer;

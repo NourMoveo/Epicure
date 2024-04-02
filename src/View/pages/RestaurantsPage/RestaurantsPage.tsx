@@ -4,7 +4,6 @@ import { RootState, AppDispatch } from "../../../Controller/redux/store/store";
 import { fetchRestaurantsPageData } from "../../../Controller/redux/thunks/restaurantsPageThunk";
 import { Map, LoadingGif, SadChefIcon } from "@/View/Photos";
 import "./RestaurantsPage.scss";
-import { setIsHomePage } from "@/Controller/redux/slices/homePageSlice";
 import { setData, setFirstFilter, setNewData, setPage, setSecondFilter } from "@/Controller/redux/slices/restaurantsPageSlice";
 import { Restaurant } from "@/Model/Interfaces";
 import { restaurantAPI } from "@/Model/APIs/RestaurantAPI";
@@ -19,15 +18,14 @@ const RestaurantsPage = () => {
   const [pastButton, setPastButton] = useState("All");
   const [isMapView, setIsMapView] = useState(false);
   const { isModalOpen } = useSelector((state: RootState) => state.homePage);
-  const { newData, allRestaurants, newRestaurants, openNowRestaurants, popularRestaurants, restaurantsByDistance, restaurantsByPriceRange, restaurantsByRatings, data, page, limit, max, min, distance, selectedRating, firstFilter, secondFilter } = useSelector((state: RootState) => state.restaurantsPage);
-
-
+  const { data, firstFilter, distance, min, max, selectedRating } = useSelector((state: RootState) => state.restaurantsPage);
+  const { page, limit } = useSelector((state: RootState) => state.restaurantsPage);
 
   const handleButtonClick = async (buttonName: string) => {
     setPastButton(activeButton);
     dispatch(setFirstFilter(buttonName));
     setActiveButton(buttonName);
-    dispatch(setPage(0))
+    dispatch(setPage(0));
     if (buttonName === "MapView") {
       setIsMapView(true);
     }
@@ -37,77 +35,27 @@ const RestaurantsPage = () => {
     setPastButton(activeButton);
     dispatch(setSecondFilter(buttonName));
     setActiveButton(buttonName);
-    dispatch(setPage(0))
+    dispatch(setPage(0));
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchRestaurantsPageData({ page, limit, firstFilter, distance, min, max, selectedRating }))
-  //     .then(() => {
-  //       setIsLoading(false);
-  //       const fetchData = async () => {
-  //         try {
-  //           let res: any[] = [];
-  //           switch (activeButton) {
-  //             case "All":
-  //               res = allRestaurants;
-  //               break;
-  //             case "New":
-  //               res = newRestaurants;
-  //               break;
-  //             case "MostPopular":
-  //               res = popularRestaurants;
-  //               break;
-  //             case "OpenNow":
-  //               res = openNowRestaurants;
-  //               break;
-  //             case "PriceRange":
-  //               res = restaurantsByPriceRange;
-  //               break;
-  //             case "Distance":
-  //               res = restaurantsByDistance;
-  //               break;
-  //             case "Rating":
-  //               res = restaurantsByRatings;
-  //               break;
-  //           }
-  //           console.log("page: in use effect", page, " ", res);
-  //           if (pastButton == activeButton) {
-  //             if (data && data.length > 0 && res && res.length > 0) {
-  //               if (data[data.length - 1]._id != (res[res.length - 1] as Restaurant)._id) {
-  //                 dispatch(setData(data.concat(res)));
-  //               }
-  //             }
-  //           } else {
-  //             dispatch(setData(res));
-  //           }
-
-  //           setIsLoading(false);
-  //         } catch (error) {
-  //           console.log(error);
-  //         }
-  //       };
-  //       console.log("data data data ,", data)
-  //       fetchData();
-  //     });
-  // }, [activeButton, page]);
-
-
   useEffect(() => {
-    dispatch(fetchRestaurantsPageData({ page, limit,firstFilter,distance,min,max,selectedRating}))
-    .then(() => setIsLoading(false))
-    .catch((error) => {
-      console.error("Error fetching home page data:", error);
-    });
-    setIsLoading(false);
+    dispatch(fetchRestaurantsPageData({ page, limit, firstFilter, distance, min, max, selectedRating }))
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        console.error("Error fetching restaurants page data:", error);
+        setIsLoading(false);
+      });
+
     const fetchData = async () => {
-      console.log("yesssss : ",activeButton)
+      console.log("activeButton:", activeButton);
       try {
-        let res: any[] = [];
+        let res: Restaurant[] = [];
         switch (activeButton) {
           case "All":
             res = await restaurantAPI.getAllRestaurants(page, limit);
-            if(page==1)  
-            {dispatch(setData(res));}
+            if (page === 1) {
+              dispatch(setData(res));
+            }
             break;
           case "New":
             res = await restaurantAPI.getNewRestaurants(page, limit);
@@ -122,19 +70,21 @@ const RestaurantsPage = () => {
             res = [];
             break;
           case "Distance":
-            res =  await restaurantAPI.getRestaurantsByDistance(page, limit, distance, firstFilter);
+            res = await restaurantAPI.getRestaurantsByDistance(page, limit, distance, firstFilter);
             break;
           case "Rating":
-            console.log("selectedRating ,",selectedRating)
-            res =await restaurantAPI.getRestaurantsByRatings(page, limit, selectedRating, firstFilter);
+            console.log("selectedRating:", selectedRating);
+            res = await restaurantAPI.getRestaurantsByRatings(page, limit, selectedRating, firstFilter);
+            break;
+          default:
             break;
         }
-        console.log("page: in use effect", page, " ", res);
-  if (pastButton == activeButton) {
-          console.log("buttons equal")
+        console.log("page:", page, "res:", res);
+        if (pastButton === activeButton) {
+          console.log("buttons equal");
           if (data && data.length > 0 && res && res.length > 0) {
-            if (data[data.length - 1]._id != (res[res.length - 1] as Restaurant)._id) {
-              console.log("conact")
+            if (data[data.length - 1]._id !== res[res.length - 1]._id) {
+              console.log("concat");
               dispatch(setData(data.concat(res)));
             }
           }
@@ -144,11 +94,11 @@ const RestaurantsPage = () => {
         setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     };
-    console.log("data data data ,", data)
+    console.log("data:", data);
     fetchData();
-
   }, [activeButton, page]);
 
   useEffect(() => {
@@ -165,7 +115,6 @@ const RestaurantsPage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [page]);
-
 
   return (
     <div className="restaurants-page">
@@ -190,6 +139,7 @@ const RestaurantsPage = () => {
       </div>
     );
   }
+
   function renderContent() {
     return (
       <>
@@ -198,27 +148,23 @@ const RestaurantsPage = () => {
             <img className="map-img" src={Map} alt="Map" />
           </div>
         ) : (
-
           <div className="cards">
             {isLoading ? (
               renderLoading()
             ) : data && data.length > 0 ? (
-              <>
-                <CustomCardsSection
-                  cardsData={data}
-                  cardType={1}
-                  pageType={2}
-                  layoutDirection="vertical"
-                />
-              </>
-            )
-              : (
-                <div className="empty-data-message">
-                  {/* <p>No restaurants found.</p>
-                <img className="sad-chef" src={SadChefIcon} alt="Sad chef" /> */}
-                </div>
-              )
-            }
+              <CustomCardsSection
+                cardsData={data}
+                cardType={1}
+                pageType={2}
+                layoutDirection="vertical"
+              />
+            ) : (
+              <div className="empty-data-message">
+                <p>No restaurants found.</p>
+                {/* Uncomment the line below to render the sad chef icon */}
+                {/* <img className="sad-chef" src={SadChefIcon} alt="Sad chef" /> */}
+              </div>
+            )}
           </div>
         )}
       </>
