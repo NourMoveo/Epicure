@@ -56,6 +56,7 @@
 
   .chefs-page {
     padding-bottom: 5vw;
+    overflow-y: hidden; 
     .chefs-title {
       display: none;
     }
@@ -101,7 +102,7 @@
         width: 83.5vw;
         // height: 83.3vw; 
         // margin-bottom: 3vw;
-        // overflow-y: auto; 
+        overflow-y: hidden; 
       }
       .swiper {
         @include desktop {

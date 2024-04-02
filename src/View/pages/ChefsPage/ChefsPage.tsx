@@ -54,21 +54,32 @@ const ChefsPage = () => {
                 dispatch(setChefsToShow(chefsToShow.concat(newChefs)));
               }
             }
-            break;
+            break; // Add break statement here
           case "New":
             res = await chefAPI.getNewChefs(page, limit);
-            dispatch(setChefsToShow(chefsToShow.concat(await chefAPI.getAllChefs(page, limit))));
-            break;
-          case "Most Viewed":
-            res = await chefAPI.getMostViewedChefs(page, limit);
-            if (pastButton === activeButton && chefsToShow.length && res.length) {
-              if (chefsToShow[chefsToShow.length - 1]._id !== res[res.length - 1]._id) {
-                dispatch(setChefsToShow(chefsToShow.concat(res)));
-              }
-            } else {
+            if (page === 1) {
               dispatch(setChefsToShow(res));
             }
-            break;
+            console.log("iin New")
+            if (pastButton === activeButton && chefsToShow.length && res.length) {
+              if (chefsToShow[chefsToShow.length - 1]._id !== res[res.length - 1]._id) {
+                const newChefs = await chefAPI.getNewChefs(page, limit);
+                dispatch(setChefsToShow(chefsToShow.concat(newChefs)));
+              }
+            }
+            break; // Add break statement here
+          case "Most Viewed":
+            res = await chefAPI.getMostViewedChefs(page, limit);
+            if (page === 1) {
+              dispatch(setChefsToShow(res));
+            }
+            if (pastButton === activeButton && chefsToShow.length && res.length) {
+              if (chefsToShow[chefsToShow.length - 1]._id !== res[res.length - 1]._id) {
+                const newChefs = await chefAPI.getMostViewedChefs(page, limit);
+                dispatch(setChefsToShow(chefsToShow.concat(newChefs)));
+              }
+            }
+            break; // Add break statement here
           default:
             break;
         }
@@ -77,6 +88,7 @@ const ChefsPage = () => {
         console.log("Error fetching chefs: ", error);
       }
     };
+    
 
     fetchData();
 

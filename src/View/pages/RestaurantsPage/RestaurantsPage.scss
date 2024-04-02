@@ -2,6 +2,7 @@
 @import "../../themes/variables";
 // Restaurants.scss
 .restaurants-page{
+  overflow-y: hidden;
 .restaurant-header {
   @include titles_style;
   letter-spacing: 0.3vw;

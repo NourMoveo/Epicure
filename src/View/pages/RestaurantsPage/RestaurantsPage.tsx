@@ -29,12 +29,15 @@ const RestaurantsPage = () => {
     if (buttonName === "MapView") {
       setIsMapView(true);
     }
+
   };
 
   const handleAdditionalButtonClick = async (buttonName: string) => {
     setPastButton(activeButton);
     dispatch(setSecondFilter(buttonName));
     setActiveButton(buttonName);
+    console.log("data console.log(data)console.log(data)console.log(data)console.log(data) ")
+    console.log(data)
     dispatch(setPage(0));
   };
 
@@ -67,7 +70,7 @@ const RestaurantsPage = () => {
             res = await restaurantAPI.getOpenNowRestaurants(page, limit);
             break;
           case "PriceRange":
-            res = [];
+            res = await restaurantAPI.getRestaurantsByPriceRange(page,limit,min,max,firstFilter);
             break;
           case "Distance":
             res = await restaurantAPI.getRestaurantsByDistance(page, limit, distance, firstFilter);
@@ -88,9 +91,7 @@ const RestaurantsPage = () => {
               dispatch(setData(data.concat(res)));
             }
           }
-        } else {
-          dispatch(setData(res));
-        }
+        } 
         setIsLoading(false);
       } catch (error) {
         console.log(error);
