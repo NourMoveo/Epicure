@@ -14,13 +14,16 @@ interface RestaurantsPageState {
   limit: number;
   data: Restaurant[];
   newData: Restaurant[];
-  min: number;
-  max: number;
   restaurantsDistances: number[];
   distance: number;
   selectedRating: number[];
   firstFilter: string;
   secondFilter:string;
+  min: number;
+  max: number;
+  restaurantsByPriceRange: Restaurant[];
+  restaurantsByDistance: Restaurant[];
+  restaurantsByRatings: Restaurant[];
 }
 
 const initialState: RestaurantsPageState = {
@@ -35,14 +38,16 @@ const initialState: RestaurantsPageState = {
   page: 1,
   limit: 3,
   data: [],
-  min: 0,
-  max: 0,
+  min: 1,
+  max: 2,
   restaurantsDistances: [],
-  distance: 0,
-  selectedRating: [],
+  distance: 0.1,
+  selectedRating: [0],
   newData:[],
-  
-  secondFilter:""
+  secondFilter:"",
+  restaurantsByPriceRange:[],
+  restaurantsByDistance: [],
+  restaurantsByRatings: [],
 };
 
 const restaurantsPageSlice = createSlice({
@@ -50,11 +55,11 @@ const restaurantsPageSlice = createSlice({
   initialState,
   reducers: {
     setAllRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
-      state.allRestaurants = action.payload;
+      state.allRestaurants=action.payload;
       
     },
     setNewRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
-      state.newRestaurants = action.payload;
+      state.newRestaurants.concat(action.payload);
       
     },
     setPopularRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
@@ -69,7 +74,11 @@ const restaurantsPageSlice = createSlice({
       state.selectedRestaurant = action.payload;
     },
     setPage(state, action: PayloadAction<number>) {
-      state.page = action.payload + 1;
+      state.page=action.payload;
+      if(action.payload==0){
+        state.page=1;
+      }
+      console.log("state.page :",state.page);
     },
     setLimit(state, action: PayloadAction<number>) {
       state.limit = action.payload;
@@ -82,9 +91,6 @@ const restaurantsPageSlice = createSlice({
       
     },
     setData(state, action: PayloadAction<Restaurant[]>) {
-      if (state.data.length > 0) {
-        state.data.concat(action.payload);
-      }
       state.data = action.payload;
     },setNewData(state, action: PayloadAction<Restaurant[]>) {
       state.newData = action.payload;
@@ -113,12 +119,15 @@ const restaurantsPageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRestaurantsPageData.fulfilled, (state, action) => {
-      state.allRestaurants = action.payload.allRestaurants;
+      state.allRestaurants=action.payload.allRestaurants;
       state.newRestaurants = action.payload.newRestaurants;
       state.popularRestaurants = action.payload.popularRestaurants;
       state.openNowRestaurants = action.payload.openNowRestaurants;
       state.restaurantsPrices= action.payload.restaurantsPrices;
       state.restaurantsDistances=action.payload.restaurantsDistances;
+      state.restaurantByPrices=action.payload.restaurantsByPriceRange;
+      state.restaurantsByDistance=action.payload.restaurantsByDistance;
+      state.restaurantsByRatings=action.payload.restaurantsByRatings;
     });
   },
 });
@@ -129,6 +138,7 @@ export const {
   setSelectedRating,
   setDistance,
   setData,
+  setNewData,
   setLimit,
   setPage,
   setAllRestaurantsData,

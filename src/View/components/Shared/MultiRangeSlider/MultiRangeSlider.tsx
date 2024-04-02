@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { ILSLogo } from "@/View/Photos";
 import { RootState } from "@/Controller/redux/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { setData, setMax,setMin, setRestaurantByPrices } from "@/Controller/redux/slices/restaurantsPageSlice";
+import { setData, setMax,setMin, setPage, setRestaurantByPrices } from "@/Controller/redux/slices/restaurantsPageSlice";
 import { restaurantAPI } from "@/Model/APIs/RestaurantAPI";
 
 interface MultiRangeSliderProps {
@@ -25,7 +25,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
   const range = useRef<HTMLDivElement>(null);
-  const { restaurantsPrices, restaurantByPrices, page,limit,firstFilter} = useSelector((state: RootState) => state.restaurantsPage);
+  const { data,restaurantsPrices, restaurantByPrices, page,limit,firstFilter} = useSelector((state: RootState) => state.restaurantsPage);
 
   useEffect(() => {
     setMinVal(Math.min(min, ...restaurantsPrices));
@@ -37,10 +37,25 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
       if (isRangeChanged) {
         togglePopupHeight(14);
         setRestaurantByPrices(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter));
-        dispatch(setMax(maxVal));
-        dispatch(setMin(minVal));
-        dispatch(setData(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter)))
+        if(min==minVal && max==maxVal){
+          if(page==1){
+            dispatch(setData(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter)));
+            dispatch(setPage(page))
+          }else{
+            dispatch(setData(data.concat(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter))));
+            console.log("data data data data data data data",data)
+          }
+        }else{
+          console.log("ohhhh noooo")
+          dispatch(setMax(maxVal));
+          dispatch(setMin(minVal));
+          dispatch(setPage(0))
+          dispatch(setData(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter)))
+        }
+        
+       
         // console.log("restaurantByPrices",await restaurantAPI.getRestaurantsByPriceRange(minVal, maxVal))
+        console.log("Fetching restaurants with price range:", minVal, "-", maxVal);
       } else {
         togglePopupHeight(11);
       }
@@ -61,9 +76,10 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
   }, [minVal, maxVal, onChange, min, max]);
 
   useEffect(() => {
+    console.log("restaurantByPrices:", restaurantByPrices);
   }, [restaurantByPrices]);
 
-  const handleClear = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClear = async(event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setMinVal(min);
     setMaxVal(max);

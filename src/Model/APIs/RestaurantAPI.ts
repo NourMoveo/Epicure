@@ -119,6 +119,7 @@ class RestaurantAPI {
         `${RestaurantAPI.endpoint}/restaurants-by-distance?page=${page}&limit=${limit}`,
         { distance: distance, filterBy: filterBy }
       );
+
       return response.data;
     } catch (error) {
       console.error("Error fetching restaurants by price range:", error);

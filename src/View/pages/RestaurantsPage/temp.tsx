@@ -7,7 +7,6 @@ import "./RestaurantsPage.scss";
 import { setIsHomePage } from "@/Controller/redux/slices/homePageSlice";
 import { setData, setFirstFilter, setNewData, setPage, setSecondFilter } from "@/Controller/redux/slices/restaurantsPageSlice";
 import { Restaurant } from "@/Model/Interfaces";
-import { restaurantAPI } from "@/Model/APIs/RestaurantAPI";
 const DishOrderPopup = React.lazy(() => import("@/View/components/Common/PopUps/dishOrderPopup/dishOrderPopup"));
 const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
 const RestaurantsHeader = React.lazy(() => import("@/View/components/Shared/RestaurantsHeader/RestaurantsHeader"));
@@ -18,153 +17,113 @@ const RestaurantsPage = () => {
   const [activeButton, setActiveButton] = useState("All");
   const [pastButton, setPastButton] = useState("All");
   const [isMapView, setIsMapView] = useState(false);
+  const [activeAdditionalButton, setActiveAdditionalButton] = useState<string | null>(null);
   const { isModalOpen } = useSelector((state: RootState) => state.homePage);
   const { newData, allRestaurants, newRestaurants, openNowRestaurants, popularRestaurants, restaurantsByDistance, restaurantsByPriceRange, restaurantsByRatings, data, page, limit, max, min, distance, selectedRating, firstFilter, secondFilter } = useSelector((state: RootState) => state.restaurantsPage);
 
-
+  const getDataByButton = async (buttonName: string): Promise<Restaurant[]> => {
+    console.log("buttonName  :", buttonName);
+    console.log("pageeeee ---------- : , ", page)
+    let temp: any[] = [];
+    switch (buttonName) {
+      case "All":
+        temp = allRestaurants;
+        break;
+      case "New":
+        temp = newRestaurants;
+        break;
+      case "MostPopular":
+        temp = popularRestaurants;
+        break;
+      case "OpenNow":
+        temp = openNowRestaurants;
+        break;
+      case "PriceRange":
+        temp = restaurantsByPriceRange;
+        break;
+      case "Distance":
+        temp = restaurantsByDistance;
+        break;
+      case "Rating":
+        temp = restaurantsByRatings;
+        break;
+    }
+    console.log("in the temppppp , ",temp)
+    return temp;
+  }
 
   const handleButtonClick = async (buttonName: string) => {
     setPastButton(activeButton);
     dispatch(setFirstFilter(buttonName));
     setActiveButton(buttonName);
-    dispatch(setPage(0))
-    if (buttonName === "MapView") {
-      setIsMapView(true);
-    }
+    dispatch(setData(await getDataByButton(activeButton)));
   };
 
   const handleAdditionalButtonClick = async (buttonName: string) => {
     setPastButton(activeButton);
     dispatch(setSecondFilter(buttonName));
     setActiveButton(buttonName);
-    dispatch(setPage(0))
+    dispatch(setData(await getDataByButton(activeButton)));
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchRestaurantsPageData({ page, limit, firstFilter, distance, min, max, selectedRating }))
-  //     .then(() => {
-  //       setIsLoading(false);
-  //       const fetchData = async () => {
-  //         try {
-  //           let res: any[] = [];
-  //           switch (activeButton) {
-  //             case "All":
-  //               res = allRestaurants;
-  //               break;
-  //             case "New":
-  //               res = newRestaurants;
-  //               break;
-  //             case "MostPopular":
-  //               res = popularRestaurants;
-  //               break;
-  //             case "OpenNow":
-  //               res = openNowRestaurants;
-  //               break;
-  //             case "PriceRange":
-  //               res = restaurantsByPriceRange;
-  //               break;
-  //             case "Distance":
-  //               res = restaurantsByDistance;
-  //               break;
-  //             case "Rating":
-  //               res = restaurantsByRatings;
-  //               break;
-  //           }
-  //           console.log("page: in use effect", page, " ", res);
-  //           if (pastButton == activeButton) {
-  //             if (data && data.length > 0 && res && res.length > 0) {
-  //               if (data[data.length - 1]._id != (res[res.length - 1] as Restaurant)._id) {
-  //                 dispatch(setData(data.concat(res)));
-  //               }
-  //             }
-  //           } else {
-  //             dispatch(setData(res));
-  //           }
-
-  //           setIsLoading(false);
-  //         } catch (error) {
-  //           console.log(error);
-  //         }
-  //       };
-  //       console.log("data data data ,", data)
-  //       fetchData();
-  //     });
-  // }, [activeButton, page]);
-
 
   useEffect(() => {
-    dispatch(fetchRestaurantsPageData({ page, limit,firstFilter,distance,min,max,selectedRating}))
-    .then(() => setIsLoading(false))
-    .catch((error) => {
-      console.error("Error fetching home page data:", error);
-    });
-    setIsLoading(false);
-    const fetchData = async () => {
-      console.log("yesssss : ",activeButton)
-      try {
-        let res: any[] = [];
+    dispatch(fetchRestaurantsPageData({ page, limit, firstFilter, distance, min, max, selectedRating }))
+      .then(() => {
+        setIsLoading(false);})
+        let temp: any[] = [];
         switch (activeButton) {
           case "All":
-            res = await restaurantAPI.getAllRestaurants(page, limit);
-            if(page==1)  
-            {dispatch(setData(res));}
+            temp = allRestaurants;
             break;
           case "New":
-            res = await restaurantAPI.getNewRestaurants(page, limit);
+            temp = newRestaurants;
             break;
           case "MostPopular":
-            res = await restaurantAPI.getPopularRestaurants(page, limit);
+            temp = popularRestaurants;
             break;
           case "OpenNow":
-            res = await restaurantAPI.getOpenNowRestaurants(page, limit);
+            temp = openNowRestaurants;
             break;
           case "PriceRange":
-            res = [];
+            temp = restaurantsByPriceRange;
             break;
           case "Distance":
-            res =  await restaurantAPI.getRestaurantsByDistance(page, limit, distance, firstFilter);
+            temp = restaurantsByDistance;
             break;
           case "Rating":
-            console.log("selectedRating ,",selectedRating)
-            res =await restaurantAPI.getRestaurantsByRatings(page, limit, selectedRating, firstFilter);
+            temp = restaurantsByRatings;
             break;
         }
-        console.log("page: in use effect", page, " ", res);
-  if (pastButton == activeButton) {
-          console.log("buttons equal")
-          if (data && data.length > 0 && res && res.length > 0) {
-            if (data[data.length - 1]._id != (res[res.length - 1] as Restaurant)._id) {
-              console.log("conact")
-              dispatch(setData(data.concat(res)));
-            }
-          }
-        } else {
-          dispatch(setData(res));
-        }
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    console.log("data data data ,", data)
-    fetchData();
-
-  }, [activeButton, page]);
-
-  useEffect(() => {
-    const handleScroll = () => {
+        dispatch(setData(temp));
+      })
+      .catch((error) => {
+        console.error("Error fetching home page data:", error);
+      });
+    const handleScroll = async () => {
       const scrollHeight = document.documentElement.scrollHeight;
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       const clientHeight = document.documentElement.clientHeight;
+      console.log("before scroll data", data)
       if (scrollTop + clientHeight >= scrollHeight - 1) {
-        dispatch(setPage(page + 1));
+        dispatch(setPage(page));
+        console.log("await getDataByButton(activeButton)  ,",await getDataByButton(activeButton))
+        
+        if(pastButton==activeButton){
+          
+          dispatch(setData(data.concat(await getDataByButton(activeButton))));
+          console.log("after scroll data ", data)
+        }else{
+          dispatch(setData(data.concat(await getDataByButton(activeButton))));
+        }
+        
       }
     };
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [page]);
+  }, [page, limit, activeButton]);
 
 
   return (
@@ -204,12 +163,23 @@ const RestaurantsPage = () => {
               renderLoading()
             ) : data && data.length > 0 ? (
               <>
+                {console.log("CustomCardsSection data", data)}
+                {console.log("CustomCardsSection newData", newData)}
                 <CustomCardsSection
                   cardsData={data}
                   cardType={1}
                   pageType={2}
                   layoutDirection="vertical"
                 />
+
+                {newData && newData.length > 0 && (
+                  <CustomCardsSection
+                    cardsData={newData}
+                    cardType={1}
+                    pageType={2}
+                    layoutDirection="vertical"
+                  />
+                )}
               </>
             )
               : (
