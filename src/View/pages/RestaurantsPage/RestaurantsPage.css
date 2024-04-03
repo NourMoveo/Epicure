@@ -45,10 +45,6 @@
 }
 
 @media screen and (min-width: 769px) {
-  .restaurants-page {
-    height: 150vh;
-    height: 75vw;
-  }
   .restaurants-page .restaurant-header {
     display: none;
   }
