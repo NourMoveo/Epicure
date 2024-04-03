@@ -59,8 +59,6 @@ const SingleDistanceSlider: FC<SingleDistanceSliderProps> = ({ maxDistance, isOp
     const handleClear = async(event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         setMaxVal(maxDistance);
-        const restaurants = await restaurantAPI.getRestaurantsByDistance(page,limit,maxDistance,firstFilter);
-        dispatch(setData(restaurants));
         setValuesChanged(false);
         setIsRangeChanged(false);
     };
@@ -73,8 +71,6 @@ const SingleDistanceSlider: FC<SingleDistanceSliderProps> = ({ maxDistance, isOp
         try {
             setMaxVal(value);
             dispatch(setDistance(value));
-            const restaurants = await restaurantAPI.getRestaurantsByDistance(page,limit,value,firstFilter);
-            dispatch(setData(restaurants));
         } catch (error) {
             console.error("Error fetching restaurants:", error);
             // Handle error if necessary

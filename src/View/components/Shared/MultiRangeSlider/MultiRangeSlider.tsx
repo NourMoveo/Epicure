@@ -25,7 +25,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
   const range = useRef<HTMLDivElement>(null);
-  const { data,restaurantsPrices, restaurantByPrices, page,limit,firstFilter} = useSelector((state: RootState) => state.restaurantsPage);
+  const { restaurantsPrices, restaurantByPrices, page,limit,firstFilter} = useSelector((state: RootState) => state.restaurantsPage);
 
   useEffect(() => {
     setMinVal(Math.min(min, ...restaurantsPrices));
@@ -37,23 +37,13 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
       if (isRangeChanged) {
         togglePopupHeight(14);
         setRestaurantByPrices(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter));
-        if(min==minVal && max==maxVal){
-          if(page==1){
-            dispatch(setData(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter)));
-            dispatch(setPage(page))
-          }else{
-            dispatch(setData(data.concat(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter))));
-            console.log("data data data data data data data",data)
-          }
-        }else{
-          console.log("ohhhh noooo")
-          dispatch(setMax(maxVal));
-          dispatch(setMin(minVal));
-          dispatch(setPage(0))
-          dispatch(setData(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter)))
-        }
+        dispatch(setMax(maxVal));
+        dispatch(setMin(minVal));
+        dispatch(setPage(1))
         
-       
+       console.log("dispatch(setMax(maxVal)); ,",max);
+       console.log("dispatch(setMax(minnnnVal)); ,",min);
+
         // console.log("restaurantByPrices",await restaurantAPI.getRestaurantsByPriceRange(minVal, maxVal))
         console.log("Fetching restaurants with price range:", minVal, "-", maxVal);
       } else {

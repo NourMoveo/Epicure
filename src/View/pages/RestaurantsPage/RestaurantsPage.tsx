@@ -4,7 +4,15 @@ import { RootState, AppDispatch } from "../../../Controller/redux/store/store";
 import { fetchRestaurantsPageData } from "../../../Controller/redux/thunks/restaurantsPageThunk";
 import { Map, LoadingGif, SadChefIcon } from "@/View/Photos";
 import "./RestaurantsPage.scss";
-import { setData, setFirstFilter, setNewData, setPage, setSecondFilter } from "@/Controller/redux/slices/restaurantsPageSlice";
+import {
+  setAllRestaurantsData,
+  setData,
+  setFirstFilter,
+  setLimit,
+  setNewData,
+  setPage,
+  setSecondFilter,
+} from "@/Controller/redux/slices/restaurantsPageSlice";
 import { Restaurant } from "@/Model/Interfaces";
 import { restaurantAPI } from "@/Model/APIs/RestaurantAPI";
 const DishOrderPopup = React.lazy(() => import("@/View/components/Common/PopUps/dishOrderPopup/dishOrderPopup"));
@@ -15,107 +23,92 @@ const RestaurantsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setIsLoading] = useState(true);
   const [activeButton, setActiveButton] = useState("All");
-  const [pastButton, setPastButton] = useState("All");
+  const [isNewData, setNewData] = useState(true);
   const [isMapView, setIsMapView] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const { isModalOpen } = useSelector((state: RootState) => state.homePage);
-  const { data, firstFilter, distance, min, max, selectedRating } = useSelector((state: RootState) => state.restaurantsPage);
+
+  const { allRestaurants, newRestaurants, popularRestaurants, openNowRestaurants, restaurantsByDistance, restaurantsByPriceRange, restaurantsByRatings, data, firstFilter, distance, min, max, selectedRating } = useSelector(
+    (state: RootState) => state.restaurantsPage
+  );
   const { page, limit } = useSelector((state: RootState) => state.restaurantsPage);
 
   const handleButtonClick = async (buttonName: string) => {
-    setPastButton(activeButton);
     dispatch(setFirstFilter(buttonName));
     setActiveButton(buttonName);
-    dispatch(setPage(0));
+    dispatch(setPage(1));
     if (buttonName === "MapView") {
       setIsMapView(true);
+    } else {
+      setIsMapView(false);
     }
-
   };
 
   const handleAdditionalButtonClick = async (buttonName: string) => {
-    setPastButton(activeButton);
     dispatch(setSecondFilter(buttonName));
     setActiveButton(buttonName);
-    console.log("data console.log(data)console.log(data)console.log(data)console.log(data) ")
-    console.log(data)
-    dispatch(setPage(0));
+    dispatch(setPage(1));
+  };
+
+  const fetchData = async () => {
+    setIsLoading(true); // Start loading
+    try {
+      let res: Restaurant[] = [];
+      switch (activeButton) {
+        case "All":
+          res = allRestaurants;
+          break;
+        case "New":
+          res = newRestaurants;
+          break;
+        case "MostPopular":
+          res = popularRestaurants;
+          break;
+        case "OpenNow":
+          res = openNowRestaurants;
+          break;
+        case "PriceRange":
+          res = restaurantsByPriceRange;
+          break;
+        case "Distance":
+          res = restaurantsByDistance;
+          break;
+        case "Rating":
+          res = restaurantsByRatings;
+          break;
+        default:
+          break;
+      }
+      if (res.length > 0) {
+        dispatch(setData(res));
+      } 
+      dispatch(setData(res));
+      setIsLoading(false); // Stop loading
+      return res;
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false); // Stop loading on error
+      return [];
+    }
+  };
+
+  const nextData = async () => {
+    setIsLoadingMore(true); // Start loading more
+    dispatch(setLimit(limit*(page + 1)));
   };
 
   useEffect(() => {
-    dispatch(fetchRestaurantsPageData({ page, limit, firstFilter, distance, min, max, selectedRating }))
-      .then(() => setIsLoading(false))
-      .catch((error) => {
-        console.error("Error fetching restaurants page data:", error);
-        setIsLoading(false);
-      });
-
-    const fetchData = async () => {
-      console.log("activeButton:", activeButton);
-      try {
-        let res: Restaurant[] = [];
-        switch (activeButton) {
-          case "All":
-            res = await restaurantAPI.getAllRestaurants(page, limit);
-            if (page === 1) {
-              dispatch(setData(res));
-            }
-            break;
-          case "New":
-            res = await restaurantAPI.getNewRestaurants(page, limit);
-            break;
-          case "MostPopular":
-            res = await restaurantAPI.getPopularRestaurants(page, limit);
-            break;
-          case "OpenNow":
-            res = await restaurantAPI.getOpenNowRestaurants(page, limit);
-            break;
-          case "PriceRange":
-            res = await restaurantAPI.getRestaurantsByPriceRange(page,limit,min,max,firstFilter);
-            break;
-          case "Distance":
-            res = await restaurantAPI.getRestaurantsByDistance(page, limit, distance, firstFilter);
-            break;
-          case "Rating":
-            console.log("selectedRating:", selectedRating);
-            res = await restaurantAPI.getRestaurantsByRatings(page, limit, selectedRating, firstFilter);
-            break;
-          default:
-            break;
-        }
-        console.log("page:", page, "res:", res);
-        if (pastButton === activeButton) {
-          console.log("buttons equal");
-          if (data && data.length > 0 && res && res.length > 0) {
-            if (data[data.length - 1]._id !== res[res.length - 1]._id) {
-              console.log("concat");
-              dispatch(setData(data.concat(res)));
-            }
-          }
-        } 
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
-      }
-    };
-    console.log("data:", data);
-    fetchData();
-  }, [activeButton, page]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
-      if (scrollTop + clientHeight >= scrollHeight - 1) {
-        dispatch(setPage(page + 1));
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [page]);
+    if (isLoadingMore) {
+      fetchData().then(() => setIsLoadingMore(false)); // Stop loading more after fetching data
+    } else {
+      dispatch(fetchRestaurantsPageData({ page, limit, firstFilter, distance, min, max, selectedRating }))
+        .then(() => setIsLoading(false))
+        .catch((error) => {
+          console.error("Error fetching restaurants page data:", error);
+          setIsLoading(false);
+        });    
+    }
+  }, [activeButton, limit, isLoadingMore]);
 
   return (
     <div className="restaurants-page">
@@ -125,9 +118,7 @@ const RestaurantsPage = () => {
           onButtonClick={handleButtonClick}
           onAdditionalButtonClick={handleAdditionalButtonClick}
         />
-        <div className="container-content">
-          {renderContent()}
-        </div>
+        <div className="container-content">{renderContent()}</div>
         {isModalOpen && <DishOrderPopup />}
       </Suspense>
     </div>
@@ -141,6 +132,16 @@ const RestaurantsPage = () => {
     );
   }
 
+  function renderNoMoreData() {
+    return (
+      <div className="no-more-data">
+        <div className="empty-data-message">
+          <p>No more restaurants.</p>
+        </div>
+      </div>
+    );
+  }
+
   function renderContent() {
     return (
       <>
@@ -150,22 +151,34 @@ const RestaurantsPage = () => {
           </div>
         ) : (
           <div className="cards">
-            {isLoading ? (
+            {isLoading? (
               renderLoading()
-            ) : data && data.length > 0 ? (
-              <CustomCardsSection
-                cardsData={data}
-                cardType={1}
-                pageType={2}
-                layoutDirection="vertical"
-              />
+            ): activeButton=="All" ?(
+              <CustomCardsSection cardsData={allRestaurants} cardType={1} pageType={2} layoutDirection="vertical" />
+            ): activeButton=="New" ?(
+              <CustomCardsSection cardsData={newRestaurants} cardType={1} pageType={2} layoutDirection="vertical" />
+            ): activeButton=="MostPopular" ?(
+              <CustomCardsSection cardsData={popularRestaurants} cardType={1} pageType={2} layoutDirection="vertical" />
+            ): activeButton=="OpenNow" ?(
+              <CustomCardsSection cardsData={openNowRestaurants} cardType={1} pageType={2} layoutDirection="vertical" />
+            ):activeButton=="PriceRange" ?(
+              
+              <CustomCardsSection cardsData={restaurantsByPriceRange} cardType={1} pageType={2} layoutDirection="vertical" />
+            ):activeButton=="Distance" ?(
+              <CustomCardsSection cardsData={restaurantsByDistance} cardType={1} pageType={2} layoutDirection="vertical" />
+            ):activeButton=="Rating" ?(
+              <CustomCardsSection cardsData={restaurantsByRatings} cardType={1} pageType={2} layoutDirection="vertical" />
+            ):isNewData ? (
+              renderNoMoreData()
             ) : (
-              <div className="empty-data-message">
-                <p>No restaurants found.</p>
-                {/* Uncomment the line below to render the sad chef icon */}
-                {/* <img className="sad-chef" src={SadChefIcon} alt="Sad chef" /> */}
-              </div>
+               renderLoading()
             )}
+            <div className="next-prev-button">
+              <button className="load-more" onClick={nextData} disabled={page === 0 || isLoadingMore}>
+                {isLoadingMore ? "Loading..." : "Load More"}
+              </button>
+              
+            </div>
           </div>
         )}
       </>

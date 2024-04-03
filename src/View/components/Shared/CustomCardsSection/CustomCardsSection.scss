@@ -127,6 +127,7 @@
 
 &.restaurant-page {
   &.restaurant-card {
+    height:100%;
     .desktop-section {
       display: grid; 
       grid-template-columns: repeat(3, 1fr); 

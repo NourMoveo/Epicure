@@ -38,11 +38,11 @@ const initialState: RestaurantsPageState = {
   page: 1,
   limit: 3,
   data: [],
-  min: 1,
-  max: 2,
+  min: 10,
+  max: 300,
   restaurantsDistances: [],
-  distance: 0.1,
-  selectedRating: [0],
+  distance: 3.4,
+  selectedRating: [1,2,3,4,5],
   newData:[],
   secondFilter:"",
   restaurantsByPriceRange:[],
@@ -75,9 +75,6 @@ const restaurantsPageSlice = createSlice({
     },
     setPage(state, action: PayloadAction<number>) {
       state.page=action.payload;
-      if(action.payload==0){
-        state.page=1;
-      }
       console.log("state.page :",state.page);
     },
     setLimit(state, action: PayloadAction<number>) {
