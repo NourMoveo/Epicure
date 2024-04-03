@@ -2,38 +2,40 @@
 @import "../../../themes/mixins";
 
 .distance-popup-container {
-    padding: 1vw;
-    width: 23vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 16.22vw; 
-    left: 51.7%; 
-    transform: translateX(-50%);
-    z-index: 9; 
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 0.05vw 0.5vw rgba(0, 0, 0, 0.1);
-    transition: height 0.3s ease; // Add transition for smooth height change
-  }
-  
-  // Rest of your SCSS styles...
-  
+  padding: 1vw;
+  width: 23vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 16.22vw;
+  left: 51.7%;
+  transform: translateX(-50%);
+  z-index: 9;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0.05vw 0.5vw rgba(0, 0, 0, 0.1);
+  transition: height 0.3s ease; // Add transition for smooth height change
+}
+
+.popup-open {
+  height: 9.5vw;
+}
+
+.popup-open-clear {
+  height: 12vw;
+}
+// Rest of your SCSS styles...
 
 // Rest of your SCSS styles...
 
 .distance-popup-title {
-@include font-style;
-font-size: 1.25vw;
-letter-spacing: 0.1vw;
-margin-bottom: 0.5vw;
-font-weight: 400;
+  @include font-style;
+  font-size: 1.25vw;
+  letter-spacing: 0.1vw;
+  margin-bottom: 0.5vw;
+  font-weight: 400;
 }
-
-
-
-
 
 .distance-container {
   background-color: $secondary-offwhite-color;
@@ -46,21 +48,18 @@ font-weight: 400;
   padding: 2.3vw 0vw 0px 1vw;
 
   .distance-slider {
-    position:sticky;
+    position: sticky;
     width: 17vw;
     padding-left: 0.4vw;
     .distance-slider__left-value,
     .distance-slider__right-value {
       position: absolute;
-      
     }
-    
 
     .distance-slider__track,
     .distance-slider__range {
       height: 0.3vw;
-      position: absolute; 
-      
+      position: absolute;
     }
 
     .distance-slider__track {
@@ -90,11 +89,9 @@ font-weight: 400;
           color: $secondary-orange-color; // Change color to orange when values changed
         }
         margin-left: -1vw;
+      }
     }
 
-
-    }
-    
     .distance-slider__left-value {
       left: 0;
       &--orange {
@@ -104,22 +101,19 @@ font-weight: 400;
         margin-top: 1.7vw;
         width: 0.8vw;
         height: 0.8vw;
-        background-color:$secondary-grey-color;
+        background-color: $secondary-grey-color;
         border-radius: 50%;
         margin-left: -0.3vw;
+      }
     }
-    
-    }
-    
+
     .distance-slider__right-value {
       right: -1.5vw;
       &--orange {
         color: $secondary-orange-color; // Change color to orange when values changed
       }
     }
-    
   }
-
 
   /* Removing the default appearance */
   .distance-thumb,
@@ -159,7 +153,6 @@ font-weight: 400;
     margin-top: 0;
     pointer-events: all;
     position: relative;
-
   }
 
   /* When thumb is active, show the pseudo-element */
@@ -170,29 +163,28 @@ font-weight: 400;
 
   /* Adding orange color for thumb when active */
   .distance-thumb--orange::-webkit-slider-thumb {
-    background-color:  $secondary-orange-color;
+    background-color: $secondary-orange-color;
   }
 
-     /* Clear button */
-     .distance-clear-button {
-        @include font_style;
-        font-size: 0.9vw;
-        letter-spacing: 0.2vw;
-        font-weight: 400;
-        text-transform: uppercase;
-        width: 9vw;
-        height: 2.5vw;
-        position: absolute;
-        top: 3.5vw;
-        margin-left: 5.3vw;
-        transform: translateY(-50%);
-        background-color: white;
-        border: 0.1vw solid black;
-        cursor: pointer;
-          &:hover {
-          background-color: black; /* Change background color on hover */
-          color: white; /* Change text color on hover */
-      }
+  /* Clear button */
+  .distance-clear-button {
+    @include font_style;
+    font-size: 0.9vw;
+    letter-spacing: 0.2vw;
+    font-weight: 400;
+    text-transform: uppercase;
+    width: 9vw;
+    height: 2.5vw;
+    position: absolute;
+    top: 3.5vw;
+    margin-left: 5.3vw;
+    transform: translateY(-50%);
+    background-color: white;
+    border: 0.1vw solid black;
+    cursor: pointer;
+    &:hover {
+      background-color: black; /* Change background color on hover */
+      color: white; /* Change text color on hover */
     }
+  }
 }
-

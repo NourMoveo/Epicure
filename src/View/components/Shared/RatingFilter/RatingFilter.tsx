@@ -1,34 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { RatingComponent } from '@/View/components';
 import './RatingFilter.scss';
-import { setData, setSelectedRating } from '@/Controller/redux/slices/restaurantsPageSlice';
-import { RootState } from '@/Controller/redux/store/store';
-import { restaurantAPI } from '@/Model/APIs/RestaurantAPI';
 
 const RatingFilter: React.FC = () => {
-  const [popupHeight, setPopupHeight] = useState<number>(9.5); // Initial height
-  const dispatch = useDispatch();
-  const { selectedRating ,page ,limit,firstFilter } = useSelector((state: RootState) => state.restaurantsPage);
+  const [popupHeight, setPopupHeight] = useState<number>(9.5); 
+  const [selectedRating, setSelectedRating] = useState<number[]>([]);
 
   const handleRatingChange = async (rating: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    // Stop event propagation to prevent the popup from closing automatically
-    event.stopPropagation();
-
-    const updatedRatings = selectedRating.includes(rating)
-      ? selectedRating.filter((r: number) => r !== rating)
-      : [...selectedRating, rating];
-    console.log(updatedRatings);
-    console.log(await restaurantAPI.getRestaurantsByRatings(page,limit,updatedRatings,firstFilter));
-    dispatch(setSelectedRating(updatedRatings));
-    dispatch(setData(await restaurantAPI.getRestaurantsByRatings(page,limit,updatedRatings,firstFilter)));
-
+    try {
+      const updatedSelectedRating = event.target.checked
+        ? [...selectedRating, rating] // Add the selected rating to the array
+        : selectedRating.filter((r) => r !== rating); // Remove the unselected rating from the array
+      setSelectedRating(updatedSelectedRating);
+      console.log("Selected rating:", updatedSelectedRating); 
+    } catch (error) {
+      console.error("Error setting selected rating:", error);
+      // Handle error if necessary
+    }
   };
 
-  const handleClearFilter =  async () => {
-    dispatch(setSelectedRating([])); 
-    dispatch(setData(await restaurantAPI.getRestaurantsByRatings(page,limit,selectedRating,firstFilter)));
-
+  const handleClearFilter = async () => {
+    setSelectedRating([]);
   };
 
   useEffect(() => {

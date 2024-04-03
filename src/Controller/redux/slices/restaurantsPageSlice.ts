@@ -3,6 +3,7 @@ import { Restaurant } from "@/Model/Interfaces";
 import { fetchRestaurantsPageData } from "../thunks/restaurantsPageThunk";
 
 interface RestaurantsPageState {
+  Restaurants: Restaurant[];
   allRestaurants: Restaurant[];
   newRestaurants: Restaurant[];
   popularRestaurants: Restaurant[];
@@ -27,6 +28,7 @@ interface RestaurantsPageState {
 }
 
 const initialState: RestaurantsPageState = {
+  Restaurants:[],
   allRestaurants: [],
   newRestaurants: [],
   popularRestaurants: [],
@@ -57,6 +59,8 @@ const restaurantsPageSlice = createSlice({
     setAllRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
       state.allRestaurants=action.payload;
       
+    },setRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
+      state.Restaurants=action.payload;   
     },
     setNewRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
       state.newRestaurants.concat(action.payload);
@@ -130,6 +134,7 @@ const restaurantsPageSlice = createSlice({
 });
 
 export const {
+  setRestaurantsData,
   setFirstFilter,
   setSecondFilter,
   setSelectedRating,

@@ -2,10 +2,6 @@ import React, { ChangeEvent, FC, useEffect, useState, useRef } from "react";
 import "./MultiRangeSlider.scss";
 import classnames from "classnames";
 import { ILSLogo } from "@/View/Photos";
-import { RootState } from "@/Controller/redux/store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { setData, setMax,setMin, setPage, setRestaurantByPrices } from "@/Controller/redux/slices/restaurantsPageSlice";
-import { restaurantAPI } from "@/Model/APIs/RestaurantAPI";
 
 interface MultiRangeSliderProps {
   min: number;
@@ -15,9 +11,7 @@ interface MultiRangeSliderProps {
   togglePopup: () => void;
 }
 
-const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpen, togglePopup }) => {
-  const dispatch = useDispatch();
-  const popupClassName = isOpen ? 'range-price-popup open' : 'range-price-popup';
+const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange,  togglePopup }) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
   const [valuesChanged, setValuesChanged] = useState(false);
@@ -25,35 +19,47 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
   const range = useRef<HTMLDivElement>(null);
-  const { restaurantsPrices, restaurantByPrices, page,limit,firstFilter} = useSelector((state: RootState) => state.restaurantsPage);
 
   useEffect(() => {
-    setMinVal(Math.min(min, ...restaurantsPrices));
-    setMaxVal(Math.max(max, ...restaurantsPrices));
-  }, [restaurantsPrices]);
+    if (isRangeChanged) {
+      togglePopupHeight(14);
+    } else {
+      togglePopupHeight(11);
+    }
+  }, [isRangeChanged]);
+
+  const togglePopupHeight = (height: number) => {
+    const popupContainer = document.querySelector('.popup-container') as HTMLElement;
+    if (popupContainer) {
+      popupContainer.style.height = `${height}vw`;
+    }
+  };
+
+  const getPercent = (value: number) => Math.round(((value - min) / (max - min)) * 100);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (isRangeChanged) {
-        togglePopupHeight(14);
-        setRestaurantByPrices(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter));
-        dispatch(setMax(maxVal));
-        dispatch(setMin(minVal));
-        dispatch(setPage(1))
-        
-       console.log("dispatch(setMax(maxVal)); ,",max);
-       console.log("dispatch(setMax(minnnnVal)); ,",min);
+    if (maxValRef.current) {
+      const minPercent = getPercent(minVal);
+      const maxPercent = getPercent(+maxValRef.current.value);
 
-        // console.log("restaurantByPrices",await restaurantAPI.getRestaurantsByPriceRange(minVal, maxVal))
-        console.log("Fetching restaurants with price range:", minVal, "-", maxVal);
-      } else {
-        togglePopupHeight(11);
+      if (range.current) {
+        range.current.style.left = `${minPercent}%`;
+        range.current.style.width = `${maxPercent - minPercent}%`;
       }
-    };
-  
-    fetchData();
-  }, [isRangeChanged, minVal, maxVal, dispatch]);
-  
+    }
+  }, [minVal]);
+
+  useEffect(() => {
+    if (minValRef.current) {
+      const minPercent = getPercent(+minValRef.current.value);
+      const maxPercent = getPercent(maxVal);
+
+      if (range.current) {
+        range.current.style.width = `${maxPercent - minPercent}%`;
+      }
+    }
+  }, [maxVal]);
+
   useEffect(() => {
     onChange({ min: minVal, max: maxVal });
     setValuesChanged(minVal !== min || maxVal !== max);
@@ -65,15 +71,10 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
     }
   }, [minVal, maxVal, onChange, min, max]);
 
-  useEffect(() => {
-    console.log("restaurantByPrices:", restaurantByPrices);
-  }, [restaurantByPrices]);
-
-  const handleClear = async(event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setMinVal(min);
     setMaxVal(max);
-    setRestaurantByPrices(await restaurantAPI.getRestaurantsByPriceRange(page ,limit, minVal, maxVal,firstFilter));
     setValuesChanged(false);
     setIsRangeChanged(false);
   };
@@ -81,37 +82,20 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation(); // Stop event propagation
     const value = parseInt(event.target.value, 10);
-    // Find the nearest value in the restaurantsPrices array
-    const nearestValue = restaurantsPrices.reduce((prev, curr) => (
-      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-    ));
-
     if (event.target === minValRef.current) {
-      // Ensure that the minimum value is less than or equal to the maximum value
-      if (nearestValue <= maxVal) {
-        setMinVal(nearestValue);
-      } else {
-        setMinVal(maxVal); // Set the minimum value to the maximum value
-      }
+      const newValue = Math.min(value, maxVal - 1);
+      setMinVal(newValue);
+      console.log("Minimum value:", newValue); // Log the updated minimum value
     } else if (event.target === maxValRef.current) {
-      // Ensure that the maximum value is greater than or equal to the minimum value
-      if (nearestValue >= minVal) {
-        setMaxVal(nearestValue);
-      } else {
-        setMaxVal(minVal); // Set the maximum value to the minimum value
-      }
+      const newValue = Math.max(value, minVal + 1);
+      setMaxVal(newValue);
+      console.log("Maximum value:", newValue); // Log the updated maximum value
     }
   };
+  
 
   const handleSliderClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation(); // Prevent popup from closing when clicking inside it
-  };
-
-  const togglePopupHeight = (height: number) => {
-    const popupContainer = document.querySelector('.popup-container') as HTMLElement;
-    if (popupContainer) {
-      popupContainer.style.height = `${height}vw`;
-    }
   };
 
   return (
@@ -122,14 +106,14 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
           <img className="ils-icon" src={ILSLogo} alt="ILS Icon" />
         </div>
         <div className="value">
-          {minVal}
+          {min}
         </div>
         <div className="mini-line">-</div>
         <div className="ils-icon">
           <img className="ils-icon" src={ILSLogo} alt="ILS Icon" />
         </div>
         <div className="value">
-          {maxVal}
+          {max}
         </div>
       </div>
       <div className="container" onClick={handleSliderClick}>
@@ -143,13 +127,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
           className={classnames("thumb thumb--zindex-3", {
             "thumb--zindex-5": minVal > max - 100,
           })}
-          list="restaurantsPricesList"
         />
-        <datalist id="restaurantsPricesList">
-          {restaurantsPrices.map(price => (
-            <option key={price} value={price} />
-          ))}
-        </datalist>
         <input
           type="range"
           min={min}
@@ -158,7 +136,6 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
           ref={maxValRef}
           onChange={handleInputChange}
           className="thumb thumb--zindex-4"
-          list="restaurantsPricesList"
         />
         <div className="slider">
           <div className="slider__track"></div>
@@ -174,8 +151,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange, isOpe
           {valuesChanged && <button className="clear-button" onClick={handleClear}>Clear</button>}
         </div>
       </div>
-    </div>
-  );
+    </div>);
 };
 
 export default MultiRangeSlider;
