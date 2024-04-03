@@ -1,105 +1,29 @@
-import React, { ChangeEvent, FC, useEffect, useState, useRef } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import "./MultiRangeSlider.scss";
 import classnames from "classnames";
 import { ILSLogo } from "@/View/Photos";
 
 interface MultiRangeSliderProps {
-  min: number;
-  max: number;
-  onChange: (values: { min: number; max: number }) => void;
-  isOpen: boolean;
-  togglePopup: () => void;
+  newMin: number,
+  newMax: number,
+  setNewMin: (min: number) => void,
+  setNewMax: (max: number) => void
 }
+const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin }) => {
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
 
-const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange,  togglePopup }) => {
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState(max);
-  const [valuesChanged, setValuesChanged] = useState(false);
-  const [isRangeChanged, setIsRangeChanged] = useState(false);
-  const minValRef = useRef<HTMLInputElement>(null);
-  const maxValRef = useRef<HTMLInputElement>(null);
-  const range = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isRangeChanged) {
-      togglePopupHeight(14);
+  const handleInputChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>, isMin: boolean) => {
+    if (isMin) {
+      setNewMin(parseInt(value));
+      console.log("Selected minimum value:", value);
     } else {
-      togglePopupHeight(11);
-    }
-  }, [isRangeChanged]);
-
-  const togglePopupHeight = (height: number) => {
-    const popupContainer = document.querySelector('.popup-container') as HTMLElement;
-    if (popupContainer) {
-      popupContainer.style.height = `${height}vw`;
+      setNewMax(parseInt(value));
+      console.log("Selected maximum value:", value);
     }
   };
-
-  const getPercent = (value: number) => Math.round(((value - min) / (max - min)) * 100);
-
-  useEffect(() => {
-    if (maxValRef.current) {
-      const minPercent = getPercent(minVal);
-      const maxPercent = getPercent(+maxValRef.current.value);
-
-      if (range.current) {
-        range.current.style.left = `${minPercent}%`;
-        range.current.style.width = `${maxPercent - minPercent}%`;
-      }
-    }
-  }, [minVal]);
-
-  useEffect(() => {
-    if (minValRef.current) {
-      const minPercent = getPercent(+minValRef.current.value);
-      const maxPercent = getPercent(maxVal);
-
-      if (range.current) {
-        range.current.style.width = `${maxPercent - minPercent}%`;
-      }
-    }
-  }, [maxVal]);
-
-  useEffect(() => {
-    onChange({ min: minVal, max: maxVal });
-    setValuesChanged(minVal !== min || maxVal !== max);
-    setIsRangeChanged(minVal !== min || maxVal !== max);
-
-    if (minVal === min && maxVal === max) {
-      minValRef.current?.classList.remove('thumb--orange');
-      maxValRef.current?.classList.remove('thumb--orange');
-    }
-  }, [minVal, maxVal, onChange, min, max]);
-
-  const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setMinVal(min);
-    setMaxVal(max);
-    setValuesChanged(false);
-    setIsRangeChanged(false);
-  };
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation(); // Stop event propagation
-    const value = parseInt(event.target.value, 10);
-    if (event.target === minValRef.current) {
-      const newValue = Math.min(value, maxVal - 1);
-      setMinVal(newValue);
-      console.log("Minimum value:", newValue); // Log the updated minimum value
-    } else if (event.target === maxValRef.current) {
-      const newValue = Math.max(value, minVal + 1);
-      setMaxVal(newValue);
-      console.log("Maximum value:", newValue); // Log the updated maximum value
-    }
-  };
-  
-
-  const handleSliderClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation(); // Prevent popup from closing when clicking inside it
-  };
-
   return (
-    <div className="popup-container" onClick={togglePopup}>
+    <div className={`range-popup-container ${(newMin !== min || newMax !== max ? 'range-popup-open-clear' : 'range-popup-open')}`}>
       <div className="popup-title">Price Range Selected</div>
       <div className="range-display">
         <div className="ils-icon">
@@ -116,39 +40,37 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange,  togg
           {max}
         </div>
       </div>
-      <div className="container" onClick={handleSliderClick}>
+      <div className="container" >
         <input
           type="range"
           min={min}
           max={max}
-          value={minVal}
-          ref={minValRef}
-          onChange={handleInputChange}
+          value={newMin}
+          onChange={(event) => handleInputChange(event, true)}
           className={classnames("thumb thumb--zindex-3", {
-            "thumb--zindex-5": minVal > max - 100,
+            "thumb--zindex-5": newMin > max - 100,
           })}
         />
         <input
           type="range"
           min={min}
           max={max}
-          value={maxVal}
-          ref={maxValRef}
-          onChange={handleInputChange}
+          value={newMax}
+          onChange={(event) => handleInputChange(event, false)}
           className="thumb thumb--zindex-4"
         />
         <div className="slider">
           <div className="slider__track"></div>
-          <div ref={range} className="slider__range"></div>
-          <div className={classnames("slider__left-value", { "slider__left-value--orange": valuesChanged })}>
-            <div className={classnames("ils-icon", { "ils-icon-value--orange": valuesChanged })}><img className="ils-img" src={ILSLogo} alt="ILS Icon" /></div>
-            <div className="min-value">{minVal}</div>
+          <div className="slider__range"></div>
+          <div className={classnames("slider__left-value", { "slider__left-value--orange": newMin !== min || newMax !== max })}>
+            <div className={classnames("ils-icon", { "ils-icon-value--orange": newMin !== min || newMax !== max })}><img className="ils-img" src={ILSLogo} alt="ILS Icon" /></div>
+            <div className="min-value">{newMin}</div>
           </div>
-          <div className={classnames("slider__right-value", { "slider__right-value--orange": valuesChanged })}>
-            <div className="ils-icon"><img src={ILSLogo} alt="ILS Icon" className="ils-img"/></div>
-            <div className="max-value">{maxVal}</div>
+          <div className={classnames("slider__right-value", { "slider__right-value--orange": newMin !== min || newMax !== max })}>
+            <div className="ils-icon"><img src={ILSLogo} alt="ILS Icon" className="ils-img" /></div>
+            <div className="max-value">{newMax}</div>
           </div>
-          {valuesChanged && <button className="clear-button" onClick={handleClear}>Clear</button>}
+          {(newMin !== min || newMax !== max) && <button className="clear-button" onClick={() => { setNewMin(min); setNewMax(max); }}>Clear</button>}
         </div>
       </div>
     </div>);

@@ -1,39 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { RatingComponent } from '@/View/components';
 import './RatingFilter.scss';
-
-const RatingFilter: React.FC = () => {
-  const [popupHeight, setPopupHeight] = useState<number>(9.5); 
-  const [selectedRating, setSelectedRating] = useState<number[]>([]);
+interface RatingFilterProps {
+  selectedRating: number[];
+  setSelectedRating: (selectedRating: number[]) => void;
+}
+const RatingFilter: FC<RatingFilterProps> = ({ selectedRating, setSelectedRating }) => {
 
   const handleRatingChange = async (rating: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const updatedSelectedRating = event.target.checked
-        ? [...selectedRating, rating] // Add the selected rating to the array
-        : selectedRating.filter((r) => r !== rating); // Remove the unselected rating from the array
-      setSelectedRating(updatedSelectedRating);
-      console.log("Selected rating:", updatedSelectedRating); 
-    } catch (error) {
-      console.error("Error setting selected rating:", error);
-      // Handle error if necessary
-    }
+    const updatedSelectedRating = event.target.checked
+      ? [...selectedRating, rating] : selectedRating.filter((r) => r !== rating);
+    setSelectedRating(updatedSelectedRating);
+    console.log("Selected rating:", updatedSelectedRating);
+
   };
 
-  const handleClearFilter = async () => {
-    setSelectedRating([]);
-  };
 
-  useEffect(() => {
-    // Adjust popup height based on selected ratings
-    if (selectedRating.length > 0) {
-      setPopupHeight(26.5); // Increase height when checkboxes are selected
-    } else {
-      setPopupHeight(22.5); // Restore initial height when no checkboxes are selected
-    }
-  }, [selectedRating]);
 
+
+  selectedRating.length > 0
   return (
-    <div className="range-checkbox-filter-popup" style={{ height: `${popupHeight}vw` }}>
+
+    <div className={`range-checkbox-filter-popup ${(selectedRating.length > 0 ? 'rating-popup-open-clear' : 'rating-popup-open')}`}>
       <div className="rating-popup-title">Rating</div>
       <div className="filter-options">
         {[1, 2, 3, 4, 5].map((rating) => (
@@ -50,10 +38,7 @@ const RatingFilter: React.FC = () => {
         ))}
       </div>
       <div className="button-container">
-        {selectedRating.length > 0 && (
-          <button className="clear-button" onClick={handleClearFilter}>
-            Clear
-          </button>
+        {selectedRating.length > 0 && (<button className="clear-button" onClick={() => setSelectedRating([])}>Clear</button>
         )}
       </div>
     </div>

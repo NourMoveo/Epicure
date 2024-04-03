@@ -1,5 +1,4 @@
-@import "../../../themes/mixins";
-
+@charset "UTF-8";
 .range-checkbox-filter-popup {
   padding: 1vw;
   width: 24.5vw;
@@ -17,6 +16,7 @@
   box-shadow: 0 0.05vw 0.5vw rgba(0, 0, 0, 0.1);
   transition: height 0.3s ease;
 }
+
 .rating-popup-open {
   height: 22.5vw;
 }
@@ -25,7 +25,7 @@
   height: 27vw;
 }
 
-.checkbox-rating input[type="checkbox"] {
+.checkbox-rating input[type=checkbox] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -34,7 +34,7 @@
   margin-right: 5px;
 }
 
-.checkbox-rating input[type="checkbox"]::before {
+.checkbox-rating input[type=checkbox]::before {
   content: "";
   margin-right: 0.8vw;
   display: inline-block;
@@ -46,12 +46,12 @@
   vertical-align: middle;
 }
 
-.checkbox-rating input[type="checkbox"]:checked::before {
+.checkbox-rating input[type=checkbox]:checked::before {
   background-color: black;
 }
 
-.checkbox-rating input[type="checkbox"]:checked::before {
-  content: "\2713";
+.checkbox-rating input[type=checkbox]:checked::before {
+  content: "✓";
   font-size: 1.4vw;
   color: black;
   text-align: center;
@@ -60,7 +60,12 @@
 }
 
 .rating-popup-title {
-  @include font-style;
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
   font-size: 1.25vw;
   letter-spacing: 0.1vw;
   font-weight: 400;
@@ -93,7 +98,12 @@ svg {
 }
 
 .clear-button {
-  @include font-style;
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
   font-size: 0.9vw;
   letter-spacing: 0.2vw;
   font-weight: 400;
@@ -110,4 +120,4 @@ svg {
 .clear-button:hover {
   background-color: black;
   color: white;
-}
+}/*# sourceMappingURL=RatingFilter.css.map */
