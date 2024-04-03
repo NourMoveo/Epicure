@@ -1,0 +1,62 @@
+.chef-image-container {
+  margin-top: 4.3vw;
+  background-size: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: flex;
+  align-items: flex-end;
+  width: 90vw;
+  height: 90vw;
+  background-position-x: 40%;
+  filter: grayscale(100%);
+}
+.chef-image-container .chef-img-name {
+  background-color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 12.6vw;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.chef-image-container .chef-img-name .chef-name {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  font-weight: 400;
+  letter-spacing: 0.7vw;
+}
+
+@media screen and (min-width: 769px) {
+  .chef-image-container {
+    margin-top: 1vw;
+    width: 26.5vw;
+    height: 23.5vw;
+  }
+  .chef-image-container .chef-img-name {
+    background-color: rgba(255, 255, 255, 0.88);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 5.5vw;
+    -o-object-fit: contain;
+       object-fit: contain;
+  }
+  .chef-image-container .chef-img-name .chef-name {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 2.8vw;
+    font-weight: 400;
+    letter-spacing: 0.2vw;
+  }
+}/*# sourceMappingURL=ChefCard.css.map */

@@ -1,0 +1,168 @@
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10.667vw;
+}
+.sign-in-container .titles {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  text-align: center;
+}
+.sign-in-container .titles .main-title {
+  text-transform: uppercase;
+  font-size: 4.8vw;
+  letter-spacing: 0.712vw;
+  margin-bottom: 3.733vw;
+}
+.sign-in-container .titles .sub-title {
+  font-size: 4.267vw;
+  letter-spacing: 0.525vw;
+}
+.sign-in-container .inputs .pass-input-ctr {
+  margin-top: 10.667vw;
+  height: 16vw;
+  width: 87.2vw;
+  border-bottom: 0.267vw solid black;
+}
+.sign-in-container .inputs .email-input-ctr {
+  width: 87.2vw;
+  height: 16vw;
+  border-bottom: 0.267vw solid black;
+}
+.sign-in-container .inputs .email-input,
+.sign-in-container .inputs .pass-input {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  width: 70vw;
+  height: 100%;
+  border: none;
+  letter-spacing: 0.525vw;
+}
+.sign-in-container .inputs .email-input::-moz-placeholder, .sign-in-container .inputs .pass-input::-moz-placeholder {
+  /* Set initial placeholder style */
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+  opacity: 0.5; /* Adjust opacity as needed */
+  -moz-transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.sign-in-container .inputs .email-input::placeholder,
+.sign-in-container .inputs .pass-input::placeholder {
+  /* Set initial placeholder style */
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+  opacity: 0.5; /* Adjust opacity as needed */
+  transition: opacity 0.3s, transform 0.3s;
+}
+.sign-in-container .inputs .email-input:focus::-moz-placeholder, .sign-in-container .inputs .pass-input:focus::-moz-placeholder {
+  /* Adjust placeholder style on focus */
+  opacity: 1;
+  transform: translateY(-150%);
+}
+.sign-in-container .inputs .email-input:focus::placeholder,
+.sign-in-container .inputs .pass-input:focus::placeholder {
+  /* Adjust placeholder style on focus */
+  opacity: 1;
+  transform: translateY(-150%);
+}
+.sign-in-container .inputs .pass-input {
+  position: relative;
+}
+.sign-in-container .inputs .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translate(-130%, -150%);
+  cursor: pointer;
+  color: #999; /* Adjust color as needed */
+}
+.sign-in-container .inputs .view-pass {
+  width: 6vw;
+  height: 6vw;
+}
+.sign-in-container .inputs .email-input:focus,
+.sign-in-container .inputs .pass-input:focus {
+  outline: none;
+  border-color: transparent;
+}
+.sign-in-container .login-forget-pass {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  display: flex;
+  flex-direction: column;
+  gap: 4.267vw;
+}
+.sign-in-container .login-forget-pass .forget-pass {
+  background-color: transparent;
+  border: none;
+  font-size: 3.733vw;
+  font-weight: 400;
+  letter-spacing: 0.525vw;
+}
+.sign-in-container .or {
+  display: flex;
+  align-items: center;
+  gap: 3.2vw;
+}
+.sign-in-container .or .line {
+  width: 33.733vw;
+  height: 0.03vw;
+  background: #979797;
+  align-self: center;
+}
+.sign-in-container .or .or-txt {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  color: #979797;
+  font-weight: 400;
+  letter-spacing: 0.525vw;
+}
+.sign-in-container .login,
+.sign-in-container .sign-up {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 4.8vw;
+  font-weight: 400;
+  letter-spacing: 0.712vw;
+  width: 54.933vw;
+  height: 12.8vw;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+.sign-in-container .login {
+  background-color: rgba(0, 0, 0, 0.534);
+  border: none;
+}
+.sign-in-container .login:hover {
+  background-color: black;
+}
+.sign-in-container .sign-up {
+  background-color: white;
+  color: black;
+}
+.sign-in-container .sign-up:hover {
+  background-color: black;
+  color: white;
+}/*# sourceMappingURL=SignInCnt.css.map */

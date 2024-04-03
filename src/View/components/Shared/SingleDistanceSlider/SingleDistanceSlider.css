@@ -1,0 +1,180 @@
+.distance-popup-container {
+  padding: 1vw;
+  width: 23vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 16.22vw;
+  left: 51.7%;
+  transform: translateX(-50%);
+  z-index: 9;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0.05vw 0.5vw rgba(0, 0, 0, 0.1);
+  transition: height 0.3s ease;
+}
+
+.distance-popup-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 1.25vw;
+  letter-spacing: 0.1vw;
+  margin-bottom: 0.5vw;
+  font-weight: 400;
+}
+
+.distance-container {
+  background-color: #F9F4EA;
+  border-radius: 0.3vw;
+  margin-top: 1vw;
+  height: 0vw;
+  z-index: 1;
+  width: 20vw;
+  height: 3.7vw;
+  padding: 2.3vw 0vw 0px 1vw;
+  /* Removing the default appearance */
+  /* When thumb is active, show the pseudo-element */
+  /* Adding orange color for thumb when active */
+  /* Clear button */
+}
+.distance-container .distance-slider {
+  position: sticky;
+  width: 17vw;
+  padding-left: 0.4vw;
+}
+.distance-container .distance-slider .distance-slider__left-value,
+.distance-container .distance-slider .distance-slider__right-value {
+  position: absolute;
+}
+.distance-container .distance-slider .distance-slider__track,
+.distance-container .distance-slider .distance-slider__range {
+  height: 0.3vw;
+  position: absolute;
+}
+.distance-container .distance-slider .distance-slider__track {
+  background-color: #FAFAFA;
+  width: 100%;
+  z-index: 1;
+}
+.distance-container .distance-slider .distance-slider__range {
+  background-color: rgba(151, 151, 151, 0.6392156863);
+  z-index: 2;
+}
+.distance-container .distance-slider .distance-slider__left-value,
+.distance-container .distance-slider .distance-slider__right-value {
+  display: flex;
+  flex-direction: row;
+  margin-top: -2vw;
+}
+.distance-container .distance-slider .distance-slider__left-value .distance-min-value,
+.distance-container .distance-slider .distance-slider__left-value .distance-max-value,
+.distance-container .distance-slider .distance-slider__right-value .distance-min-value,
+.distance-container .distance-slider .distance-slider__right-value .distance-max-value {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 1vw;
+  line-height: 1.5vw;
+  letter-spacing: 0.11vw;
+  font-weight: 300;
+  margin-left: -1vw;
+}
+.distance-container .distance-slider .distance-slider__left-value .distance-min-value--orange,
+.distance-container .distance-slider .distance-slider__left-value .distance-max-value--orange,
+.distance-container .distance-slider .distance-slider__right-value .distance-min-value--orange,
+.distance-container .distance-slider .distance-slider__right-value .distance-max-value--orange {
+  color: rgba(222, 146, 0, 0.8980392157);
+}
+.distance-container .distance-slider .distance-slider__left-value {
+  left: 0;
+}
+.distance-container .distance-slider .distance-slider__left-value--orange {
+  color: rgba(222, 146, 0, 0.8980392157);
+}
+.distance-container .distance-slider .distance-slider__left-value .distance-left-circle {
+  margin-top: 1.7vw;
+  width: 0.8vw;
+  height: 0.8vw;
+  background-color: rgba(151, 151, 151, 0.6392156863);
+  border-radius: 50%;
+  margin-left: -0.3vw;
+}
+.distance-container .distance-slider .distance-slider__right-value {
+  right: -1.5vw;
+}
+.distance-container .distance-slider .distance-slider__right-value--orange {
+  color: rgba(222, 146, 0, 0.8980392157);
+}
+.distance-container .distance-thumb,
+.distance-container .distance-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #000000;
+}
+.distance-container .distance-thumb {
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 17.5vw;
+  outline: none;
+}
+.distance-container .distance-thumb--zindex-3 {
+  z-index: 3;
+}
+.distance-container .distance-thumb--zindex-4 {
+  z-index: 4;
+}
+.distance-container .distance-thumb--zindex-5 {
+  z-index: 5;
+}
+.distance-container .distance-thumb::-webkit-slider-thumb {
+  background-color: #000000;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 1.4vw;
+  width: 1.4vw;
+  margin-top: 0;
+  pointer-events: all;
+  position: relative;
+}
+.distance-container .distance-thumb::-webkit-slider-thumb:active::after,
+.distance-container .distance-thumb::-webkit-slider-thumb:focus::after {
+  opacity: 0;
+}
+.distance-container .distance-thumb--orange::-webkit-slider-thumb {
+  background-color: rgba(222, 146, 0, 0.8980392157);
+}
+.distance-container .distance-clear-button {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 0.9vw;
+  letter-spacing: 0.2vw;
+  font-weight: 400;
+  text-transform: uppercase;
+  width: 9vw;
+  height: 2.5vw;
+  position: absolute;
+  top: 3.5vw;
+  margin-left: 5.3vw;
+  transform: translateY(-50%);
+  background-color: white;
+  border: 0.1vw solid black;
+  cursor: pointer;
+}
+.distance-container .distance-clear-button:hover {
+  background-color: black; /* Change background color on hover */
+  color: white; /* Change text color on hover */
+}/*# sourceMappingURL=SingleDistanceSlider.css.map */

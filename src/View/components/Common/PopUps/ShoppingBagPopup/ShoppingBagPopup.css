@@ -1,0 +1,576 @@
+/* Styles for mobile */
+.bag-content-new-dishes.open {
+  height: 207.467vw;
+  width: 100%;
+  position: absolute;
+  top: calc(100% + 0px);
+  left: 0;
+  width: 100%;
+  height: 137.067vw;
+  background-color: #ffffff;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: block;
+  opacity: 1;
+}
+.bag-content-new-dishes.open .order-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  text-transform: uppercase;
+  font-size: 5.333vw;
+  font-weight: 400;
+  letter-spacing: 0.712vw;
+  text-align: center;
+  margin-top: 4.267vw;
+  line-height: 6.4vw;
+  margin-bottom: 1.067vw;
+}
+.bag-content-new-dishes.open .restaurant-name {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  text-align: center;
+  font-size: 4.8vw;
+  letter-spacing: 0.525vw;
+  margin-bottom: 5.333vw;
+  line-height: 6.4vw;
+}
+.bag-content-new-dishes.open .dishes-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5.333vw;
+  height: 75vw;
+  overflow-y: scroll;
+}
+@media screen and (max-width: 768px) {
+  .bag-content-new-dishes .total-price .line {
+    display: none;
+  }
+}
+.bag-content-new-dishes .second-part {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+.bag-content-new-dishes .second-part .total-quantity {
+  margin-top: 10vw;
+  display: flex;
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 5.333vw;
+  gap: 2.667vw;
+  width: 100%;
+}
+.bag-content-new-dishes .second-part .total-quantity .ils-logo {
+  display: flex;
+  justify-self: end;
+  align-self: flex-end;
+  margin-right: 0.533vw;
+}
+.bag-content-new-dishes .second-part .add-comment {
+  display: none;
+}
+.bag-content-new-dishes .second-part .checkout-button {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 4.8vw;
+  font-weight: 400;
+  letter-spacing: 0.712vw;
+  width: 54.933vw;
+  height: 12.8vw;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+.bag-content-new-dishes .second-part .checkout-button {
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  margin-top: 5.333vw;
+}
+
+.dish-card-popup {
+  width: 90.667vw;
+  height: 25.6vw;
+  background-color: #F9F4EA;
+  display: flex;
+}
+.dish-card-popup .dish-img-popup {
+  width: 25.6vw;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.dish-card-popup .dish-details-popup {
+  display: flex;
+  margin-left: 6.4vw;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dish-card-popup .dish-details-popup .quantity-name-price {
+  display: flex;
+  margin-top: 3.2vw;
+}
+@media screen and (max-width: 768px) {
+  .dish-card-popup .dish-details-popup .quantity-name-price .quantity-button {
+    display: none;
+  }
+}
+.dish-card-popup .dish-details-popup .quantity-name-price .name-price {
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (max-width: 768px) {
+  .dish-card-popup .dish-details-popup .quantity-name-price .name-price .dish-price {
+    display: none;
+  }
+}
+.dish-card-popup .dish-details-popup .quantity-name-price .quantity-value,
+.dish-card-popup .dish-details-popup .quantity-name-price .dish-name {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 3.733vw;
+  font-weight: 400;
+  letter-spacing: 0.712vw;
+  margin-right: 1.8vw;
+}
+.dish-card-popup .dish-details-popup .dish-side-changes {
+  margin-top: 2.133vw;
+  display: flex;
+  gap: 2vw;
+}
+.dish-card-popup .dish-details-popup .dish-side-changes .dish-side,
+.dish-card-popup .dish-details-popup .dish-side-changes .dish-change {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 3.2vw;
+  letter-spacing: 0.328vw;
+}
+.dish-card-popup .dish-details-popup .dish-side-changes .split-line {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 3.2vw;
+}
+.dish-card-popup .dish-details-popup .main-dish-price {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  justify-self: end;
+  margin-right: 3.2vw;
+  margin-top: 2.133vw;
+}
+.dish-card-popup .dish-details-popup .main-dish-price .price-value {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-weight: 400;
+}
+.dish-card-popup .dish-details-popup .main-dish-price .ils-logo {
+  display: flex;
+  align-self: flex-end;
+  margin-right: 0.533vw;
+  height: 3.4vw;
+}
+
+.bag-popup {
+  position: absolute;
+  top: calc(100% + 0px);
+  left: 0;
+  width: 100%;
+  height: 137.067vw;
+  background-color: #ffffff;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  height: 58vw;
+}
+.bag-popup.open {
+  display: block;
+  opacity: 1;
+  /* Ensure visibility when open */
+}
+.bag-popup .bag-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16.2vw;
+  gap: 5.5vw;
+}
+.bag-popup .bag-content .order-history-button {
+  display: none;
+}
+.bag-popup .bag-content .content {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  display: flex;
+  height: 100%;
+  font-size: 4.3vw;
+  letter-spacing: 0.5vw;
+  text-transform: uppercase;
+  opacity: 0.6;
+  /* Default opacity for mobile */
+  padding: 0vw 35vw 0vw 31vw;
+  text-align: center;
+}
+.bag-popup .bag-content .BagIcon {
+  margin-right: 6vw;
+  width: 11vw;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.6;
+  /* Default opacity for mobile */
+}
+
+@media screen and (min-width: 769px) {
+  .bag-popup {
+    width: 35vw;
+    height: 40.5vw;
+    left: 65vw;
+  }
+  .bag-popup .bag-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 18vw;
+    gap: 2vw;
+  }
+  .bag-popup .bag-content .order-history-button {
+    display: block;
+    /* Ensure button is visible by default on mobile */
+    margin-top: 4vw;
+    padding: 1.2vw;
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.5vw;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #ffffff;
+    border: 0.15vw solid #000000;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .bag-popup .bag-content .order-history-button:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  .bag-popup .bag-content .content {
+    padding: 0vw 9.5vw 0vw 9vw;
+    font-size: 1.55vw;
+    letter-spacing: 0.15vw;
+    opacity: 0.3;
+    /* Default opacity for desktop */
+  }
+  .bag-popup .bag-content .BagIcon {
+    width: 9vw;
+    padding: 0vw 0vw 0vw 5vw;
+    height: auto;
+    opacity: 0.3;
+    /* Default opacity for desktop */
+  }
+  .bag-content-new-dishes.open {
+    width: 35vw;
+    height: 40.5vw;
+    left: 65vw;
+    position: absolute;
+    top: calc(100% + 0px);
+    background-color: #ffffff;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: block;
+    opacity: 1;
+  }
+  .bag-content-new-dishes.open .order-title {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    text-transform: uppercase;
+    font-size: 2.222vw;
+    font-weight: 400;
+    letter-spacing: 0.712vw;
+    text-align: center;
+    margin-top: 1.875vw;
+  }
+  .bag-content-new-dishes.open .restaurant-name {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    text-align: center;
+    font-size: 1.25vw;
+    letter-spacing: 0.525vw;
+    margin-bottom: 2.083vw;
+    line-height: 1.389vw;
+  }
+  .bag-content-new-dishes.open .dishes-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.833vw;
+    height: 20.833vw;
+    overflow-y: scroll;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 768px) {
+  .bag-content-new-dishes.open .total-price .line {
+    display: none;
+  }
+}
+@media screen and (min-width: 769px) {
+  .bag-content-new-dishes.open .second-part {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+  }
+  .bag-content-new-dishes.open .second-part .total-quantity {
+    display: none;
+  }
+  .bag-content-new-dishes.open .second-part .line-desktop {
+    width: 9.444vw;
+    height: 0.01vw;
+    background: #979797;
+    align-self: center;
+    margin-top: 1.875vw;
+    margin-bottom: 1.597vw;
+  }
+  .bag-content-new-dishes.open .second-part .add-comment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.083vw;
+  }
+  .bag-content-new-dishes.open .second-part .add-comment .add-comment-title {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-weight: 400;
+    font-size: 1.25vw;
+  }
+  .bag-content-new-dishes.open .second-part .add-comment .comment-input {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    width: 24.861vw;
+    font-size: 0.833vw;
+    height: 8.472vw;
+    letter-spacing: 0.09vw;
+    text-align: start;
+  }
+  .bag-content-new-dishes.open .second-part .add-comment .comment-input::-moz-placeholder {
+    text-align: start;
+    margin-left: 0.625vw;
+  }
+  .bag-content-new-dishes.open .second-part .add-comment .comment-input::placeholder {
+    text-align: start;
+    margin-left: 0.625vw;
+  }
+  .bag-content-new-dishes.open .second-part .checkout-button {
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 1.25vw;
+    font-weight: 400;
+    letter-spacing: 0.185vw;
+    width: 14.306vw;
+    height: 3.333vw;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+  .bag-content-new-dishes.open .second-part .checkout-button {
+    background-color: black;
+    border: none;
+    cursor: pointer;
+    margin-top: 2.431vw;
+  }
+  .bag-content-new-dishes .dish-card-popup {
+    width: 23.75vw;
+    height: 7.2vw;
+    background-color: #F9F4EA;
+    display: flex;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-img-popup {
+    width: 6.667vw;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup {
+    display: flex;
+    margin-left: 1.667vw;
+    max-width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .quantity-name-price {
+    display: flex;
+    margin-top: 0.833vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .quantity-name-price .quantity-button {
+    background-color: transparent;
+    border: 0.1vw solid;
+    border-color: rgba(151, 151, 151, 0.6392156863);
+    border-radius: 20%;
+    width: 2.5vw;
+    height: 2.5vw;
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-weight: 400;
+    font-size: 1.258vw;
+    color: rgba(222, 146, 0, 0.8980392157);
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .quantity-name-price .quantity-value {
+    display: none;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .quantity-name-price .name-price {
+    display: flex;
+    flex-direction: column;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .quantity-name-price .name-price .dish-price {
+    display: flex;
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 0.903vw;
+    color: rgba(222, 146, 0, 0.8980392157);
+    margin-left: 0.972vw;
+    margin-top: 0.417vw;
+    gap: 0.137vw;
+    font-weight: 400;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .quantity-name-price .name-price .dish-price .ils-logo {
+    width: 1vw;
+    height: 0.6vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .quantity-name-price .dish-name {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.25vw;
+    font-weight: 400;
+    letter-spacing: 0.137vw;
+    margin-right: 1.8vw;
+    margin-left: 0.833vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .dish-side-changes {
+    margin-top: 0.556vw;
+    display: flex;
+    gap: 0.4vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .dish-side-changes .dish-side,
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .dish-side-changes .dish-change {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 0.833vw;
+    letter-spacing: 0.085vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .dish-side-changes .split-line {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 0.833vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .main-dish-price {
+    display: flex;
+    justify-content: center;
+    align-self: flex-end;
+    justify-self: center;
+    margin-right: 0.5vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .main-dish-price .price-value {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-weight: 400;
+    letter-spacing: 0.137vw;
+    font-size: 1.111vw;
+    margin-top: -1.7vw;
+  }
+  .bag-content-new-dishes .dish-card-popup .dish-details-popup .main-dish-price .ils-logo {
+    display: flex;
+    align-self: flex-end;
+    margin-top: -1.35vw;
+    margin-bottom: 9vw;
+    margin-right: 0.139vw;
+    height: 0.972vw;
+  }
+}/*# sourceMappingURL=ShoppingBagPopup.css.map */

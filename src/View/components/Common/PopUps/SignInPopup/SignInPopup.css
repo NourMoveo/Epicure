@@ -1,0 +1,18 @@
+/* Styles for mobile */
+.signIn-popup {
+  position: absolute;
+  top: calc(100% + 0px);
+  left: 0;
+  width: 100%;
+  height: 137.067vw;
+  background-color: #ffffff;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 10.667vw 0px 0px 3.2vw;
+  top: calc(100% + 0.07vw);
+  height: 157.333vw;
+}
+.signIn-popup.open {
+  opacity: 1;
+}/*# sourceMappingURL=SignInPopup.css.map */

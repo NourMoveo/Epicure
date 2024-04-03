@@ -1,0 +1,613 @@
+@charset "UTF-8";
+.popup-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.popup-content .dish-img {
+  width: 100%;
+  height: 72.267vw;
+}
+.popup-content .dish-img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.popup-content .dish-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  justify-content: center;
+  text-align: left;
+  margin-left: 5.333vw;
+}
+.popup-content .dish-details .dish-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  font-weight: 400;
+  margin-top: 8.533vw;
+}
+.popup-content .dish-details .dish-description {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.267vw;
+  letter-spacing: 0.137vw;
+  text-align: left;
+  margin-top: 3.733vw;
+}
+.popup-content .dish-details .dish-icon {
+  display: none;
+}
+.popup-content .dish-details .dish-price {
+  display: none;
+}
+.popup-content .dish-side,
+.popup-content .dish-changes,
+.popup-content .dish-quantity {
+  display: flex;
+  justify-content: left;
+  align-items: self-start;
+  width: 100%;
+  flex-direction: column;
+}
+.popup-content .dish-side .side-title,
+.popup-content .dish-side .changes-title,
+.popup-content .dish-side .quantity-title,
+.popup-content .dish-changes .side-title,
+.popup-content .dish-changes .changes-title,
+.popup-content .dish-changes .quantity-title,
+.popup-content .dish-quantity .side-title,
+.popup-content .dish-quantity .changes-title,
+.popup-content .dish-quantity .quantity-title {
+  margin-top: 10.667vw;
+  margin-bottom: 6.4vw;
+  display: flex;
+  flex-direction: column;
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 5.333vw;
+  border-bottom: 0.069vw solid rgba(222, 146, 0, 0.8980392157);
+}
+.popup-content .dish-side .side-choices,
+.popup-content .dish-changes .side-choices,
+.popup-content .dish-quantity .side-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 6.4vw;
+  text-align: left;
+  align-self: self-start;
+}
+.popup-content .dish-side .side-choices label,
+.popup-content .dish-changes .side-choices label,
+.popup-content .dish-quantity .side-choices label {
+  display: flex;
+  flex-direction: row;
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+}
+.popup-content .dish-side .side-choices .choose-label,
+.popup-content .dish-changes .side-choices .choose-label,
+.popup-content .dish-quantity .side-choices .choose-label {
+  margin-top: 0vw;
+  font-size: 4.8vw;
+}
+.popup-content .dish-side .side-choices .side-checkbox,
+.popup-content .dish-side .side-choices .changes-checkbox,
+.popup-content .dish-changes .side-choices .side-checkbox,
+.popup-content .dish-changes .side-choices .changes-checkbox,
+.popup-content .dish-quantity .side-choices .side-checkbox,
+.popup-content .dish-quantity .side-choices .changes-checkbox {
+  margin-right: 8px;
+}
+.popup-content .dish-side .side-choices .checkbox-label,
+.popup-content .dish-changes .side-choices .checkbox-label,
+.popup-content .dish-quantity .side-choices .checkbox-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 0;
+  /* Remove the margin-top */
+}
+.popup-content .dish-side .side-choices .side-checkbox,
+.popup-content .dish-side .side-choices .changes-checkbox,
+.popup-content .dish-changes .side-choices .side-checkbox,
+.popup-content .dish-changes .side-choices .changes-checkbox,
+.popup-content .dish-quantity .side-choices .side-checkbox,
+.popup-content .dish-quantity .side-choices .changes-checkbox {
+  margin-right: 8px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+.popup-content .dish-side .side-choices .side-checkbox,
+.popup-content .dish-changes .side-choices .side-checkbox,
+.popup-content .dish-quantity .side-choices .side-checkbox {
+  position: relative;
+  width: 4.8vw;
+  /* Adjust size as needed */
+  height: 4.8vw;
+  /* Adjust size as needed */
+  border: 0.1vw solid black;
+  border-radius: 50%;
+  /* Make it a circle */
+}
+.popup-content .dish-side .side-choices .side-checkbox::after,
+.popup-content .dish-changes .side-choices .side-checkbox::after,
+.popup-content .dish-quantity .side-choices .side-checkbox::after {
+  content: "";
+  /* Empty content */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.8vw;
+  /* Adjust size as needed */
+  height: 3.8vw;
+  /* Adjust size as needed */
+  background-color: transparent;
+  /* Set default background as transparent */
+  border-radius: 50%;
+  /* Make it a point */
+}
+.popup-content .dish-side .side-choices .side-checkbox:checked::after,
+.popup-content .dish-changes .side-choices .side-checkbox:checked::after,
+.popup-content .dish-quantity .side-choices .side-checkbox:checked::after {
+  background-color: black;
+  /* Fill as point color */
+}
+.popup-content .dish-side .side-choices .changes-checkbox,
+.popup-content .dish-changes .side-choices .changes-checkbox,
+.popup-content .dish-quantity .side-choices .changes-checkbox {
+  position: relative;
+  width: 4.8vw;
+  /* Adjust size as needed */
+  height: 4.8vw;
+  /* Adjust size as needed */
+  border: 0.1vw solid black;
+  outline: none;
+  cursor: pointer;
+}
+.popup-content .dish-side .side-choices .changes-checkbox::after,
+.popup-content .dish-changes .side-choices .changes-checkbox::after,
+.popup-content .dish-quantity .side-choices .changes-checkbox::after {
+  content: "";
+  /* Empty content */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  /* Set default background as transparent */
+}
+.popup-content .dish-side .side-choices .changes-checkbox:checked::after,
+.popup-content .dish-changes .side-choices .changes-checkbox:checked::after,
+.popup-content .dish-quantity .side-choices .changes-checkbox:checked::after {
+  content: "✓";
+  /* Use tick symbol */
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-weight: 100;
+  font-size: 4.8vw;
+  /* Adjust size as needed */
+  color: black;
+  /* Set color of tick */
+  text-align: center;
+  /* Center the tick */
+  line-height: 0vw;
+  /* Vertically center the tick */
+}
+.popup-content .dish-quantity {
+  display: flex;
+  align-items: left;
+  margin-top: 10.667vw;
+  flex-direction: column;
+}
+.popup-content .dish-quantity .quantity-title {
+  margin: 0;
+}
+.popup-content .dish-quantity .actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6.4vw;
+  width: 30.133vw;
+}
+.popup-content .dish-quantity .actions .reduce {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  background-color: transparent;
+  border: none;
+  font-size: 4.8vw;
+}
+.popup-content .dish-quantity .actions .add {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  background-color: transparent;
+  border: none;
+  font-size: 8vw;
+  margin-top: -1.7vw;
+}
+.popup-content .dish-quantity .actions .line-reduce {
+  height: 0.1vw;
+  width: 5.067vw;
+  background-color: rgba(0, 0, 0, 0.314);
+}
+.popup-content .dish-quantity .actions .quantity {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  margin-top: 1.8vw;
+}
+.popup-content .add-to-bag {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  width: 54.933vw;
+  height: 12.8vw;
+  background-color: black;
+  color: #fff;
+  font-size: 4.8vw;
+  margin-top: 10.667vw;
+  margin-bottom: 13.067vw;
+  letter-spacing: 0.185vw;
+  margin-left: 5.333vw;
+}
+
+@media screen and (min-width: 769px) {
+  .popup-content {
+    width: 39.792vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .popup-content .dish-img {
+    width: 100%;
+    height: 20.28vw;
+    margin-top: -0.25vw;
+  }
+  .popup-content .dish-img img {
+    width: 100%;
+    height: 20.28vw;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .popup-content .dish-details {
+    width: 16.111vw;
+    gap: 0.972vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: 0;
+  }
+  .popup-content .dish-details .dish-title {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 2.222vw;
+    font-weight: 400;
+    margin-top: 2.778vw;
+  }
+  .popup-content .dish-details .dish-description {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 0.972vw;
+    letter-spacing: 0.137vw;
+    text-align: center;
+    margin-top: 0;
+  }
+  .popup-content .dish-details .dish-icon .food-icon {
+    width: 2.778vw;
+    height: 2.083vw;
+  }
+  .popup-content .dish-details .dish-price {
+    gap: 0.833vw;
+    display: flex;
+  }
+  .popup-content .dish-details .dish-price .line {
+    margin-top: 1.042vw;
+    height: 0.009vw;
+    width: 5.799vw;
+    background-color: rgba(0, 0, 0, 0.314);
+  }
+  .popup-content .dish-details .dish-price .value-logo-container {
+    gap: 0.139vw;
+    display: flex;
+  }
+  .popup-content .dish-details .dish-price .value-logo-container .ils-icon {
+    width: 0.764vw;
+    height: 1.319vw;
+    margin-top: 0.764vw;
+  }
+  .popup-content .dish-details .dish-price .value-logo-container .price-value {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.667vw;
+    font-weight: 400;
+  }
+  .popup-content .dish-side,
+  .popup-content .dish-changes,
+  .popup-content .dish-quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 13.125vw;
+    flex-direction: column;
+  }
+  .popup-content .dish-side .side-title,
+  .popup-content .dish-side .changes-title,
+  .popup-content .dish-side .quantity-title,
+  .popup-content .dish-changes .side-title,
+  .popup-content .dish-changes .changes-title,
+  .popup-content .dish-changes .quantity-title,
+  .popup-content .dish-quantity .side-title,
+  .popup-content .dish-quantity .changes-title,
+  .popup-content .dish-quantity .quantity-title {
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    display: flex;
+    flex-direction: column;
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.389vw;
+    border-bottom: 0.069vw solid rgba(222, 146, 0, 0.8980392157);
+  }
+  .popup-content .dish-side .side-choices,
+  .popup-content .dish-changes .side-choices,
+  .popup-content .dish-quantity .side-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 1.667vw;
+    text-align: left;
+    align-self: self-start;
+  }
+  .popup-content .dish-side .side-choices label,
+  .popup-content .dish-changes .side-choices label,
+  .popup-content .dish-quantity .side-choices label {
+    display: flex;
+    flex-direction: row;
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+  }
+  .popup-content .dish-side .side-choices .choose-label,
+  .popup-content .dish-changes .side-choices .choose-label,
+  .popup-content .dish-quantity .side-choices .choose-label {
+    margin-top: 0vw;
+    font-size: 1.25vw;
+  }
+  .popup-content .dish-side .side-choices .side-checkbox,
+  .popup-content .dish-side .side-choices .changes-checkbox,
+  .popup-content .dish-changes .side-choices .side-checkbox,
+  .popup-content .dish-changes .side-choices .changes-checkbox,
+  .popup-content .dish-quantity .side-choices .side-checkbox,
+  .popup-content .dish-quantity .side-choices .changes-checkbox {
+    margin-right: 8px;
+  }
+  .popup-content .dish-side .side-choices .checkbox-label,
+  .popup-content .dish-changes .side-choices .checkbox-label,
+  .popup-content .dish-quantity .side-choices .checkbox-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0;
+    /* Remove the margin-top */
+  }
+  .popup-content .dish-side .side-choices .side-checkbox,
+  .popup-content .dish-side .side-choices .changes-checkbox,
+  .popup-content .dish-changes .side-choices .side-checkbox,
+  .popup-content .dish-changes .side-choices .changes-checkbox,
+  .popup-content .dish-quantity .side-choices .side-checkbox,
+  .popup-content .dish-quantity .side-choices .changes-checkbox {
+    margin-right: 8px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .popup-content .dish-side .side-choices .side-checkbox,
+  .popup-content .dish-changes .side-choices .side-checkbox,
+  .popup-content .dish-quantity .side-choices .side-checkbox {
+    position: relative;
+    width: 1.2vw;
+    /* Adjust size as needed */
+    height: 1.2vw;
+    /* Adjust size as needed */
+    border: 0.1vw solid black;
+    border-radius: 50%;
+    /* Make it a circle */
+  }
+  .popup-content .dish-side .side-choices .side-checkbox::after,
+  .popup-content .dish-changes .side-choices .side-checkbox::after,
+  .popup-content .dish-quantity .side-choices .side-checkbox::after {
+    content: "";
+    /* Empty content */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.8vw;
+    /* Adjust size as needed */
+    height: 0.8vw;
+    /* Adjust size as needed */
+    background-color: transparent;
+    /* Set default background as transparent */
+    border-radius: 50%;
+    /* Make it a point */
+  }
+  .popup-content .dish-side .side-choices .side-checkbox:checked::after,
+  .popup-content .dish-changes .side-choices .side-checkbox:checked::after,
+  .popup-content .dish-quantity .side-choices .side-checkbox:checked::after {
+    background-color: black;
+    /* Fill as point color */
+  }
+  .popup-content .dish-side .side-choices .changes-checkbox,
+  .popup-content .dish-changes .side-choices .changes-checkbox,
+  .popup-content .dish-quantity .side-choices .changes-checkbox {
+    position: relative;
+    width: 1.2vw;
+    /* Adjust size as needed */
+    height: 1.2vw;
+    /* Adjust size as needed */
+    border: 0.1vw solid black;
+    outline: none;
+    cursor: pointer;
+  }
+  .popup-content .dish-side .side-choices .changes-checkbox::after,
+  .popup-content .dish-changes .side-choices .changes-checkbox::after,
+  .popup-content .dish-quantity .side-choices .changes-checkbox::after {
+    content: "";
+    /* Empty content */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    /* Set default background as transparent */
+  }
+  .popup-content .dish-side .side-choices .changes-checkbox:checked::after,
+  .popup-content .dish-changes .side-choices .changes-checkbox:checked::after,
+  .popup-content .dish-quantity .side-choices .changes-checkbox:checked::after {
+    content: "✓";
+    /* Use tick symbol */
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-weight: 100;
+    font-size: 1.5vw;
+    /* Adjust size as needed */
+    color: black;
+    /* Set color of tick */
+    text-align: center;
+    /* Center the tick */
+    line-height: 0vw;
+    /* Vertically center the tick */
+  }
+  .popup-content .dish-quantity {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    flex-direction: column;
+  }
+  .popup-content .dish-quantity .quantity-title {
+    margin: 0;
+  }
+  .popup-content .dish-quantity .actions {
+    display: flex;
+    justify-content: space-between;
+    width: 7.847vw;
+    margin-top: 1.667vw;
+  }
+  .popup-content .dish-quantity .actions .reduce,
+  .popup-content .dish-quantity .actions .add {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    background-color: transparent;
+    border: none;
+    font-size: 1.9vw;
+  }
+  .popup-content .dish-quantity .actions .add {
+    margin-top: 0vw;
+  }
+  .popup-content .dish-quantity .actions .line-reduce {
+    height: 0.009vw;
+    width: 1.215vw;
+    background-color: rgba(0, 0, 0, 0.314);
+    margin-top: 0.5vw;
+  }
+  .popup-content .dish-quantity .actions .quantity {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.25vw;
+    margin-top: 0.7vw;
+  }
+  .popup-content .add-to-bag {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    width: 14.514vw;
+    height: 3.333vw;
+    background-color: black;
+    color: #fff;
+    font-size: 1.25vw;
+    margin-bottom: 0vw;
+    margin-top: 2.778vw;
+    letter-spacing: 0.185vw;
+    margin-left: 0vw;
+  }
+}/*# sourceMappingURL=DishOrderCnt.css.map */

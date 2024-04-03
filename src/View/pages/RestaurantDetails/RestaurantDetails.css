@@ -1,0 +1,174 @@
+.restaurant-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5vw;
+}
+.restaurant-info .restaurant-image {
+  width: 100%;
+  height: 72.7vw;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.restaurant-info .restaurant-content {
+  margin-left: 5.3vw;
+}
+.restaurant-info .restaurant-content .restaurant-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  font-weight: 400;
+  margin-top: 6.1vw;
+  letter-spacing: 0.7vw;
+}
+.restaurant-info .restaurant-content .restaurant-description {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.3vw;
+  letter-spacing: 0.51vw;
+  margin-top: 4.3vw;
+}
+.restaurant-info .restaurant-content .status-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 4.3vw;
+}
+.restaurant-info .restaurant-content .status-container .restaurant-status {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  line-height: 5.4vw;
+  letter-spacing: 0.51vw;
+}
+.restaurant-info .restaurant-content .status-container .clock-icon {
+  margin-right: 2.25vw;
+  margin-top: 4.5vw;
+  width: auto;
+  height: 6vw;
+}
+
+.mini-subheader {
+  display: flex;
+  margin-top: 8.2vw;
+  gap: 5.5vw;
+}
+.mini-subheader .tab-button {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  background-color: transparent;
+  border: none;
+  font-size: 4.8vw;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  font-weight: 400;
+  border-bottom: 2px solid rgba(222, 146, 0, 0.8980392157); /* Orange line under active link */
+  border-radius: 4%;
+  border-top: 2vw;
+}
+
+@media screen and (min-width: 769px) {
+  .restaurant-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.8vw;
+    flex-direction: column;
+  }
+  .restaurant-info .restaurant-image {
+    width: 82.5vw;
+    height: 29.6vw;
+  }
+  .restaurant-info .restaurant-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0vw;
+    flex-direction: column;
+  }
+  .restaurant-info .restaurant-content .restaurant-title {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 3.9vw;
+    font-weight: 400;
+    margin-top: 2.2vw;
+    letter-spacing: 0.28vw;
+  }
+  .restaurant-info .restaurant-content .restaurant-description {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 2.2vw;
+    letter-spacing: 0.15vw;
+    margin-top: -3vw;
+  }
+  .restaurant-info .restaurant-content .status-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: -1.3vw;
+  }
+  .restaurant-info .restaurant-content .status-container .restaurant-status {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.25vw;
+    line-height: 1.5vw;
+    letter-spacing: 0.13vw;
+  }
+  .restaurant-info .restaurant-content .status-container .clock-icon {
+    margin-right: 0.6vw;
+    margin-top: 1.3vw;
+    width: auto;
+    height: 1.2vw;
+  }
+  .mini-subheader {
+    display: flex;
+    margin-top: 3vw;
+    gap: 2.2vw;
+  }
+  .mini-subheader .tab-button {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    background-color: transparent;
+    border: none;
+    font-size: 1.65vw;
+    cursor: pointer;
+    letter-spacing: 1.92px;
+  }
+  .tab-button.active {
+    font-weight: 400;
+    border-bottom: 2px solid rgba(222, 146, 0, 0.8980392157); /* Orange line under active link */
+    border-radius: 4%;
+    border-top: 2vw;
+  }
+}/*# sourceMappingURL=RestaurantDetails.css.map */

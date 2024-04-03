@@ -1,0 +1,57 @@
+.menu-popup {
+  position: absolute;
+  top: calc(100% + 0px);
+  left: 0;
+  width: 100%;
+  height: 137.067vw;
+  background-color: #ffffff;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  height: 90vw;
+}
+
+.link-route {
+  text-decoration: none;
+  color: inherit;
+}
+
+.menu-popup.open {
+  opacity: 1;
+}
+
+.menu-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-popup ul li:hover {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.popup-buttons {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  letter-spacing: 0.5vw;
+}
+.popup-buttons .first-section {
+  padding: 6vw 0vw 5vw 6vw;
+  line-height: 11vw;
+}
+.popup-buttons .line {
+  width: 100%;
+  height: 0.3vw;
+  background: rgba(151, 151, 151, 0.1);
+  align-self: center;
+}
+.popup-buttons .second-section {
+  padding: 2vw 0px 0px 6vw;
+  line-height: 17.5vw;
+}/*# sourceMappingURL=MenuPopup.css.map */

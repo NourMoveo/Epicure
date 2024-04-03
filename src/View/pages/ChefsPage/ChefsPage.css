@@ -1,0 +1,120 @@
+.chefs-page .chefs-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.4vw;
+  text-transform: uppercase;
+  margin-left: 6vw;
+  letter-spacing: 0.45vw;
+  letter-spacing: 0.3vw;
+  font-size: 4.8vw;
+  margin-top: 4.4vw;
+  margin-bottom: 0vw;
+}
+@media screen and (min-width: 769px) {
+  .chefs-page .chefs-title {
+    letter-spacing: 0.15vw;
+    margin-top: 5.6vw;
+    font-size: 1.95vw;
+    margin-bottom: 2.9vw;
+    text-align: center;
+  }
+}
+.chefs-page .header-container .chefs-header {
+  display: flex;
+  padding: 4.8vw;
+}
+.chefs-page .header-container .chefs-header .menu-button {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  padding: 2vw 2vw 0vw 2vw;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 4.8vw;
+  position: relative;
+}
+.chefs-page .header-container .chefs-header .menu-button.active {
+  font-weight: 400;
+  border-bottom: 0.5vw solid rgba(222, 146, 0, 0.8980392157);
+  /* Orange line under active link */
+  border-radius: 4%;
+}
+.chefs-page .chefs-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.chefs-page .chefs-card .swiper .swiper-slide {
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+
+@media screen and (max-width: 768px) {
+  .desktop-section {
+    display: none;
+  }
+}
+@media screen and (min-width: 769px) {
+  .chefs-page {
+    padding-bottom: 5vw;
+  }
+  .chefs-page .chefs-title {
+    display: none;
+  }
+  .chefs-page .header-container .chefs-header {
+    display: flex;
+    padding: 3.3vw vw 2.8vw 0vw;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+    margin-bottom: -2vw;
+  }
+  .chefs-page .header-container .chefs-header .menu-button {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    padding: 0vw;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.25vw;
+    color: #333;
+    position: relative;
+  }
+  .chefs-page .header-container .chefs-header .menu-button.active {
+    font-weight: 400;
+    border-bottom: 2px solid transparent;
+    border-radius: 4%;
+  }
+  .chefs-page .chefs-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .chefs-page .chefs-card .desktop-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    row-gap: 2.778vw;
+    -moz-column-gap: 1.667vw;
+         column-gap: 1.667vw;
+    width: 83.5vw;
+  }
+}
+@media screen and (min-width: 769px) and (min-width: 769px) {
+  .chefs-page .chefs-card .swiper {
+    display: none;
+  }
+}/*# sourceMappingURL=ChefsPage.css.map */

@@ -1,0 +1,65 @@
+.sub-title-home-page {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.4vw;
+  text-transform: uppercase;
+  margin-left: 6vw;
+  letter-spacing: 0.45vw;
+  margin-top: 6vw;
+  margin-bottom: 4vw;
+}
+@media screen and (min-width: 769px) {
+  .sub-title-home-page {
+    letter-spacing: 0.15vw;
+    margin-top: 5.6vw;
+    font-size: 1.95vw;
+    margin-bottom: 2.9vw;
+    text-align: center;
+  }
+}
+@media screen and (min-width: 769px) {
+  .sub-title-home-page {
+    margin-right: 7.2vw;
+  }
+}
+
+.loading-spinner {
+  position: relative;
+  top: 65vw;
+  left: 35vw;
+  margin-bottom: 130vw;
+}
+.loading-spinner .loading {
+  width: 30vw;
+  height: auto;
+}
+
+.no-data {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  margin-left: 8.5vw;
+  font-size: 3.5vw;
+}
+
+@media screen and (min-width: 769px) {
+  .loading-spinner {
+    left: 41vw;
+    top: 10vw;
+    margin-bottom: 20vw;
+  }
+  .loading-spinner .loading {
+    width: 15vw;
+    height: auto;
+  }
+  .no-data {
+    font-size: 1vw;
+  }
+}/*# sourceMappingURL=HomePage.css.map */

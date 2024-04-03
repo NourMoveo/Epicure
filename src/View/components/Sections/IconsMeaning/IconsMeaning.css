@@ -1,0 +1,82 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6.3vw;
+  margin-top: 12.2vw;
+  align-items: center;
+  height: 177vw; /* Adjust height as needed */
+  /* Styles for mobile */
+  background: #FAFAFA;
+  /* Media query for desktop */
+}
+.main-container .title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.82vw;
+  letter-spacing: 0.32vw;
+  text-transform: uppercase;
+  margin-bottom: 8.7vw;
+}
+.main-container .icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15vw;
+}
+.main-container .icon-container .icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8.5vw;
+}
+.main-container .icon-container .icon-item .icon-img {
+  width: auto;
+  height: 12vw;
+}
+.main-container .icon-container .icon-item .icon-label {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  letter-spacing: 0.5vw;
+}
+@media screen and (min-width: 769px) {
+  .main-container {
+    margin-top: 5.5vw;
+    height: 22vw;
+    padding-top: 1vw;
+  }
+  .main-container .title {
+    font-size: 2.09vw;
+    letter-spacing: 0.15vw;
+    margin-bottom: 3vw;
+  }
+  .main-container .icon-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2.8vw;
+    margin-top: 0;
+    padding: 0;
+  }
+  .main-container .icon-container .icon-item {
+    width: 9.4vw;
+    height: auto;
+    gap: 1vw;
+  }
+  .main-container .icon-container .icon-item .icon-img {
+    width: 5.5vw;
+    height: auto;
+  }
+  .main-container .icon-container .icon-item .icon-label {
+    padding: 0;
+    font-size: 1.65vw;
+    letter-spacing: 0.2vw;
+  }
+}/*# sourceMappingURL=IconsMeaning.css.map */

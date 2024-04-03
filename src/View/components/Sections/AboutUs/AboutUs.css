@@ -1,0 +1,106 @@
+/* Styles for mobile */
+.about-us-container {
+  display: flex;
+  flex-direction: column;
+  padding: 6.6vw 0 12.9vw 5.4vw;
+  margin-top: 13vw;
+  background: #FAFAFA;
+}
+.about-us-container .app-logo {
+  width: 27.3vw;
+  height: auto;
+}
+.about-us-container .description-and-buttons .epicure-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 48vw;
+  margin-top: 8.7vw;
+  gap: 4.3vw;
+  cursor: pointer;
+}
+.about-us-container .description-and-buttons .about-us-content {
+  margin-top: 12.7vw;
+}
+.about-us-container .description-and-buttons .about-us-content .about-us-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  line-height: 9.2vw;
+  text-transform: uppercase;
+  letter-spacing: 0.34vw;
+  font-size: 4.8vw;
+}
+.about-us-container .description-and-buttons .about-us-content .about-us-description {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  line-height: 7.45vw;
+  letter-spacing: 0.57vw;
+}
+.about-us-container .description-and-buttons .about-us-content .part-one {
+  padding-right: 5vw;
+}
+.about-us-container .description-and-buttons .about-us-content .part-two {
+  padding-right: 10vw;
+}
+
+/* Media query for desktop */
+@media screen and (min-width: 769px) {
+  .about-us-container {
+    margin-top: 4vw;
+    padding: 2.8vw 9vw;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    height: 41vw;
+  }
+  .about-us-container .app-logo {
+    align-self: center;
+    display: flex;
+    justify-self: center;
+    width: 12.5vw;
+    height: auto;
+  }
+  .about-us-container .description-and-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 69vw;
+    gap: 0;
+  }
+  .about-us-container .description-and-buttons .epicure-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-top: 4vw;
+    gap: 1vw;
+  }
+  .about-us-container .description-and-buttons .about-us-content {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+  }
+  .about-us-container .description-and-buttons .about-us-content .about-us-title {
+    font-size: 2.08vw;
+    letter-spacing: 0.15vw;
+    margin-bottom: 0;
+    line-height: 2vw;
+  }
+  .about-us-container .description-and-buttons .about-us-content .about-us-description {
+    font-size: 1.39vw;
+    line-height: 2.1vw;
+    width: 37vw;
+    letter-spacing: 0.15vw;
+  }
+  .about-us-container .description-and-buttons .about-us-content .part-one,
+  .about-us-container .description-and-buttons .about-us-content .part-two {
+    padding: 0;
+    margin: 0;
+  }
+}/*# sourceMappingURL=AboutUs.css.map */

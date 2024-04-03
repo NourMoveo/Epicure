@@ -1,0 +1,36 @@
+.dish-order-popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow-y: scroll;
+}
+.dish-order-popup .popup-container {
+  width: 39.792vw;
+  height: 72vw;
+  margin-top: -11vw;
+  margin-left: 10vw;
+}
+.dish-order-popup .popup-container .close-btn-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: -3.3vw;
+}
+.dish-order-popup .popup-container .close-btn-container .modal-close-btn {
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}/*# sourceMappingURL=dishOrderPopup.css.map */

@@ -28,6 +28,8 @@ const RestaurantsPage = () => {
     dispatch(setPage(0));
     if (buttonName === "MapView") {
       setIsMapView(true);
+    }else {
+      setIsMapView(false)
     }
   };
 

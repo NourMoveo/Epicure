@@ -1,0 +1,144 @@
+/* Styles for mobile */
+.WeekChef-main-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.4vw;
+  text-transform: uppercase;
+  margin-left: 6vw;
+  letter-spacing: 0.45vw;
+  margin-left: 0;
+}
+@media screen and (min-width: 769px) {
+  .WeekChef-main-title {
+    letter-spacing: 0.15vw;
+    margin-top: 5.6vw;
+    font-size: 1.95vw;
+    margin-bottom: 2.9vw;
+    text-align: center;
+  }
+}
+
+.WeekChef-text {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.4vw;
+  text-transform: uppercase;
+  margin-left: 6vw;
+  letter-spacing: 0.45vw;
+  margin-left: 0;
+  line-height: 4.1vw;
+}
+@media screen and (min-width: 769px) {
+  .WeekChef-text {
+    letter-spacing: 0.15vw;
+    margin-top: 5.6vw;
+    font-size: 1.95vw;
+    margin-bottom: 2.9vw;
+    text-align: center;
+  }
+}
+
+.chef-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0 5.4vw;
+  overflow-x: hidden;
+}
+
+.image-container .chef-image-container {
+  margin-top: 4.3vw;
+  background-size: cover;
+  display: flex;
+  align-items: flex-end;
+  width: 89.5vw;
+  height: 69.7vw;
+}
+.image-container .chef-image-container .chef-img-name {
+  background-color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 12.6vw;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.image-container .chef-image-container .chef-img-name .chef-name {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.8vw;
+  font-weight: 400;
+  letter-spacing: 0.7vw;
+}
+.image-container .chef-description {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  text-align: justify;
+  margin-top: 7vw;
+  line-height: 7.45vw;
+  font-size: 4.8vw;
+  letter-spacing: 0.33vw;
+  overflow-y: scroll;
+}
+
+/* Media query for desktop */
+@media screen and (min-width: 769px) {
+  .WeekChef-main-title {
+    letter-spacing: 0.3vw;
+    margin-top: 6.1vw;
+    font-size: 2.5vw;
+    margin-bottom: 0vw;
+  }
+  .WeekChef-text {
+    margin-left: 8.75vw;
+    font-size: 2.05vw;
+    text-align: left;
+  }
+  .chef-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .chef-container .image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4.4vw;
+    margin-left: 8.85vw;
+    margin-right: 9vw;
+  }
+  .chef-container .image-container .chef-image-container {
+    width: 187vw;
+    height: 25.8vw;
+  }
+  .chef-container .image-container .chef-image-container .chef-img-name {
+    height: 5.4vw;
+  }
+  .chef-container .image-container .chef-image-container .chef-img-name .chef-name {
+    font-size: 2.6vw;
+    letter-spacing: 0.2vw;
+  }
+  .chef-container .image-container .chef-description {
+    font-size: 1.67vw;
+    line-height: 2.6vw;
+    letter-spacing: 0.085vw;
+    margin-top: 6vw;
+  }
+}/*# sourceMappingURL=WeekChef.css.map */

@@ -1,0 +1,127 @@
+.background {
+  background-image: url("../../../../View/Photos/Hero/MainHomePage.png");
+  position: relative;
+  background-size: cover;
+  height: 73vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position-x: 73.7%;
+}
+
+.overlay {
+  position: relative;
+  width: 88.55vw;
+  height: 39vw;
+  background: rgba(255, 255, 255, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4vw;
+}
+
+.text {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  text-align: center;
+  font-size: 6.4vw;
+  letter-spacing: 0.5vw;
+}
+
+.bar {
+  display: flex;
+  justify-self: flex-end;
+  align-items: center;
+  border-radius: 1.06667vw;
+  border: 0.02604vw solid #000000;
+  padding: 4vw 3.2vw;
+  margin-top: 1vw;
+  width: 83.5vw;
+  height: 4vw;
+}
+.bar .input {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  border: none;
+  background-color: transparent;
+  flex: 1;
+  letter-spacing: 0.25vw;
+  font-size: 3.45vw;
+}
+.bar .input:focus {
+  outline: none;
+}
+.bar .button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.bar .button .icon {
+  height: 5vw;
+  width: auto;
+  margin-right: 3vw;
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 769px) {
+  .background {
+    height: 48.3vw;
+  }
+  .overlay {
+    width: 54vw;
+    height: 15.5vw;
+    gap: 0.4vw;
+  }
+  .overlay .text {
+    margin: 0vw 13vw 0vw 13vw;
+    font-size: 2.22vw;
+    letter-spacing: 0.135vw;
+  }
+  .overlay .bar {
+    display: flex;
+    align-items: center;
+    border-radius: 0.4vw;
+    border: 0.02604vw solid #000000;
+    padding: 0vw 0.8vw;
+    width: 66%;
+    height: 3.4vw;
+  }
+  .overlay .bar .input {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    border: none;
+    background-color: transparent;
+    flex: 1;
+    font-size: 1.5vw;
+    letter-spacing: 0.11vw;
+  }
+  .overlay .bar .input:focus {
+    outline: none;
+  }
+  .overlay .bar .button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .overlay .bar .button .icon {
+    height: 2.2vw;
+    width: auto;
+    margin-right: 1vw;
+  }
+}/*# sourceMappingURL=Hero.css.map */

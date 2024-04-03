@@ -1,0 +1,6 @@
+/* app.scss */
+/* Define a class for the app body */
+.app-body {
+  height: 100vh; /* Set height to 100vh */
+  overflow-y: auto; /* Allow vertical scrolling if content exceeds viewport height */
+}/*# sourceMappingURL=App.css.map */

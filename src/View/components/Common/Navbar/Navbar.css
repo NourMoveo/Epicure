@@ -1,0 +1,236 @@
+.navbar-container {
+  position: relative;
+  display: flex;
+  height: 10vw;
+  padding-left: 4.5vw;
+  justify-content: space-between;
+}
+
+.navbar-link {
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Inherit color from parent */
+}
+
+.active {
+  border-bottom: 2px solid rgba(222, 146, 0, 0.8980392157); /* Orange line under active link */
+  border-radius: 4%;
+}
+
+.navbar-left {
+  width: 50%;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-hamburger-menu,
+.navbar-logo {
+  background: none;
+  border: none;
+  cursor: pointer;
+  cursor: pointer;
+}
+
+.navbar-icon-left-logo {
+  margin-bottom: 0.5vh;
+  margin-top: 1.5vw;
+  width: auto;
+  height: 8vw;
+}
+
+.navbar-icon-left-menu {
+  padding-top: 0.5vh;
+  height: 6.9vw;
+  width: auto;
+}
+
+.nav-bag {
+  display: flex;
+  align-items: center;
+}
+
+.bag-quantity {
+  position: absolute;
+  top: 1vw;
+  left: 87.5vw;
+  font-family: "Helvetica Neue";
+  color: black;
+  font-weight: 106.667vw;
+  font-size: 2.133vw;
+  color: white;
+  background-color: black;
+  padding: 0.533vw 1.067vw 1.067vw 1.333vw;
+  border-radius: 50vw;
+}
+
+.desktop-searchbar,
+.animated-search-bar,
+.navbar-links {
+  display: none;
+}
+
+.navbar-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1vw;
+}
+
+.right-icons {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.navbar-icon {
+  margin-right: 5vw;
+  height: 5vw;
+}
+
+.search-popup-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.25vw;
+  margin-left: 36vw;
+  margin-top: -5vw;
+}
+
+button.exit-icon {
+  padding-top: 1.7vw;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 10vw;
+}
+button.exit-icon .exit-icon {
+  width: 6vw;
+  height: auto;
+  display: flex;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sub-navbar {
+  position: fixed;
+  height: 10vw;
+  padding-left: 4.5vw;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-width: 769px) {
+  .navbar-container {
+    height: 4.45vw;
+    padding-bottom: 0.6vw;
+    padding-left: 7.2vw;
+    border-bottom: 0.2px solid rgba(0, 0, 0, 0.2); /* Add border from the bottom */
+  }
+  .navbar-container .navbar-left {
+    width: 0;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding-top: 0.5vw;
+  }
+  .navbar-container .navbar-left .navbar-icon-left-logo {
+    padding: 0.3vw 0vw 1.7vw 0vw;
+    width: auto;
+    height: 4.5vw;
+  }
+  .navbar-container .navbar-left .navbar-links {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5vw;
+  }
+  .navbar-container .navbar-left .navbar-links .big-link {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.88vw;
+    letter-spacing: 0.15vw;
+    margin-right: 0.5vw;
+    margin-left: 0.2vw;
+  }
+  .navbar-container .navbar-left .navbar-links .small-link {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 1.25vw;
+    letter-spacing: 0.15vw;
+    margin-left: 1.9vw;
+  }
+  .navbar-container .right-icons {
+    display: flex;
+    margin-right: 6vw;
+  }
+  .navbar-container .right-icons .navbar-icon {
+    margin-top: 0.5vw;
+    margin-right: 1.8vw;
+    height: 1.8vw;
+  }
+  .navbar-container .right-icons .bag-quantity {
+    position: absolute;
+    top: 0.5vw;
+    left: 88.5vw;
+    font-family: "Helvetica Neue";
+    color: black;
+    font-weight: 106.667vw;
+    font-size: 1vw;
+    color: white;
+    background-color: black;
+    padding: 0.3vw 0.65vw 0.3vw 0.65vw;
+    border-radius: 50vw;
+  }
+  .navbar-container .desktop-searchbar {
+    display: flex;
+  }
+  .navbar-container .desktop-searchbar .animated-search-bar {
+    display: flex;
+    padding: 0vw 0vw 0.313vw 0.52vw;
+  }
+  .navbar-container .desktop-searchbar .animated-search-bar:hover {
+    display: flex;
+    border: 0.1vw solid black;
+    border-radius: 0.52vw;
+    margin-bottom: -0.7vw;
+    transform: translate(-9%);
+  }
+  .navbar-container .desktop-searchbar .animated-search-bar .search-input {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 0.93vw;
+    opacity: 0;
+    border: none;
+    transition: width 0.3s, opacity 0.3s, transform 0.3s;
+    outline: none;
+    transform-origin: left;
+  }
+  .navbar-container .desktop-searchbar .animated-search-bar .search-input:focus {
+    outline: none;
+  }
+  .navbar-container .desktop-searchbar .animated-search-bar:hover .search-input {
+    width: 21vw;
+    opacity: 1;
+  }
+  .navbar-hamburger-menu {
+    display: none;
+  }
+}/*# sourceMappingURL=Navbar.css.map */

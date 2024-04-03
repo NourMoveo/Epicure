@@ -1,0 +1,212 @@
+.popup-container {
+  padding-top: 1vw;
+  width: 24.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 16.22vw;
+  left: 40%;
+  transform: translateX(-50%);
+  z-index: 9;
+  background-color: white;
+  border: 0.1vw solid #ccc;
+  box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.1);
+  transition: height 0.3s ease;
+}
+
+.popup-title {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 1.25vw;
+  letter-spacing: 0.1vw;
+  margin-bottom: 0.6vw;
+  font-weight: 400;
+}
+
+.range-display {
+  display: flex;
+  flex-direction: row;
+}
+.range-display .value {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 1vw;
+  margin-bottom: 0.2vw;
+  margin-right: 0.1vw;
+}
+.range-display .ils-icon {
+  width: 0.55vw;
+  height: 1.7vw;
+  margin-bottom: -0.05vw;
+  margin-right: 0.25vw;
+  margin-left: 0.1vw;
+}
+.range-display .mini-line {
+  font-size: 1vw;
+}
+
+.container {
+  background-color: #F9F4EA;
+  border-radius: 0.3vw;
+  margin-top: 1vw;
+  height: 0vw;
+  z-index: 1;
+  width: 21.5vw;
+  height: 3.7vw;
+  padding: 2.3vw 0vw 0vw 1vw;
+  /* Removing the default appearance */
+  /* When thumb is active, show the pseudo-element */
+  /* Adding orange color for thumb when active */
+  /* Clear button */
+}
+.container .slider {
+  position: relative;
+  width: 18.9vw;
+  margin-left: 0.1vw;
+}
+.container .slider .slider__left-value,
+.container .slider .slider__right-value {
+  position: absolute;
+}
+.container .slider .slider__track,
+.container .slider .slider__range {
+  border-radius: 1vw;
+  height: 0.3vw;
+  position: absolute;
+}
+.container .slider .slider__track {
+  background-color: #FAFAFA;
+  width: 100%;
+  z-index: 1;
+}
+.container .slider .slider__range {
+  background-color: #979797;
+  z-index: 2;
+}
+.container .slider .slider__left-value,
+.container .slider .slider__right-value {
+  display: flex;
+  flex-direction: row;
+  margin-top: -2vw;
+}
+.container .slider .slider__left-value .min-value,
+.container .slider .slider__left-value .max-value,
+.container .slider .slider__right-value .min-value,
+.container .slider .slider__right-value .max-value {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 1vw;
+  line-height: 1.5vw;
+  letter-spacing: 0.11vw;
+  font-weight: 300;
+}
+.container .slider .slider__left-value .min-value--orange,
+.container .slider .slider__left-value .max-value--orange,
+.container .slider .slider__right-value .min-value--orange,
+.container .slider .slider__right-value .max-value--orange {
+  color: rgba(222, 146, 0, 0.8980392157);
+}
+.container .slider .slider__left-value .ils-icon,
+.container .slider .slider__right-value .ils-icon {
+  margin: 0;
+  margin-right: 0.1vw;
+}
+.container .slider .slider__left-value .ils-icon .ils-img,
+.container .slider .slider__right-value .ils-icon .ils-img {
+  width: 0.5vw;
+  height: 2vw;
+}
+.container .slider .slider__left-value .ils-icon--orange,
+.container .slider .slider__right-value .ils-icon--orange {
+  color: rgba(222, 146, 0, 0.8980392157);
+}
+.container .slider .slider__left-value {
+  left: 0;
+}
+.container .slider .slider__left-value--orange {
+  color: rgba(222, 146, 0, 0.8980392157);
+}
+.container .slider .slider__right-value {
+  right: -0.5vw;
+}
+.container .slider .slider__right-value--orange {
+  color: rgba(222, 146, 0, 0.8980392157);
+}
+.container .thumb,
+.container .thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #000000;
+}
+.container .thumb {
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 19vw;
+  outline: none;
+}
+.container .thumb--zindex-3 {
+  z-index: 3;
+}
+.container .thumb--zindex-4 {
+  z-index: 4;
+}
+.container .thumb--zindex-5 {
+  z-index: 5;
+}
+.container .thumb::-webkit-slider-thumb {
+  background-color: #000000;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 1.4vw;
+  width: 1.4vw;
+  margin-top: 0;
+  pointer-events: all;
+  position: relative;
+}
+.container .thumb::-webkit-slider-thumb:active::after,
+.container .thumb::-webkit-slider-thumb:focus::after {
+  opacity: 0;
+}
+.container .thumb--orange::-webkit-slider-thumb {
+  background-color: rgba(222, 146, 0, 0.8980392157);
+}
+.container .clear-button {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 0.9vw;
+  letter-spacing: 0.2vw;
+  font-weight: 400;
+  text-transform: uppercase;
+  width: 9vw;
+  height: 2.5vw;
+  position: absolute;
+  top: 3.5vw;
+  margin-left: 5.3vw;
+  transform: translateY(-50%);
+  background-color: white;
+  border: 0.1vw solid black;
+  cursor: pointer;
+}
+.container .clear-button:hover {
+  background-color: black; /* Change background color on hover */
+  color: white; /* Change text color on hover */
+}/*# sourceMappingURL=MultiRangeSlider.css.map */

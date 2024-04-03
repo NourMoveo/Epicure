@@ -1,0 +1,9 @@
+.svg-stars {
+  display: flex;
+  flex-direction: row;
+}
+
+.svg-star {
+  width: 2.5vw;
+  margin-right: 0.3vw;
+}/*# sourceMappingURL=RatingSVG.css.map */

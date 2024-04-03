@@ -1,0 +1,9 @@
+.route {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.route .outlet {
+  flex-grow: 1;
+}/*# sourceMappingURL=Route.css.map */
