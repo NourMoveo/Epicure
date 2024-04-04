@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { FC } from "react";
 import "./MultiRangeSlider.scss";
 import classnames from "classnames";
 import { ILSLogo } from "@/View/Photos";
@@ -8,38 +8,10 @@ interface MultiRangeSliderProps {
   newMax: number;
   setNewMin: (min: number) => void;
   setNewMax: (max: number) => void;
-  restaurantsPrices: number[];
+  min: number;
+  max: number;
 }
-
-const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin, restaurantsPrices }) => {
-  const [min, setMin] = useState(restaurantsPrices[0]);
-  const [max, setMax] = useState(restaurantsPrices[restaurantsPrices.length - 1]);
-
-  const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    isMin: boolean
-  ) => {
-    const value = parseInt(event.target.value);
-
-    const nearestValue = restaurantsPrices.reduce((prev, curr) => (
-      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-    ));
-
-    if (isMin) {
-      if (nearestValue <= max) {
-        setNewMin(nearestValue);
-      } else {
-        setNewMin(max);
-      }
-    } else {
-      if (nearestValue >= min) {
-        setNewMax(nearestValue);
-      } else {
-        setNewMax(min);
-      }
-    }
-  };
-
+const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin, min, max }) => {
   return (
     <div className={`range-popup-container ${(newMin !== min || newMax !== max ? 'range-popup-open-clear' : 'range-popup-open')}`}>
       <div className="popup-title">Price Range Selected</div>
@@ -64,7 +36,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax
           min={min}
           max={max}
           value={newMin}
-          onChange={(event) => handleInputChange(event, true)}
+          onChange={(event) => setNewMin(parseInt(event.target.value))}
           className={classnames("thumb thumb--zindex-3", {
             "thumb--zindex-5": newMin > max - 100,
           })}
@@ -74,7 +46,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax
           min={min}
           max={max}
           value={newMax}
-          onChange={(event) => handleInputChange(event, false)}
+          onChange={(event) => setNewMax(parseInt(event.target.value))}
           className="thumb thumb--zindex-4"
         />
         <div className="slider">

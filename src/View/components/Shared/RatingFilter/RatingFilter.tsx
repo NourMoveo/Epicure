@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { RatingComponent } from '@/View/components';
 import './RatingFilter.scss';
 interface RatingFilterProps {
@@ -6,21 +6,7 @@ interface RatingFilterProps {
   setSelectedRating: (selectedRating: number[]) => void;
 }
 const RatingFilter: FC<RatingFilterProps> = ({ selectedRating, setSelectedRating }) => {
-
-  const handleRatingChange = async (rating: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedSelectedRating = event.target.checked
-      ? [...selectedRating, rating] : selectedRating.filter((r) => r !== rating);
-    setSelectedRating(updatedSelectedRating);
-    console.log("Selected rating:", updatedSelectedRating);
-
-  };
-
-
-
-
-  selectedRating.length > 0
   return (
-
     <div className={`range-checkbox-filter-popup ${(selectedRating.length > 0 ? 'rating-popup-open-clear' : 'rating-popup-open')}`}>
       <div className="rating-popup-title">Rating</div>
       <div className="filter-options">
@@ -29,7 +15,11 @@ const RatingFilter: FC<RatingFilterProps> = ({ selectedRating, setSelectedRating
             <input
               type="checkbox"
               checked={selectedRating.includes(rating)}
-              onChange={(event) => handleRatingChange(rating, event)}
+              onChange={(event) => {
+                setSelectedRating(event.target.checked
+                  ? [...selectedRating, rating]
+                  : selectedRating.filter((r) => r !== rating));
+              }}
             />
             <div className="rating">
               <RatingComponent number={rating} />

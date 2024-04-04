@@ -14,17 +14,18 @@ const RestaurantsPage = () => {
   const { Restaurants, page, limit, data } = useSelector(
     (state: RootState) => state.restaurantsPage
   );
-  const { restaurantsPrices, restaurantsDistances } = useSelector(
-    (state: RootState) => state.homePage
-  );
+
   const [isLoading, setIsLoading] = useState(true);
+
+  const MAX_DISTANCE = Math.max(...Restaurants.map(({ distance }: any) => distance));
+  const MIN_PRICE = Math.min(...Restaurants.map(({ minPrice }: any) => minPrice));
+  const MAX_PRICE = Math.max(...Restaurants.map(({ maxPrice }: any) => maxPrice));
 
   const [primaryButton, setPrimaryButton] = useState("All");
   const [secondaryButton, setSecondaryButton] = useState("");
-  const [maxDistance, setMaxDistance] = useState(Math.max(...Restaurants.map(({ distance }: any) => distance)));
-  const [newDistance, setNewDistance] = useState(maxDistance);
-  const [newMin, setNewMin] = useState(Math.min(...restaurantsPrices));
-  const [newMax, setNewMax] = useState(Math.max(...restaurantsPrices));
+  const [newDistance, setNewDistance] = useState(MAX_DISTANCE);
+  const [newMin, setNewMin] = useState(Math.min(...Restaurants.map(({ minPrice }: any) => minPrice)));
+  const [newMax, setNewMax] = useState(Math.max(...Restaurants.map(({ maxPrice }: any) => maxPrice)));
   const [selectedRating, setSelectedRating] = useState<number[]>([]);
   console.log("dis  :", newDistance)
   // useEffect(() => {
@@ -32,7 +33,7 @@ const RestaurantsPage = () => {
   // }, [dispatch]);
 
   useEffect(() => {
-    console.log("Restaurants: ", maxDistance);
+    console.log("Restaurants: ", MAX_DISTANCE);
   }, [Restaurants])
 
   useEffect(() => {
@@ -98,7 +99,7 @@ const RestaurantsPage = () => {
           setPrimaryButton={setPrimaryButton}
           secondaryButton={secondaryButton}
           setSecondaryButton={setSecondaryButton}
-          maxDistance={newDistance}
+          maxDistance={MAX_DISTANCE}
           newDistance={newDistance}
           setNewDistance={setNewDistance}
           newMax={newMax}
@@ -107,7 +108,9 @@ const RestaurantsPage = () => {
           setNewMax={setNewMax}
           selectedRating={selectedRating}
           setSelectedRating={setSelectedRating}
-          restaurantsPrices={restaurantsPrices}
+          max={MAX_PRICE}
+          min={MIN_PRICE}
+
         />
         <div className="container-content">{renderContent()}</div>
       </Suspense>

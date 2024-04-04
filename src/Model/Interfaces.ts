@@ -3,11 +3,11 @@ export interface Restaurant {
   title: string;
   image: string;
   rating: number;
-  open:Date;
-  close:Date;
-  maxPrice:number;
-  minPrice:number;
-  distance:number;
+  open: Date;
+  close: Date;
+  maxPrice: number;
+  minPrice: number;
+  distance: number;
   chef: Chef | string;
   dishes: Dish[] | string[];
 }
@@ -19,8 +19,8 @@ export interface Dish {
   flavorIcon: string;
   price: number;
   restaurant: Restaurant | string;
-  isSignature:boolean;
-  type:string;
+  isSignature: boolean;
+  type: string;
   dishSides: string[];
   changes: string[];
 }
@@ -33,12 +33,12 @@ export interface Chef {
   description: string;
   restaurant: Restaurant[] | string[];
   isChefOfTheWeek: boolean;
-  isMostViewedChef:boolean;
+  isMostViewedChef: boolean;
 }
 
 export interface IconsMeaningProps {
   icons: {
-    name: string,
+    name: string;
     image: string;
   }[];
 }
@@ -62,15 +62,15 @@ export enum PagesType {
   HomePage = 1,
   RestaurantsPage = 2,
   OrdersPage = 3,
-  checkoutPage=4,
-  bagShoppingPopup=5
+  checkoutPage = 4,
+  bagShoppingPopup = 5,
 }
 export interface dataTypes {
-  interfaceType: 'r' | 'd' | 'c';
+  interfaceType: "r" | "d" | "c";
   data: Dish[] | Restaurant[] | Chef[];
 }
 
-export interface User{
+export interface User {
   fName: string;
   lName: string;
   phone: string;
@@ -84,7 +84,7 @@ export interface OrderDish {
   quantity: number;
 }
 
-export interface Order{
+export interface Order {
   date: string;
   total: number;
   dishes: OrderDish[];

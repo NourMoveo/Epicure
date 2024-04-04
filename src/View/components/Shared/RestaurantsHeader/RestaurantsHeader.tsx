@@ -22,11 +22,13 @@ interface RestaurantsHeaderProps {
   setNewDistance: (buttonName: number) => void;
   newMin: number,
   newMax: number,
+  min: number,
+  max: number,
   setNewMin: (min: number) => void,
   setNewMax: (max: number) => void,
   selectedRating: number[],
   setSelectedRating: (selectedRating: number[]) => void,
-  restaurantsPrices: number[],
+
 }
 const primaryFilterButtons: ButtonData[] = [
   { name: "All" },
@@ -40,30 +42,12 @@ const secondaryFilterButtons: ButtonData[] = [
   { name: "Distance" },
   { name: "Rating" },
 ];
-const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, setPrimaryButton, secondaryButton, setSecondaryButton, newDistance, maxDistance, setNewDistance, newMin, newMax, setNewMax, setNewMin, selectedRating, setSelectedRating, restaurantsPrices }) => {
+const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, setPrimaryButton, secondaryButton, setSecondaryButton, newDistance, maxDistance, setNewDistance, newMin, newMax, setNewMax, setNewMin, selectedRating, setSelectedRating, min, max }) => {
   const [isPopupsOpen, setIsPopupsOpen] = useState<PopupsState>({
     PriceRange: false,
     Distance: false,
     Rating: false,
   });
-  const handleClick = (buttonName: string, isPrimary: boolean) => {
-    if (isPrimary) {
-      setPrimaryButton(buttonName);
-      console.log("Primary Filter Selected:", buttonName);
-      setSecondaryButton("");
-    } else {
-      setSecondaryButton(buttonName);
-      console.log("Secondary Filter Selected:", buttonName);
-      togglePopup(buttonName);
-    }
-  };
-  const togglePopup = (buttonName: string) => {
-    setIsPopupsOpen((prevState) => ({
-      ...prevState,
-      [secondaryButton]: !prevState[secondaryButton],
-      [buttonName]: !prevState[buttonName]
-    }));
-  };
   return (
     <div className="header-container">
       <div className="restaurants-header">
@@ -71,7 +55,7 @@ const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, se
           <button
             key={name}
             className={primaryButton === name ? "active" : name}
-            onClick={() => handleClick(name, true)}
+            onClick={() => setPrimaryButton(name)}
           >
             {name}
           </button>
@@ -81,32 +65,43 @@ const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, se
         {secondaryFilterButtons.map(({ name }) => (
           <button
             key={name}
-            id={name} // added id to identify the button
+            id={name}
             className={`additional-button ${secondaryButton === name ? "active" : ""}`}
-            onClick={() => handleClick(name, false)}
+            onClick={() => {
+              setSecondaryButton(name);
+              setIsPopupsOpen(prevState => ({
+                ...prevState,
+                [name]: !prevState[name],
+              }));
+            }}
           >
             {name} <img src={DownArrow} alt="Down Arrow" className="arrow-icon" />
           </button>
         ))}
       </div>
-      {isPopupsOpen.PriceRange && (
-        <MultiRangeSlider
-          newMin={newMin}
-          newMax={newMax}
-          setNewMin={setNewMin}
-          setNewMax={setNewMax}
-          restaurantsPrices={restaurantsPrices}
-        />
-      )}
-      {isPopupsOpen.Distance && (
-        <SingleDistanceSlider
-          newDistance={newDistance}
-          setNewDistance={setNewDistance}
-          maxDistance={maxDistance}
-        />
-      )}
+      {
+        isPopupsOpen.PriceRange && (
+          <MultiRangeSlider
+            newMin={newMin}
+            newMax={newMax}
+            setNewMin={setNewMin}
+            setNewMax={setNewMax}
+            min={min}
+            max={max}
+          />
+        )
+      }
+      {
+        isPopupsOpen.Distance && (
+          <SingleDistanceSlider
+            newDistance={newDistance}
+            setNewDistance={setNewDistance}
+            maxDistance={maxDistance}
+          />
+        )
+      }
       {isPopupsOpen.Rating && <RangeFilter selectedRating={selectedRating} setSelectedRating={setSelectedRating} />}
-    </div>
+    </div >
   );
 };
 
