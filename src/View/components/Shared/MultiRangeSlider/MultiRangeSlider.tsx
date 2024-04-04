@@ -1,17 +1,18 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import "./MultiRangeSlider.scss";
 import classnames from "classnames";
 import { ILSLogo } from "@/View/Photos";
-
 interface MultiRangeSliderProps {
   newMin: number,
   newMax: number,
   setNewMin: (min: number) => void,
-  setNewMax: (max: number) => void
+  setNewMax: (max: number) => void,
+  restaurantsPrices: number[]
 }
-const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin }) => {
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100);
+const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin, restaurantsPrices }) => {
+
+  const [min, setMin] = useState(restaurantsPrices[0]);
+  const [max, setMax] = useState(restaurantsPrices[restaurantsPrices.length - 1]);
 
   const handleInputChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>, isMin: boolean) => {
     if (isMin) {

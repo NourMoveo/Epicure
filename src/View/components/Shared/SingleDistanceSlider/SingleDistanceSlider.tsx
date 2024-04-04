@@ -3,9 +3,10 @@ import "./SingleDistanceSlider.scss";
 interface SingleDistanceSliderProps {
     newDistance: number;
     setNewDistance: (distance: number) => void;
+    restaurantsDistances: number[];
 }
-const SingleDistanceSlider: FC<SingleDistanceSliderProps> = ({ newDistance, setNewDistance }) => {
-    const maxDistance = 4;
+const SingleDistanceSlider: FC<SingleDistanceSliderProps> = ({ newDistance, setNewDistance, restaurantsDistances }) => {
+    const maxDistance = restaurantsDistances[restaurantsDistances.length - 1]
     const handleSliderChange =
         ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
             setNewDistance(parseFloat(value));
@@ -24,7 +25,7 @@ const SingleDistanceSlider: FC<SingleDistanceSliderProps> = ({ newDistance, setN
                     <input
                         type="range"
                         min={0}
-                        max={4}
+                        max={maxDistance}
                         step={0.1}
                         value={newDistance}
                         onChange={handleSliderChange}

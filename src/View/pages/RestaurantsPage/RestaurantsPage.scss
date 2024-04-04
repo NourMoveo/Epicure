@@ -1,72 +1,73 @@
 @import "../../themes/mixins";
 @import "../../themes/variables";
 // Restaurants.scss
-.restaurants-page{
+.restaurants-page {
   overflow-y: hidden;
-.restaurant-header {
-  @include titles_style;
-  letter-spacing: 0.3vw;
-  font-size: 4.8vw;
-  margin-top: 4.4vw;
-  margin-bottom: 0vw;
-
-}
-.map-image-container{
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  .map-img{
-    width: 100vw;
-    height: 40.5vw;
+  .restaurant-header {
+    @include titles_style;
+    letter-spacing: 0.3vw;
+    font-size: 4.8vw;
+    margin-top: 4.4vw;
+    margin-bottom: 0vw;
+  }
+  .map-image-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    .map-img {
+      width: 100vw;
+      height: 40.5vw;
+    }
+  }
+  .no-data {
+    @include font-style;
+    margin-left: 8.5vw;
+    font-size: 3.5vw;
   }
 }
-.no-data{
-  @include font-style;
-  margin-left: 8.5vw;
-  font-size: 3.5vw;
-}
-}
-@include desktop{
-  
-  .restaurants-page{
-      .restaurant-header{
-    display: none;
+@include desktop {
+  .restaurants-page {
+    .restaurant-header {
+      display: none;
+    }
+    .no-data {
+      font-size: 1vw;
+    }
+    .empty-data-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include font-style;
+      font-size: 3vw;
+      font-weight: 400;
+      opacity: 0.6;
+    }
+    .sad-chef {
+      height: 20vw;
+      opacity: 0.6;
+    }
+    .container-content {
+      overflow: scroll;
+      height: 67vw;
+    }
   }
-  .no-data{
-    font-size: 1vw;
-  }
-  .empty-data-message{
-display: flex;
-align-items: center;
-justify-content: center;
-  @include font-style;
-  font-size: 3vw;
-  font-weight: 400;
-  opacity: 0.6;
-  }
-  .sad-chef{
-    height: 20vw;
-    opacity: 0.6;
-  }
-  }
-  .load-more{
+  .load-more {
     display: flex;
     align-items: center;
     align-self: center;
     justify-self: center;
     justify-content: center;
     @include font-style;
-      text-transform: uppercase;
-      color:black;
-      font-size: 2vw;
-      font-weight: 400;
-      letter-spacing: 0.2vw;
-      width: 20vw;
-      height: 5vw;
-      transition: background-color 0.3s;
-      cursor: pointer;
-      margin-left: 40vw;
+    text-transform: uppercase;
+    color: black;
+    font-size: 2vw;
+    font-weight: 400;
+    letter-spacing: 0.2vw;
+    width: 20vw;
+    height: 5vw;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    margin-left: 40vw;
   }
-
 }

@@ -1,25 +1,87 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../Controller/redux/store/store";
+import { AppDispatch, RootState } from "../../../Controller/redux/store/store";
 import { Map, LoadingGif, SadChefIcon } from "@/View/Photos";
 import "./RestaurantsPage.scss";
+import { setData, setPage } from "@/Controller/redux/slices/restaurantsPageSlice";
+import { fetchRestaurantsPageData } from "@/Controller/redux/thunks/restaurantsPageThunk";
+import { useDispatch } from "react-redux";
 const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
 const RestaurantsHeader = React.lazy(() => import("@/View/components/Shared/RestaurantsHeader/RestaurantsHeader"));
 
 const RestaurantsPage = () => {
-  const [newDistance, setNewDistance] = useState(4);
-  const [newMin, setNewMin] = useState(0);
-  const [newMax, setNewMax] = useState(100);
-  const [selectedRating, setSelectedRating] = useState<number[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeButton, setActiveButton] = useState("All");
-  const [isMapView, setIsMapView] = useState(false);
-  const [primaryButton, setPrimaryButton] = useState("All");
-  const [secondaryButton, setSecondaryButton] = useState("");
-
-  const { Restaurants, page, limit } = useSelector(
+  const dispatch = useDispatch<AppDispatch>();
+  const { page, limit, data } = useSelector(
     (state: RootState) => state.restaurantsPage
   );
+  const { restaurantsPrices, restaurantsDistances } = useSelector(
+    (state: RootState) => state.homePage
+  );
+  const [newDistance, setNewDistance] = useState(restaurantsDistances[restaurantsDistances.length - 1]);
+  const [newMin, setNewMin] = useState(restaurantsPrices[0]);
+  const [newMax, setNewMax] = useState(restaurantsPrices[restaurantsPrices.length - 1]);
+  const [selectedRating, setSelectedRating] = useState<number[]>([]);
+  const [primaryButton, setPrimaryButton] = useState("All");
+  const [secondaryButton, setSecondaryButton] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  useEffect(() => {
+    console.log(restaurantsDistances[restaurantsDistances.length - 1])
+  }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        dispatch(setPage(1));
+        const data1: any = (await dispatch(fetchRestaurantsPageData({
+          page, limit, newMax, newMin, newDistance, selectedRating, primaryButton,
+          secondary: secondaryButton
+        }))).payload;
+        setIsLoading(false);
+        dispatch(setData(data1.Restaurants));
+        console.log("Restaurants without concat: ", data1.Restaurants);
+      } catch (error) {
+        console.error("Error fetching restaurants page data:", error);
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [dispatch, newMax, newMin, newDistance, selectedRating, primaryButton]);
+
+  useEffect(() => {
+    const handleScroll = async () => {
+
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const clientHeight = document.documentElement.clientHeight;
+      if (scrollTop + clientHeight >= scrollHeight - 1) {
+        dispatch(setPage(page + 1));
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [dispatch, page]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data1: any = await dispatch(fetchRestaurantsPageData({
+          page, limit, newMax, newMin, newDistance, selectedRating, primaryButton,
+          secondary: secondaryButton
+        }));
+        dispatch(setData(data.concat(data1.payload.Restaurants)));
+      } catch (error) {
+        console.error("Error fetching restaurants page data:", error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch, page]);
+
 
 
   return (
@@ -39,6 +101,8 @@ const RestaurantsPage = () => {
           setNewMax={setNewMax}
           selectedRating={selectedRating}
           setSelectedRating={setSelectedRating}
+          restaurantsPrices={restaurantsPrices}
+          restaurantsDistances={restaurantsDistances}
         />
         <div className="container-content">{renderContent()}</div>
       </Suspense>
@@ -66,7 +130,7 @@ const RestaurantsPage = () => {
   function renderContent() {
     return (
       <>
-        {isMapView ? (
+        {primaryButton === "MapView" ? (
           <div className="map-image-container">
             <img className="map-img" src={Map} alt="Map" />
           </div>
@@ -75,7 +139,7 @@ const RestaurantsPage = () => {
             {isLoading ? (
               renderLoading()
             ) : (
-              <CustomCardsSection cardsData={Restaurants} cardType={1} pageType={2} layoutDirection="vertical" />
+              <CustomCardsSection cardsData={data} cardType={1} pageType={2} layoutDirection="vertical" />
             )}
           </div>
         )}

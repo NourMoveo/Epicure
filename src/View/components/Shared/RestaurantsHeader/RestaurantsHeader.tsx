@@ -24,7 +24,9 @@ interface RestaurantsHeaderProps {
   setNewMin: (min: number) => void,
   setNewMax: (max: number) => void,
   selectedRating: number[],
-  setSelectedRating: (selectedRating: number[]) => void;
+  setSelectedRating: (selectedRating: number[]) => void,
+  restaurantsPrices: number[],
+  restaurantsDistances: number[]
 }
 const primaryFilterButtons: ButtonData[] = [
   { name: "All" },
@@ -38,7 +40,7 @@ const secondaryFilterButtons: ButtonData[] = [
   { name: "Distance" },
   { name: "Rating" },
 ];
-const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, setPrimaryButton, secondaryButton, setSecondaryButton, newDistance, setNewDistance, newMin, newMax, setNewMax, setNewMin, selectedRating, setSelectedRating }) => {
+const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, setPrimaryButton, secondaryButton, setSecondaryButton, newDistance, setNewDistance, newMin, newMax, setNewMax, setNewMin, selectedRating, setSelectedRating, restaurantsPrices, restaurantsDistances }) => {
   const [isPopupsOpen, setIsPopupsOpen] = useState<PopupsState>({
     PriceRange: false,
     Distance: false,
@@ -93,12 +95,14 @@ const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, se
           newMax={newMax}
           setNewMin={setNewMin}
           setNewMax={setNewMax}
+          restaurantsPrices={restaurantsPrices}
         />
       )}
       {isPopupsOpen.Distance && (
         <SingleDistanceSlider
           newDistance={newDistance}
           setNewDistance={setNewDistance}
+          restaurantsDistances={restaurantsDistances}
         />
       )}
       {isPopupsOpen.Rating && <RangeFilter selectedRating={selectedRating} setSelectedRating={setSelectedRating} />}

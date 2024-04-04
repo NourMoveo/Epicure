@@ -4,50 +4,44 @@ import { fetchRestaurantsPageData } from "../thunks/restaurantsPageThunk";
 
 interface RestaurantsPageState {
   Restaurants: Restaurant[];
+  page: number;
+  limit: number;
+  data: Restaurant[];
+
   allRestaurants: Restaurant[];
   newRestaurants: Restaurant[];
   popularRestaurants: Restaurant[];
   openNowRestaurants: Restaurant[];
   restaurantByPrices: Restaurant[];
-  restaurantsPrices: number[];
   selectedRestaurant: Restaurant | null;
-  page: number;
-  limit: number;
-  data: Restaurant[];
   newData: Restaurant[];
-  restaurantsDistances: number[];
   distance: number;
   selectedRating: number[];
   firstFilter: string;
-  secondFilter:string;
-  min: number;
-  max: number;
+  secondFilter: string;
   restaurantsByPriceRange: Restaurant[];
   restaurantsByDistance: Restaurant[];
   restaurantsByRatings: Restaurant[];
 }
 
 const initialState: RestaurantsPageState = {
-  Restaurants:[],
+  Restaurants: [],
+  page: 1,
+  limit: 3,
+  data: [],
+
   allRestaurants: [],
   newRestaurants: [],
   popularRestaurants: [],
   openNowRestaurants: [],
-  restaurantsPrices: [],
   selectedRestaurant: null,
   restaurantByPrices: [],
-  firstFilter:"All",
-  page: 1,
-  limit: 3,
-  data: [],
-  min: 10,
-  max: 300,
-  restaurantsDistances: [],
+  firstFilter: "All",
   distance: 3.4,
-  selectedRating: [1,2,3,4,5],
-  newData:[],
-  secondFilter:"",
-  restaurantsByPriceRange:[],
+  selectedRating: [1, 2, 3, 4, 5],
+  newData: [],
+  secondFilter: "",
+  restaurantsByPriceRange: [],
   restaurantsByDistance: [],
   restaurantsByRatings: [],
 };
@@ -56,54 +50,39 @@ const restaurantsPageSlice = createSlice({
   name: "restaurantsPage",
   initialState,
   reducers: {
-    setAllRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
-      state.allRestaurants=action.payload;
-      
-    },setRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
-      state.Restaurants=action.payload;   
-    },
-    setNewRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
-      state.newRestaurants.concat(action.payload);
-      
-    },
-    setPopularRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
-      state.popularRestaurants = action.payload;
-      
-    },
-    setOpenNowRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
-      state.openNowRestaurants = action.payload;
-      
-    },
-    openRestaurantDetail(state, action: PayloadAction<Restaurant>) {
-      state.selectedRestaurant = action.payload;
+    setData(state, action: PayloadAction<Restaurant[]>) {
+      state.data = action.payload;
     },
     setPage(state, action: PayloadAction<number>) {
-      state.page=action.payload;
-      console.log("state.page :",state.page);
+      state.page = action.payload;
+    },
+
+    setRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
+      state.Restaurants = action.payload;
     },
     setLimit(state, action: PayloadAction<number>) {
       state.limit = action.payload;
     },
-    setRestaurantsPrices(state, action: PayloadAction<number[]>) {
-      state.restaurantsPrices = action.payload;
+    setAllRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
+      state.allRestaurants = action.payload;
+    },
+    setNewRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
+      state.newRestaurants.concat(action.payload);
+    },
+    setPopularRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
+      state.popularRestaurants = action.payload;
+    },
+    setOpenNowRestaurantsData(state, action: PayloadAction<Restaurant[]>) {
+      state.openNowRestaurants = action.payload;
+    },
+    openRestaurantDetail(state, action: PayloadAction<Restaurant>) {
+      state.selectedRestaurant = action.payload;
     },
     setRestaurantByPrices(state, action: PayloadAction<Restaurant[]>) {
       state.restaurantByPrices = action.payload;
-      
     },
-    setData(state, action: PayloadAction<Restaurant[]>) {
-      state.data = action.payload;
-    },setNewData(state, action: PayloadAction<Restaurant[]>) {
+    setNewData(state, action: PayloadAction<Restaurant[]>) {
       state.newData = action.payload;
-    },
-    setMin(state, action: PayloadAction<number>) {
-      state.min = action.payload;
-    },
-    setMax(state, action: PayloadAction<number>) {
-      state.max = action.payload;
-    },
-    setRestaurantsDistances(state, action: PayloadAction<number[]>) {
-      state.restaurantsDistances = action.payload;
     },
     setDistance(state, action: PayloadAction<number>) {
       state.distance = action.payload;
@@ -120,26 +99,28 @@ const restaurantsPageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRestaurantsPageData.fulfilled, (state, action) => {
-      state.allRestaurants=action.payload.allRestaurants;
-      state.newRestaurants = action.payload.newRestaurants;
-      state.popularRestaurants = action.payload.popularRestaurants;
-      state.openNowRestaurants = action.payload.openNowRestaurants;
-      state.restaurantsPrices= action.payload.restaurantsPrices;
-      state.restaurantsDistances=action.payload.restaurantsDistances;
-      state.restaurantByPrices=action.payload.restaurantsByPriceRange;
-      state.restaurantsByDistance=action.payload.restaurantsByDistance;
-      state.restaurantsByRatings=action.payload.restaurantsByRatings;
+      state.Restaurants = action.payload.Restaurants;
+      // state.restaurantsPrices = action.payload.restaurantsPrices;
+      // state.restaurantsDistances = action.payload.restaurantsDistances;
+      // state.allRestaurants = action.payload.allRestaurants;
+      // state.newRestaurants = action.payload.newRestaurants;
+      // state.popularRestaurants = action.payload.popularRestaurants;
+      // state.openNowRestaurants = action.payload.openNowRestaurants;
+      // state.restaurantByPrices = action.payload.restaurantsByPriceRange;
+      // state.restaurantsByDistance = action.payload.restaurantsByDistance;
+      // state.restaurantsByRatings = action.payload.restaurantsByRatings;
     });
   },
 });
 
 export const {
   setRestaurantsData,
+  setData,
+
   setFirstFilter,
   setSecondFilter,
   setSelectedRating,
   setDistance,
-  setData,
   setNewData,
   setLimit,
   setPage,
@@ -149,8 +130,6 @@ export const {
   setOpenNowRestaurantsData,
   openRestaurantDetail,
   setRestaurantByPrices,
-  setMax,
-  setMin,
 } = restaurantsPageSlice.actions;
 
 export default restaurantsPageSlice.reducer;

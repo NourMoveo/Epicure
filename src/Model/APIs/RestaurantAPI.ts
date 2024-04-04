@@ -4,14 +4,36 @@ import { genericAPI } from "./GenericAPI";
 class RestaurantAPI {
   static readonly endpoint = "/restaurants";
 
-  async getAllRestaurants(
+  async getFilteredRestaurants(
     page: number = 1,
-    limit: number = 3
+    limit: number = 3,
+    filterOptions: {
+      filterBy: string;
+      secondary: string;
+      ratingsArray?: number[];
+      distance?: number;
+      minPrice?: number;
+      maxPrice?: number;
+    }
   ): Promise<Restaurant[]> {
     try {
-      const response = await genericAPI.get<Restaurant[]>(
-        `${RestaurantAPI.endpoint}?page=${page}&limit=${limit}`
-      );
+      const response = await genericAPI.post<Restaurant[]>(`${RestaurantAPI.endpoint}/filtered-restaurants`, {
+        page,
+        limit,
+        filterOptions,
+      });
+      console.log(filterOptions);
+      console.log("response is: ", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching restaurants:", error);
+      throw error;
+    }
+  }
+
+  async getAllRestaurants(page: number = 1, limit: number = 3): Promise<Restaurant[]> {
+    try {
+      const response = await genericAPI.get<Restaurant[]>(`${RestaurantAPI.endpoint}?page=${page}&limit=${limit}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching popular restaurants:", error);
@@ -19,12 +41,9 @@ class RestaurantAPI {
     }
   }
 
-
   async getRestaurantsPrices(): Promise<number[]> {
     try {
-      const response = await genericAPI.get<number[]>(
-        `${RestaurantAPI.endpoint}/restaurant-prices`
-      );
+      const response = await genericAPI.get<number[]>(`${RestaurantAPI.endpoint}/restaurant-prices`);
       return response.data;
     } catch (error) {
       console.error("Error fetching popular restaurants:", error);
@@ -34,23 +53,16 @@ class RestaurantAPI {
 
   async getRestaurantsDistances(): Promise<number[]> {
     try {
-      const response = await genericAPI.get<number[]>(
-        `${RestaurantAPI.endpoint}/all-distances`
-      );
+      const response = await genericAPI.get<number[]>(`${RestaurantAPI.endpoint}/all-distances`);
       return response.data;
     } catch (error) {
       console.error("Error fetching popular restaurants:", error);
       throw error;
     }
   }
-  async getPopularRestaurants(
-    page: number = 1,
-    limit: number = 3
-  ): Promise<Restaurant[]> {
+  async getPopularRestaurants(page: number = 1, limit: number = 3): Promise<Restaurant[]> {
     try {
-      const response = await genericAPI.get<Restaurant[]>(
-        `${RestaurantAPI.endpoint}/popular?page=${page}&limit=${limit}`
-      );
+      const response = await genericAPI.get<Restaurant[]>(`${RestaurantAPI.endpoint}/popular?page=${page}&limit=${limit}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching popular restaurants:", error);
@@ -58,15 +70,9 @@ class RestaurantAPI {
     }
   }
 
-  async getNewRestaurants(
-    page: number = 1,
-    limit: number = 3
-  ): Promise<Restaurant[]> {
-    
+  async getNewRestaurants(page: number = 1, limit: number = 3): Promise<Restaurant[]> {
     try {
-      const response = await genericAPI.get<Restaurant[]>(
-        `${RestaurantAPI.endpoint}/new?page=${page}&limit=${limit}`
-      );
+      const response = await genericAPI.get<Restaurant[]>(`${RestaurantAPI.endpoint}/new?page=${page}&limit=${limit}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching new restaurants:", error);
@@ -74,15 +80,10 @@ class RestaurantAPI {
     }
   }
 
-  async getOpenNowRestaurants(
-    page: number = 1,
-    limit: number = 3
-  ): Promise<Restaurant[]> {
+  async getOpenNowRestaurants(page: number = 1, limit: number = 3): Promise<Restaurant[]> {
     try {
-      const response = await genericAPI.get<Restaurant[]>(
-        `${RestaurantAPI.endpoint}/open-now?page=${page}&limit=${limit}`
-      );
-      
+      const response = await genericAPI.get<Restaurant[]>(`${RestaurantAPI.endpoint}/open-now?page=${page}&limit=${limit}`);
+
       return response.data;
     } catch (error) {
       console.error("Error fetching Open-now restaurants:", error);
@@ -90,17 +91,12 @@ class RestaurantAPI {
     }
   }
 
-  async getRestaurantsByRatings(
-    page: number = 1,
-    limit: number = 3,
-    ratingsArray: number[],
-    filterBy: string
-  ): Promise<Restaurant[]> {
+  async getRestaurantsByRatings(page: number = 1, limit: number = 3, ratingsArray: number[], filterBy: string): Promise<Restaurant[]> {
     try {
-      const response = await genericAPI.post<Restaurant[]>(
-        `${RestaurantAPI.endpoint}/restaurant-by-rating?page=${page}&limit=${limit}`,
-        { ratingsArray: ratingsArray, filterBy: filterBy }
-      );
+      const response = await genericAPI.post<Restaurant[]>(`${RestaurantAPI.endpoint}/restaurant-by-rating?page=${page}&limit=${limit}`, {
+        ratingsArray: ratingsArray,
+        filterBy: filterBy,
+      });
       return response.data;
     } catch (error) {
       console.error("Error fetching restaurants by ratings:", error);
@@ -108,12 +104,7 @@ class RestaurantAPI {
     }
   }
 
-  async getRestaurantsByDistance(
-    page: number = 1,
-    limit: number = 3,
-    distance: number,
-    filterBy: string
-  ): Promise<Restaurant[]> {
+  async getRestaurantsByDistance(page: number = 1, limit: number = 3, distance: number, filterBy: string): Promise<Restaurant[]> {
     try {
       const response = await genericAPI.post<Restaurant[]>(
         `${RestaurantAPI.endpoint}/restaurants-by-distance?page=${page}&limit=${limit}`,
@@ -135,10 +126,11 @@ class RestaurantAPI {
     filterBy: string
   ): Promise<Restaurant[]> {
     try {
-      const response = await genericAPI.post<Restaurant[]>(
-        `${RestaurantAPI.endpoint}/restaurants-by-prices?page=${page}&limit=${limit}`,
-        { minPrice: minPrice, maxPrice: maxPrice, filterBy: filterBy }
-      );
+      const response = await genericAPI.post<Restaurant[]>(`${RestaurantAPI.endpoint}/restaurants-by-prices?page=${page}&limit=${limit}`, {
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        filterBy: filterBy,
+      });
       return response.data;
     } catch (error) {
       console.error("Error fetching restaurants by price range:", error);
@@ -147,9 +139,7 @@ class RestaurantAPI {
   }
   async getRestaurantById(id: string): Promise<Restaurant> {
     try {
-      const response = await genericAPI.get<Restaurant>(
-        `${RestaurantAPI.endpoint}/${id}`
-      );
+      const response = await genericAPI.get<Restaurant>(`${RestaurantAPI.endpoint}/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching restaurant by ID:", error);

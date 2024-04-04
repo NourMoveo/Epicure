@@ -12,7 +12,10 @@ interface HomePageState {
   selectedRestaurant: Restaurant | null;
   isModalOpen: boolean;
   selectedDish: Dish | null;
-  isHomePage:boolean;
+  isHomePage: boolean;
+  restaurantsDistances: number[];
+  restaurantsPrices: number[];
+
   offset: number;
 }
 
@@ -35,8 +38,10 @@ const initialState: HomePageState = {
   selectedRestaurant: null,
   isModalOpen: false,
   selectedDish: null,
-  isHomePage:true, 
-  offset:0
+  isHomePage: true,
+  offset: 0,
+  restaurantsDistances: [],
+  restaurantsPrices: [],
 };
 
 const homePageSlice = createSlice({
@@ -86,6 +91,8 @@ const homePageSlice = createSlice({
       state.popularRestaurants = action.payload.popularRestaurants;
       state.signatureDishes = action.payload.signatureDishes;
       state.chefOfTheWeek = action.payload.chefOfTheWeek;
+      state.restaurantsPrices = action.payload.restaurantsPrices;
+      state.restaurantsDistances = action.payload.restaurantsDistances;
       state.popularRestaurantsLoading = false;
       state.signatureDishesLoading = false;
       state.chefOfTheWeekLoading = false;
@@ -102,7 +109,7 @@ export const {
   setSelectedRestaurant,
   openModal,
   closeModal,
-  setSelectedDish
+  setSelectedDish,
 } = homePageSlice.actions;
 
 export default homePageSlice.reducer;

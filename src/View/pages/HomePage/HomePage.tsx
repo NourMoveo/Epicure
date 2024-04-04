@@ -5,6 +5,7 @@ import { fetchHomePageData } from "../../../Controller/redux/thunks/homePageThun
 import { IconsData } from "@/Model/constants";
 import { LoadingGif } from "../../Photos";
 import "./HomePage.scss";
+import { Restaurant } from "@/Model/Interfaces";
 const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
 const Hero = React.lazy(() => import("@/View/components/Sections/Hero/Hero"));
 const IconsMeaning = React.lazy(() => import("@/View/components/Sections/IconsMeaning/IconsMeaning"));
@@ -52,7 +53,7 @@ const HomePage = () => {
             <WeekChef {...chefOfTheWeek} />
             {chefOfTheWeek.restaurant && chefOfTheWeek.restaurant.length > 0 ? (
               <CustomCardsSection
-                cardsData={chefOfTheWeek.restaurant}
+                cardsData={(chefOfTheWeek.restaurant) as Restaurant[]}
                 cardType={3}
                 pageType={1}
                 layoutDirection="horizontal"
