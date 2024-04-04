@@ -27,7 +27,7 @@ interface RestaurantsPageState {
 const initialState: RestaurantsPageState = {
   Restaurants: [],
   page: 1,
-  limit: 3,
+  limit: 6,
   data: [],
 
   allRestaurants: [],

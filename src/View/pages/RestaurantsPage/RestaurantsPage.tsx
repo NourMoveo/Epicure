@@ -11,24 +11,29 @@ const RestaurantsHeader = React.lazy(() => import("@/View/components/Shared/Rest
 
 const RestaurantsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { page, limit, data } = useSelector(
+  const { Restaurants, page, limit, data } = useSelector(
     (state: RootState) => state.restaurantsPage
   );
   const { restaurantsPrices, restaurantsDistances } = useSelector(
     (state: RootState) => state.homePage
   );
-  const [newDistance, setNewDistance] = useState(restaurantsDistances[restaurantsDistances.length - 1]);
-  const [newMin, setNewMin] = useState(restaurantsPrices[0]);
-  const [newMax, setNewMax] = useState(restaurantsPrices[restaurantsPrices.length - 1]);
-  const [selectedRating, setSelectedRating] = useState<number[]>([]);
-  const [primaryButton, setPrimaryButton] = useState("All");
-  const [secondaryButton, setSecondaryButton] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const [primaryButton, setPrimaryButton] = useState("All");
+  const [secondaryButton, setSecondaryButton] = useState("");
+  const [maxDistance, setMaxDistance] = useState(Math.max(...Restaurants.map(({ distance }: any) => distance)));
+  const [newDistance, setNewDistance] = useState(maxDistance);
+  const [newMin, setNewMin] = useState(Math.min(...restaurantsPrices));
+  const [newMax, setNewMax] = useState(Math.max(...restaurantsPrices));
+  const [selectedRating, setSelectedRating] = useState<number[]>([]);
+  console.log("dis  :", newDistance)
+  // useEffect(() => {
+  //   dispatch(fetchHomePageData());
+  // }, [dispatch]);
 
   useEffect(() => {
-    console.log(restaurantsDistances[restaurantsDistances.length - 1])
-  }, [])
+    console.log("Restaurants: ", maxDistance);
+  }, [Restaurants])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +46,7 @@ const RestaurantsPage = () => {
         }))).payload;
         setIsLoading(false);
         dispatch(setData(data1.Restaurants));
-        console.log("Restaurants without concat: ", data1.Restaurants);
+        // console.log("Restaurants without concat: ", data1.Restaurants);
       } catch (error) {
         console.error("Error fetching restaurants page data:", error);
         setIsLoading(false);
@@ -52,7 +57,6 @@ const RestaurantsPage = () => {
 
   useEffect(() => {
     const handleScroll = async () => {
-
       const scrollHeight = document.documentElement.scrollHeight;
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       const clientHeight = document.documentElement.clientHeight;
@@ -64,26 +68,27 @@ const RestaurantsPage = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [dispatch, page]);
+  }, [dispatch]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data1: any = await dispatch(fetchRestaurantsPageData({
-          page, limit, newMax, newMin, newDistance, selectedRating, primaryButton,
-          secondary: secondaryButton
-        }));
-        dispatch(setData(data.concat(data1.payload.Restaurants)));
-      } catch (error) {
-        console.error("Error fetching restaurants page data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data1: any = await dispatch(fetchRestaurantsPageData({
+  //         page, limit, newMax, newMin, newDistance, selectedRating, primaryButton,
+  //         secondary: secondaryButton
+  //       }));
+  //       if(page!=1)
+  //         dispatch(setData(data.concat(data1.payload.Restaurants)));
+  //     } catch (error) {
+  //       console.error("Error fetching restaurants page data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [dispatch, page]);
+  //   fetchData();
+  // }, [dispatch, page]);
 
 
-
+  console.log("pageee: ", page);
   return (
     <div className="restaurants-page">
       <Suspense fallback={renderLoading()}>
@@ -93,6 +98,7 @@ const RestaurantsPage = () => {
           setPrimaryButton={setPrimaryButton}
           secondaryButton={secondaryButton}
           setSecondaryButton={setSecondaryButton}
+          maxDistance={newDistance}
           newDistance={newDistance}
           setNewDistance={setNewDistance}
           newMax={newMax}
@@ -102,7 +108,6 @@ const RestaurantsPage = () => {
           selectedRating={selectedRating}
           setSelectedRating={setSelectedRating}
           restaurantsPrices={restaurantsPrices}
-          restaurantsDistances={restaurantsDistances}
         />
         <div className="container-content">{renderContent()}</div>
       </Suspense>

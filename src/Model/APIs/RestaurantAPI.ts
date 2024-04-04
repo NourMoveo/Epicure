@@ -22,8 +22,8 @@ class RestaurantAPI {
         limit,
         filterOptions,
       });
-      console.log(filterOptions);
-      console.log("response is: ", response.data);
+      // console.log(filterOptions);
+      // console.log("response is: ", response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching restaurants:", error);

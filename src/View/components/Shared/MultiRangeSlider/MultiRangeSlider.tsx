@@ -2,27 +2,44 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import "./MultiRangeSlider.scss";
 import classnames from "classnames";
 import { ILSLogo } from "@/View/Photos";
-interface MultiRangeSliderProps {
-  newMin: number,
-  newMax: number,
-  setNewMin: (min: number) => void,
-  setNewMax: (max: number) => void,
-  restaurantsPrices: number[]
-}
-const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin, restaurantsPrices }) => {
 
+interface MultiRangeSliderProps {
+  newMin: number;
+  newMax: number;
+  setNewMin: (min: number) => void;
+  setNewMax: (max: number) => void;
+  restaurantsPrices: number[];
+}
+
+const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin, restaurantsPrices }) => {
   const [min, setMin] = useState(restaurantsPrices[0]);
   const [max, setMax] = useState(restaurantsPrices[restaurantsPrices.length - 1]);
 
-  const handleInputChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>, isMin: boolean) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    isMin: boolean
+  ) => {
+    const value = parseInt(event.target.value);
+
+    const nearestValue = restaurantsPrices.reduce((prev, curr) => (
+      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+    ));
+
     if (isMin) {
-      setNewMin(parseInt(value));
-      console.log("Selected minimum value:", value);
+      if (nearestValue <= max) {
+        setNewMin(nearestValue);
+      } else {
+        setNewMin(max);
+      }
     } else {
-      setNewMax(parseInt(value));
-      console.log("Selected maximum value:", value);
+      if (nearestValue >= min) {
+        setNewMax(nearestValue);
+      } else {
+        setNewMax(min);
+      }
     }
   };
+
   return (
     <div className={`range-popup-container ${(newMin !== min || newMax !== max ? 'range-popup-open-clear' : 'range-popup-open')}`}>
       <div className="popup-title">Price Range Selected</div>
@@ -74,7 +91,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax
           {(newMin !== min || newMax !== max) && <button className="clear-button" onClick={() => { setNewMin(min); setNewMax(max); }}>Clear</button>}
         </div>
       </div>
-    </div>);
+    </div >);
 };
 
 export default MultiRangeSlider;
