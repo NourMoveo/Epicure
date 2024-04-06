@@ -91,7 +91,7 @@ const RestaurantsPage = () => {
       }
     };
     fetchData();
-  }, [dispatch, newMax, newMin, newDistance, selectedRating, primaryButton, secondaryButton, page, limit]);
+  }, [dispatch, newMax, newMin, newDistance, selectedRating, primaryButton, page, limit]);
 
   useEffect(() => {
     const handleScroll = async () => {
