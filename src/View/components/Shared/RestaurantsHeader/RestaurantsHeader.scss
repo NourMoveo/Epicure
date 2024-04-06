@@ -9,7 +9,6 @@
   display: flex;
   padding: 4.8vw;
 
-  
   button {
     @include font-style;
     padding: 1.5vw;
@@ -24,7 +23,7 @@
     }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
@@ -54,11 +53,15 @@
 }
 
 @include desktop {
+  .header-container {
+    width: 100%;
+  }
   .restaurants-header {
     display: flex;
     padding: 3.3vw 0vw 2.8vw 0vw;
     align-items: center;
     justify-content: center;
+    width: 100%;
 
     button {
       @include font-style;
@@ -71,7 +74,7 @@
       position: relative;
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         transform: translateX(-50%);
         bottom: 0.7vw;
@@ -86,7 +89,7 @@
       }
     }
   }
-  
+
   .button-wrapper {
     margin-bottom: 3vw;
     display: flex;
@@ -98,7 +101,7 @@
     box-sizing: border-box;
     animation: fadeInUp 0.5s ease;
   }
-  
+
   .additional-button {
     @include font-style;
     padding: 1.3vw;
@@ -108,31 +111,30 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-  
+
     .arrow-icon {
       margin-left: 0.5vw;
       width: 1.5vw;
       height: 1.5vw;
     }
-  
+
     &:hover {
       background-color: rgba(0, 0, 0, 0.15);
     }
-    &.active{
+    &.active {
       background-color: rgba(0, 0, 0, 0.15);
     }
-  
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
         transform: translateY(10vw);
       }
-  
+
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
   }
-  
 }

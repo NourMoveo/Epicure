@@ -8,12 +8,14 @@ import { fetchRestaurantsPageData } from "@/Controller/redux/thunks/restaurantsP
 import { useDispatch } from "react-redux";
 const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
 const RestaurantsHeader = React.lazy(() => import("@/View/components/Shared/RestaurantsHeader/RestaurantsHeader"));
+
 interface PopupsState {
   [key: string]: boolean;
   PriceRange: boolean;
   Distance: boolean;
   Rating: boolean;
 }
+
 const RestaurantsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { Restaurants, page, limit, data } = useSelector(
@@ -38,6 +40,9 @@ const RestaurantsPage = () => {
     Distance: false,
     Rating: false,
   });
+
+  const restaurantCardsRef = useRef<HTMLDivElement>(null);
+
   const togglePopup = (name: string) => {
     const updatedState: PopupsState = {
       PriceRange: name === "PriceRange" ? !isPopupsOpen.PriceRange : false,
@@ -46,6 +51,7 @@ const RestaurantsPage = () => {
     };
     setIsPopupsOpen(updatedState);
   };
+
   const closeAllPopups = () => {
     setIsPopupsOpen({
       PriceRange: false,
@@ -54,17 +60,18 @@ const RestaurantsPage = () => {
     });
     setSecondaryButton("");
   };
+
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (target.id != "Rating" && target.id != "Distance" && target.id != "PriceRange") {
+      if (target.id != "Rating" && target.id != "Distance" && target.id != "PriceRange" && target.id != "clear") {
         closeAllPopups();
+        console.log(target)
       }
     };
     document.body.addEventListener("click", handleClick);
     return () => { document.body.removeEventListener("click", handleClick) };
   }, []);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,24 +91,37 @@ const RestaurantsPage = () => {
       }
     };
     fetchData();
-  }, [dispatch, newMax, newMin, newDistance, selectedRating, primaryButton]);
+  }, [dispatch, newMax, newMin, newDistance, selectedRating, primaryButton, secondaryButton, page, limit]);
 
   useEffect(() => {
     const handleScroll = async () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
-      if (scrollTop + clientHeight >= scrollHeight - 1) {
+      const element = restaurantCardsRef.current;
+      if (!element) return;
+
+      const scrollHeight = element.scrollHeight;
+      const scrollTop = element.scrollTop;
+      const clientHeight = element.clientHeight;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+      if (isAtBottom) {
         dispatch(setPage(page + 1));
         closeAllPopups();
+        console.log("pageeee", page);
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [dispatch]);
 
+    const element = restaurantCardsRef.current;
+    if (element) {
+      element.addEventListener("scroll", handleScroll);
+      // Disable body scroll when scrolling within restaurant-cards
+      document.body.style.overflow = "hidden";
+      return () => {
+        element.removeEventListener("scroll", handleScroll);
+        // Enable body scroll when component unmounts
+        document.body.style.overflow = "auto";
+      };
+    }
+  }, [dispatch, restaurantCardsRef]);
 
   return (
     <div className="restaurants-page">
@@ -121,12 +141,26 @@ const RestaurantsPage = () => {
           setNewMax={setNewMax}
           selectedRating={selectedRating}
           setSelectedRating={setSelectedRating}
-          max={MAX_PRICE}
           min={MIN_PRICE}
+          max={MAX_PRICE}
           isPopupsOpen={isPopupsOpen}
           togglePopup={togglePopup}
         />
-        <div className="container-content">{renderContent()}</div>
+        <div ref={restaurantCardsRef} className="container-content">
+          {primaryButton === "MapView" ? (
+            <div className="map-image-container">
+              <img className="map-img" src={Map} alt="Map" />
+            </div>
+          ) : (
+            <div className="restaurant-cards">
+              {isLoading ? (
+                renderLoading()
+              ) : (
+                <CustomCardsSection cardsData={data} cardType={1} pageType={2} layoutDirection="vertical" />
+              )}
+            </div>
+          )}
+        </div>
       </Suspense>
     </div>
   );
@@ -146,26 +180,6 @@ const RestaurantsPage = () => {
           <p>No more restaurants.</p>
         </div>
       </div>
-    );
-  }
-
-  function renderContent() {
-    return (
-      <>
-        {primaryButton === "MapView" ? (
-          <div className="map-image-container">
-            <img className="map-img" src={Map} alt="Map" />
-          </div>
-        ) : (
-          <div className="cards">
-            {isLoading ? (
-              renderLoading()
-            ) : (
-              <CustomCardsSection cardsData={data} cardType={1} pageType={2} layoutDirection="vertical" />
-            )}
-          </div>
-        )}
-      </>
     );
   }
 };

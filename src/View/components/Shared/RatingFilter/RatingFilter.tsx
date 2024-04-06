@@ -7,12 +7,13 @@ interface RatingFilterProps {
 }
 const RatingFilter: FC<RatingFilterProps> = ({ selectedRating, setSelectedRating }) => {
   return (
-    <div className={`range-checkbox-filter-popup ${(selectedRating.length > 0 ? 'rating-popup-open-clear' : 'rating-popup-open')}`}>
+    <div id="Rating" className={`range-checkbox-filter-popup ${(selectedRating.length > 0 ? 'rating-popup-open-clear' : 'rating-popup-open')}`}>
       <div className="rating-popup-title">Rating</div>
       <div className="filter-options">
         {[1, 2, 3, 4, 5].map((rating) => (
           <div key={rating} className="checkbox-rating">
             <input
+              id="Rating"
               type="checkbox"
               checked={selectedRating.includes(rating)}
               onChange={(event) => {
@@ -21,14 +22,14 @@ const RatingFilter: FC<RatingFilterProps> = ({ selectedRating, setSelectedRating
                   : selectedRating.filter((r) => r !== rating));
               }}
             />
-            <div className="rating">
+            <div id="Rating" className="rating">
               <RatingComponent number={rating} />
             </div>
           </div>
         ))}
       </div>
-      <div className="button-container">
-        {selectedRating.length > 0 && (<button className="clear-button" onClick={() => setSelectedRating([])}>Clear</button>
+      <div id="Rating" className="button-container">
+        {selectedRating.length > 0 && (<button id="clear" className="clear-button" onClick={() => setSelectedRating([])}>Clear</button>
         )}
       </div>
     </div>

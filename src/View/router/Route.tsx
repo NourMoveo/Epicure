@@ -1,9 +1,9 @@
-import { createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import {
   HomePage,
   RestaurantsPage,
   RestaurantDetails,
-  ChefsPage,DishOrder,CheckoutPage
+  ChefsPage, DishOrder, CheckoutPage
 } from "../pages";
 import { Navbar, Footer } from "../components";
 import { Outlet } from "react-router-dom";
@@ -40,15 +40,16 @@ const router = createBrowserRouter([
       {
         path: "/restaurants",
         element: <RestaurantsPage />,
+
       },
       {
         path: "/dishOrder/:title",
-        element: <DishOrder />,  
+        element: <DishOrder />,
       },
       {
         path: "/restaurant/:title",
         element: <RestaurantDetails />,
-      },      {
+      }, {
         path: "/checkout",
         element: <CheckoutPage />,
       },
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
       //   path: "/dish/:title",
       //   element: <DishOrderPopup />,
       // },
-      
+
     ],
   },
 ]);

@@ -28,6 +28,9 @@
 }
 @include desktop {
   .restaurants-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     .restaurant-header {
       display: none;
     }
@@ -50,6 +53,7 @@
     .container-content {
       overflow: scroll;
       height: 67vw;
+      width: 82.292vw;
     }
   }
   .load-more {

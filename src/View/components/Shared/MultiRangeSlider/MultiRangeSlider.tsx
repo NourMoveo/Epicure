@@ -13,7 +13,7 @@ interface MultiRangeSliderProps {
 }
 const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax, setNewMin, min, max }) => {
   return (
-    <div className={`range-popup-container ${(newMin !== min || newMax !== max ? 'range-popup-open-clear' : 'range-popup-open')}`}>
+    <div id="Rating" className={`range-popup-container ${(newMin !== min || newMax !== max ? 'range-popup-open-clear' : 'range-popup-open')}`}>
       <div className="popup-title">Price Range Selected</div>
       <div className="range-display">
         <div className="ils-icon">
@@ -30,8 +30,9 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax
           {max}
         </div>
       </div>
-      <div className="container" >
+      <div id="Rating" className="container" >
         <input
+          id="Rating"
           type="range"
           min={min}
           max={max}
@@ -42,6 +43,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax
           })}
         />
         <input
+          id="Rating"
           type="range"
           min={min}
           max={max}
@@ -60,7 +62,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ newMin, newMax, setNewMax
             <div className="ils-icon"><img src={ILSLogo} alt="ILS Icon" className="ils-img" /></div>
             <div className="max-value">{newMax}</div>
           </div>
-          {(newMin !== min || newMax !== max) && <button className="clear-button" onClick={() => { setNewMin(min); setNewMax(max); }}>Clear</button>}
+          {(newMin !== min || newMax !== max) && <button id="clear" className="clear-button" onClick={() => { setNewMin(min); setNewMax(max); }}>Clear</button>}
         </div>
       </div>
     </div >);

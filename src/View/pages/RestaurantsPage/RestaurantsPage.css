@@ -1,0 +1,108 @@
+.restaurants-page {
+  overflow-y: hidden;
+}
+.restaurants-page .restaurant-header {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  font-size: 4.4vw;
+  text-transform: uppercase;
+  margin-left: 6vw;
+  letter-spacing: 0.45vw;
+  letter-spacing: 0.3vw;
+  font-size: 4.8vw;
+  margin-top: 4.4vw;
+  margin-bottom: 0vw;
+}
+@media screen and (min-width: 769px) {
+  .restaurants-page .restaurant-header {
+    letter-spacing: 0.15vw;
+    margin-top: 5.6vw;
+    font-size: 1.95vw;
+    margin-bottom: 2.9vw;
+    text-align: center;
+  }
+}
+.restaurants-page .map-image-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.restaurants-page .map-image-container .map-img {
+  width: 100vw;
+  height: 40.5vw;
+}
+.restaurants-page .no-data {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  margin-left: 8.5vw;
+  font-size: 3.5vw;
+}
+
+@media screen and (min-width: 769px) {
+  .restaurants-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .restaurants-page .restaurant-header {
+    display: none;
+  }
+  .restaurants-page .no-data {
+    font-size: 1vw;
+  }
+  .restaurants-page .empty-data-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    font-size: 3vw;
+    font-weight: 400;
+    opacity: 0.6;
+  }
+  .restaurants-page .sad-chef {
+    height: 20vw;
+    opacity: 0.6;
+  }
+  .restaurants-page .container-content {
+    overflow: scroll;
+    height: 67vw;
+    width: 82.292vw;
+  }
+  .load-more {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-self: center;
+    justify-content: center;
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    text-transform: uppercase;
+    color: black;
+    font-size: 2vw;
+    font-weight: 400;
+    letter-spacing: 0.2vw;
+    width: 20vw;
+    height: 5vw;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    margin-left: 40vw;
+  }
+}/*# sourceMappingURL=RestaurantsPage.css.map */

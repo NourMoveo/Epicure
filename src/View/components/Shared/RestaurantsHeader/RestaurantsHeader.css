@@ -1,0 +1,138 @@
+@media screen and (max-width: 768px) {
+  .restaurants-header button.MapView {
+    display: none;
+  }
+}
+.restaurants-header {
+  display: flex;
+  padding: 4.8vw;
+}
+.restaurants-header button {
+  font-family: "Helvetica Neue";
+  color: black;
+  line-height: normal;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.1vw;
+  padding: 1.5vw;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 4.8vw;
+  position: relative;
+}
+.restaurants-header button:not(:last-child) {
+  margin-right: 2.5vw;
+}
+.restaurants-header button::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0.7vw;
+  width: 75%;
+  height: 0.6vw;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+.restaurants-header button.active {
+  font-weight: 400;
+}
+.restaurants-header button.active::after {
+  background-color: orange;
+}
+.restaurants-header button:hover {
+  color: #555;
+}
+
+.button-wrapper {
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  .header-container {
+    width: 100%;
+  }
+  .restaurants-header {
+    display: flex;
+    padding: 3.3vw 0vw 2.8vw 0vw;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .restaurants-header button {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    padding: 0vw;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.25vw;
+    color: #333;
+    position: relative;
+  }
+  .restaurants-header button::after {
+    content: "";
+    position: absolute;
+    transform: translateX(-50%);
+    bottom: 0.7vw;
+    width: 75%;
+    height: 0vw;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+  .restaurants-header button.active {
+    font-weight: 400;
+  }
+  .button-wrapper {
+    margin-bottom: 3vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FAFAFA;
+    width: 100%;
+    height: 4.2vw;
+    box-sizing: border-box;
+    animation: fadeInUp 0.5s ease;
+  }
+  .additional-button {
+    font-family: "Helvetica Neue";
+    color: black;
+    line-height: normal;
+    font-weight: 200;
+    font-style: normal;
+    letter-spacing: 0.1vw;
+    padding: 1.3vw;
+    border: none;
+    background-color: transparent;
+    font-size: 1.25vw;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .additional-button .arrow-icon {
+    margin-left: 0.5vw;
+    width: 1.5vw;
+    height: 1.5vw;
+  }
+  .additional-button:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+  .additional-button.active {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10vw);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}/*# sourceMappingURL=RestaurantsHeader.css.map */
