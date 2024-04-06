@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../Controller/redux/store/store";
 import { Map, LoadingGif, SadChefIcon } from "@/View/Photos";
@@ -8,7 +8,12 @@ import { fetchRestaurantsPageData } from "@/Controller/redux/thunks/restaurantsP
 import { useDispatch } from "react-redux";
 const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
 const RestaurantsHeader = React.lazy(() => import("@/View/components/Shared/RestaurantsHeader/RestaurantsHeader"));
-
+interface PopupsState {
+  [key: string]: boolean;
+  PriceRange: boolean;
+  Distance: boolean;
+  Rating: boolean;
+}
 const RestaurantsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { Restaurants, page, limit, data } = useSelector(
@@ -27,14 +32,39 @@ const RestaurantsPage = () => {
   const [newMin, setNewMin] = useState(Math.min(...Restaurants.map(({ minPrice }: any) => minPrice)));
   const [newMax, setNewMax] = useState(Math.max(...Restaurants.map(({ maxPrice }: any) => maxPrice)));
   const [selectedRating, setSelectedRating] = useState<number[]>([]);
-  console.log("dis  :", newDistance)
-  // useEffect(() => {
-  //   dispatch(fetchHomePageData());
-  // }, [dispatch]);
 
+  const [isPopupsOpen, setIsPopupsOpen] = useState<PopupsState>({
+    PriceRange: false,
+    Distance: false,
+    Rating: false,
+  });
+  const togglePopup = (name: string) => {
+    const updatedState: PopupsState = {
+      PriceRange: name === "PriceRange" ? !isPopupsOpen.PriceRange : false,
+      Distance: name === "Distance" ? !isPopupsOpen.Distance : false,
+      Rating: name === "Rating" ? !isPopupsOpen.Rating : false,
+    };
+    setIsPopupsOpen(updatedState);
+  };
+  const closeAllPopups = () => {
+    setIsPopupsOpen({
+      PriceRange: false,
+      Distance: false,
+      Rating: false,
+    });
+    setSecondaryButton("");
+  };
   useEffect(() => {
-    console.log("Restaurants: ", MAX_DISTANCE);
-  }, [Restaurants])
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (target.id != "Rating" && target.id != "Distance" && target.id != "PriceRange") {
+        closeAllPopups();
+      }
+    };
+    document.body.addEventListener("click", handleClick);
+    return () => { document.body.removeEventListener("click", handleClick) };
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +77,7 @@ const RestaurantsPage = () => {
         }))).payload;
         setIsLoading(false);
         dispatch(setData(data1.Restaurants));
-        // console.log("Restaurants without concat: ", data1.Restaurants);
+        console.log("Restaurants: ", MAX_DISTANCE);
       } catch (error) {
         console.error("Error fetching restaurants page data:", error);
         setIsLoading(false);
@@ -63,6 +93,7 @@ const RestaurantsPage = () => {
       const clientHeight = document.documentElement.clientHeight;
       if (scrollTop + clientHeight >= scrollHeight - 1) {
         dispatch(setPage(page + 1));
+        closeAllPopups();
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -71,25 +102,7 @@ const RestaurantsPage = () => {
     };
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data1: any = await dispatch(fetchRestaurantsPageData({
-  //         page, limit, newMax, newMin, newDistance, selectedRating, primaryButton,
-  //         secondary: secondaryButton
-  //       }));
-  //       if(page!=1)
-  //         dispatch(setData(data.concat(data1.payload.Restaurants)));
-  //     } catch (error) {
-  //       console.error("Error fetching restaurants page data:", error);
-  //     }
-  //   };
 
-  //   fetchData();
-  // }, [dispatch, page]);
-
-
-  console.log("pageee: ", page);
   return (
     <div className="restaurants-page">
       <Suspense fallback={renderLoading()}>
@@ -110,7 +123,8 @@ const RestaurantsPage = () => {
           setSelectedRating={setSelectedRating}
           max={MAX_PRICE}
           min={MIN_PRICE}
-
+          isPopupsOpen={isPopupsOpen}
+          togglePopup={togglePopup}
         />
         <div className="container-content">{renderContent()}</div>
       </Suspense>
