@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../Controller/redux/store/store";
 import { Map, LoadingGif, SadChefIcon } from "@/View/Photos";
 import "./RestaurantsPage.scss";
-import { setData, setPage } from "@/Controller/redux/slices/restaurantsPageSlice";
+import { setData } from "@/Controller/redux/slices/restaurantsPageSlice";
 import { fetchRestaurantsPageData } from "@/Controller/redux/thunks/restaurantsPageThunk";
 import { useDispatch } from "react-redux";
+import { RestaurantsHeader } from "@/View/components";
 const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
-const RestaurantsHeader = React.lazy(() => import("@/View/components/Shared/RestaurantsHeader/RestaurantsHeader"));
-
+// const RestaurantsHeader = React.lazy(() => import("@/View/components/Shared/RestaurantsHeader/RestaurantsHeader"));
 interface PopupsState {
   [key: string]: boolean;
   PriceRange: boolean;
@@ -18,29 +18,30 @@ interface PopupsState {
 
 const RestaurantsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { Restaurants, page, limit, data } = useSelector(
+  const { restaurantsDistances, restaurantsPrices } = useSelector(
+    (state: RootState) => state.homePage
+  );
+  const { Restaurants, limit, data } = useSelector(
     (state: RootState) => state.restaurantsPage
   );
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  const MAX_DISTANCE = Math.max(...Restaurants.map(({ distance }: any) => distance));
-  const MIN_PRICE = Math.min(...Restaurants.map(({ minPrice }: any) => minPrice));
-  const MAX_PRICE = Math.max(...Restaurants.map(({ maxPrice }: any) => maxPrice));
+  const MAX_DISTANCE = Math.max(...restaurantsDistances);
+  const MIN_PRICE = Math.min(...restaurantsPrices);
+  const MAX_PRICE = Math.max(...restaurantsPrices);
 
   const [primaryButton, setPrimaryButton] = useState("All");
   const [secondaryButton, setSecondaryButton] = useState("");
   const [newDistance, setNewDistance] = useState(MAX_DISTANCE);
-  const [newMin, setNewMin] = useState(Math.min(...Restaurants.map(({ minPrice }: any) => minPrice)));
-  const [newMax, setNewMax] = useState(Math.max(...Restaurants.map(({ maxPrice }: any) => maxPrice)));
+  const [newMin, setNewMin] = useState(MIN_PRICE);
+  const [newMax, setNewMax] = useState(MAX_PRICE);
   const [selectedRating, setSelectedRating] = useState<number[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [isPopupsOpen, setIsPopupsOpen] = useState<PopupsState>({
     PriceRange: false,
     Distance: false,
     Rating: false,
   });
-
+  const page = Math.ceil(data.length / limit) + 1;
   const restaurantCardsRef = useRef<HTMLDivElement>(null);
 
   const togglePopup = (name: string) => {
@@ -66,62 +67,77 @@ const RestaurantsPage = () => {
       const target = event.target as HTMLElement;
       if (target.id != "Rating" && target.id != "Distance" && target.id != "PriceRange" && target.id != "clear") {
         closeAllPopups();
-        console.log(target)
       }
     };
     document.body.addEventListener("click", handleClick);
     return () => { document.body.removeEventListener("click", handleClick) };
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        dispatch(setPage(1));
-        const data1: any = (await dispatch(fetchRestaurantsPageData({
-          page, limit, newMax, newMin, newDistance, selectedRating, primaryButton,
-          secondary: secondaryButton
-        }))).payload;
-        setIsLoading(false);
-        dispatch(setData(data1.Restaurants));
-        console.log("Restaurants: ", MAX_DISTANCE);
-      } catch (error) {
-        console.error("Error fetching restaurants page data:", error);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [dispatch, newMax, newMin, newDistance, selectedRating, primaryButton, page, limit]);
+
+
+  const fetchData = async () => {
+    try {
+      const data1: any = (await dispatch(fetchRestaurantsPageData({
+        page, limit, newMax, newMin, newDistance, selectedRating, primaryButton,
+        secondary: secondaryButton
+      }))).payload;
+      return data1.Restaurants;
+    } catch (error) {
+      console.error("Error fetching restaurants page data:", error);
+      return [];
+    }
+  };
+
+  // useEffect(() => {
+  //   const fetchDataAsync = async () => {
+  //     dispatch(setPage(1));
+
+  //     dispatch(setData([]));
+  //     const data = await fetchData();
+  //     dispatch(setData(data));
+  //     // dispatch(setPage(Math.ceil(data.length / limit) + 1));
+  //   };
+  //   fetchDataAsync();
+  //   // setPage(Math.ceil(data.length / limit) + 1)
+  // }, [primaryButton, newMax, newMin, newDistance, selectedRating]);
 
   useEffect(() => {
+    console.log("page= , ", page)
+    const fetchDataAsync = async () => {
+      dispatch(setData([]));
+      const data = await fetchData();
+      dispatch(setData(data));
+    };
+    fetchDataAsync();
+    // setPage(page + 1);
+  }, [primaryButton, newMax, newMin, newDistance, selectedRating]);
+
+
+  useEffect(() => {
+
     const handleScroll = async () => {
-      const element = restaurantCardsRef.current;
-      if (!element) return;
 
-      const scrollHeight = element.scrollHeight;
-      const scrollTop = element.scrollTop;
-      const clientHeight = element.clientHeight;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-
-      if (isAtBottom) {
-        dispatch(setPage(page + 1));
-        closeAllPopups();
-        console.log("pageeee", page);
+      if (!element) {
+        return;
+      }
+      if (element.scrollTop + element.clientHeight > element.scrollHeight - 1 && element.scrollTop + element.clientHeight != element.scrollHeight - 1) {
+        console.log("data ?: ,", page)
+        dispatch(setData(data.concat(await fetchData())));
       }
     };
-
     const element = restaurantCardsRef.current;
     if (element) {
       element.addEventListener("scroll", handleScroll);
       // Disable body scroll when scrolling within restaurant-cards
-      document.body.style.overflow = "hidden";
       return () => {
         element.removeEventListener("scroll", handleScroll);
         // Enable body scroll when component unmounts
         document.body.style.overflow = "auto";
       };
     }
-  }, [dispatch, restaurantCardsRef]);
+  }, [data.length]);
+
+
 
   return (
     <div className="restaurants-page">
@@ -153,10 +169,19 @@ const RestaurantsPage = () => {
             </div>
           ) : (
             <div className="restaurant-cards">
-              {isLoading ? (
-                renderLoading()
+              {/* {page == 1 && primaryButton == "All" ? (
+                <CustomCardsSection cardsData={Restaurants} cardType={1} pageType={2} layoutDirection="vertical" />
+              )
+                :  */}
+              {data && data.length > 0 ? (
+                <>
+                  <CustomCardsSection cardsData={data} cardType={1} pageType={2} layoutDirection="vertical" />
+                  {/* {data && renderNoMoreData()} */}
+                </>
               ) : (
-                <CustomCardsSection cardsData={data} cardType={1} pageType={2} layoutDirection="vertical" />
+
+                renderLoading()
+
               )}
             </div>
           )}

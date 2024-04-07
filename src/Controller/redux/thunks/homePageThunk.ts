@@ -15,7 +15,7 @@ interface HomePageData {
 
 export const fetchHomePageData = createAsyncThunk("homePage/fetchData", async (): Promise<HomePageData> => {
   const [popularRestaurants, signatureDishes, chefOfTheWeek, restaurantsPrices, restaurantsDistances] = await Promise.all([
-    restaurantAPI.getFilteredRestaurants(1, 3, { filterBy: "All", secondary: "" }),
+    restaurantAPI.getFilteredRestaurants(1, 3, { filterBy: "Popular", secondary: "" }),
     dishAPI.getSignatureDishes(),
     chefAPI.getChefOfTheWeek(),
     restaurantAPI.getRestaurantsPrices(),

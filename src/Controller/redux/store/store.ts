@@ -5,13 +5,13 @@ import chefsPageReducer from "../slices/chefsPageSlice";
 import signInPageReducer from "../slices/signInPageSlice";
 import dishOrderPageReducer from "../slices/dishOrderSlice";
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     homePage: homePageReducer,
     restaurantsPage: restaurantsPageReducer,
     chefsPage: chefsPageReducer,
     signInPage: signInPageReducer,
-    dishOrderPage:dishOrderPageReducer
+    dishOrderPage: dishOrderPageReducer,
   },
 });
 

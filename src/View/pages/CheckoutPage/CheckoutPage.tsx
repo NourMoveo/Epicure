@@ -15,8 +15,8 @@ const CheckoutPage = () => {
             (state: RootState) => state.signInPage
         );
         try {
-            const comment = document.getElementById('comment-input')?.nodeValue || '';
-            dispatch(updateComment(comment));
+            // const comment = document.getElementById('comment-input')?.nodeValue || '';
+            // dispatch(updateComment(comment));
             await userAPI.addOrder(email, order);
 
             alert("added successfully!");

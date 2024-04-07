@@ -6,19 +6,19 @@ import { IconsData } from "@/Model/constants";
 import { LoadingGif } from "../../Photos";
 import "./HomePage.scss";
 import { Restaurant } from "@/Model/Interfaces";
-const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
-const Hero = React.lazy(() => import("@/View/components/Sections/Hero/Hero"));
-const IconsMeaning = React.lazy(() => import("@/View/components/Sections/IconsMeaning/IconsMeaning"));
-const WeekChef = React.lazy(() => import("@/View/components/Sections/WeekChef/WeekChef"));
-const AboutUs = React.lazy(() => import("@/View/components/Sections/AboutUs/AboutUs"));
-const DishOrderPopup = React.lazy(() => import("@/View/components/Common/PopUps/dishOrderPopup/dishOrderPopup"));
+import { CustomCardsSection, Hero, IconsMeaning, WeekChef, AboutUs, DishOrderPopup } from "@/View/components"
+// const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
+// const Hero = React.lazy(() => import("@/View/components/Sections/Hero/Hero"));
+// const IconsMeaning = React.lazy(() => import("@/View/components/Sections/IconsMeaning/IconsMeaning"));
+// const WeekChef = React.lazy(() => import("@/View/components/Sections/WeekChef/WeekChef"));
+// const AboutUs = React.lazy(() => import("@/View/components/Sections/AboutUs/AboutUs"));
+// const DishOrderPopup = React.lazy(() => import("@/View/components/Common/PopUps/dishOrderPopup/dishOrderPopup"));
 
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { popularRestaurants, signatureDishes, chefOfTheWeek, isModalOpen } = useSelector(
     (state: RootState) => state.homePage
   );
-
   useEffect(() => {
     dispatch(fetchHomePageData());
   }, [dispatch]);

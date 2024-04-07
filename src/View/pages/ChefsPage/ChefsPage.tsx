@@ -10,10 +10,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { SwiperConfig } from "@/View/components";
+import { SwiperConfig, ChefCard } from "@/View/components";
 import { Chef } from "@/Model/Interfaces";
 import { LoadingGif } from "@/View/Photos";
-const ChefCard = React.lazy(() => import("@/View/components/Shared/ChefCard/ChefCard"));
+
+// const ChefCard = React.lazy(() => import("@/View/components/Shared/ChefCard/ChefCard"));
 import "./ChefsPage.scss";
 
 const menuButtons = [
@@ -88,7 +89,7 @@ const ChefsPage = () => {
         console.log("Error fetching chefs: ", error);
       }
     };
-    
+
 
     fetchData();
 

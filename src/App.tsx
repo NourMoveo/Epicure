@@ -3,14 +3,14 @@ import { RouterProvider } from "react-router-dom";
 import router from "./View/router/Route";
 import "./App.scss"; // Import the app.scss file
 import { Provider } from 'react-redux';
-import store from './Controller/redux/store/store'; 
+import store from './Controller/redux/store/store';
 function App() {
 
 
   return (
     <div className="app-body">
-        <Provider store={store}>
-        <RouterProvider router={router}>
+      <Provider store={store}>
+        <RouterProvider router={router} >
         </RouterProvider>
       </Provider>
 
