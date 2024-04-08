@@ -23,20 +23,19 @@ const menuButtons = [
 ];
 
 const ChefsPage = () => {
+  const { chefsToShow, limit } = useSelector((state: RootState) => state.chefsPage);
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setIsLoading] = useState(true);
   const [activeButton, setActiveButton] = useState("All");
   const [chefs, setChefs] = useState<Chef[]>([]);
   const [nextData, setNextData] = useState<Chef[]>([])
-  const { chefsToShow, limit } = useSelector((state: RootState) => state.chefsPage);
   const page = Math.ceil(chefs.length / limit) + 1;
   const chefCardsRef = useRef<HTMLDivElement>(null);
 
 
   useEffect(() => {
-    console.log("test1: ", page);
     dispatch(fetchChefsPageData({ page: 1, limit, activeButton }));
-    console.log("chefsToShow1: ", chefsToShow)
+    setChefs(chefsToShow)
   }, [dispatch, activeButton]);
 
 
@@ -50,7 +49,6 @@ const ChefsPage = () => {
       setIsLoading(false);
       setNextData(await chefAPI.getFilteredChefs(2, limit, activeButton));
     };
-    console.log("chefsToShow2: ", chefsToShow)
     fetchDataAsync();
   }, [activeButton]);
 
@@ -61,9 +59,10 @@ const ChefsPage = () => {
         return;
       }
       if (element.scrollTop + element.clientHeight > element.scrollHeight - 1 && element.scrollTop + element.clientHeight != element.scrollHeight - 1) {
-        console.log("test 1  : ", page)
+        console.log("test 1  : ", chefs)
         setChefs(chefs.concat(await chefAPI.getFilteredChefs(page, limit, activeButton)));
         setNextData(await chefAPI.getFilteredChefs(page + 1, limit, activeButton))
+        console.log("test 2  : ", chefs)
       }
     };
     const element = chefCardsRef.current;
@@ -147,17 +146,16 @@ const ChefsPage = () => {
                     </div>
                   ))}
                 </div>
-                {nextData.length === 0 && renderNoMoreData()}
               </Fade>
             </div>
           )
             :
-            chefs && chefs.length > 0 && page > 1 ? (
+            chefs && chefs.length > 0 ? (
               <>
                 <div className="chefs-card">
                   <Fade>
                     <Swiper className="swiper" {...SwiperConfig("vertical")}>
-                      {chefsToShow.map((chef: Chef) => (
+                      {chefs.map((chef: Chef) => (
                         <SwiperSlide className="swiper-slide" key={chef.fName}>
                           <div>
                             <ChefCard chef={chef} />
@@ -167,7 +165,7 @@ const ChefsPage = () => {
                     </Swiper>
 
                     <div className="desktop-section">
-                      {chefsToShow.map((chef: Chef) => (
+                      {chefs.map((chef: Chef) => (
                         <div key={chef.fName}>
                           <ChefCard chef={chef} />
                         </div>
@@ -176,7 +174,6 @@ const ChefsPage = () => {
                     {nextData.length === 0 && renderNoMoreData()}
                   </Fade>
                 </div>
-                {/* {nextData.length == 0 && renderNoMoreData()} */}
               </>
 
             ) : isLoading ? (

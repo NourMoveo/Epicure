@@ -7,6 +7,8 @@ import { LoadingGif } from "../../Photos";
 import "./HomePage.scss";
 import { Restaurant } from "@/Model/Interfaces";
 import { CustomCardsSection, Hero, IconsMeaning, WeekChef, AboutUs, DishOrderPopup } from "@/View/components"
+import { fetchRestaurantsPageData } from "@/Controller/redux/thunks/restaurantsPageThunk";
+import { fetchChefsPageData } from "@/Controller/redux/thunks/chefsPageThunk";
 // const CustomCardsSection = React.lazy(() => import("@/View/components/Shared/CustomCardsSection/CustomCardsSection"));
 // const Hero = React.lazy(() => import("@/View/components/Sections/Hero/Hero"));
 // const IconsMeaning = React.lazy(() => import("@/View/components/Sections/IconsMeaning/IconsMeaning"));
@@ -21,7 +23,21 @@ const HomePage = () => {
   );
   useEffect(() => {
     dispatch(fetchHomePageData());
+    const fetchDataParams = {
+      page: 1,
+      limit: 9,
+      newMax: 1,
+      newMin: 1,
+      newDistance: 1,
+      selectedRating: [],
+      primaryButton: "All",
+      secondary: "",
+    };
+
+    dispatch(fetchRestaurantsPageData(fetchDataParams));
+    dispatch(fetchChefsPageData({ page: 1, limit: 9, activeButton: "All" }));
   }, [dispatch]);
+
 
   function renderLoading() {
     return (

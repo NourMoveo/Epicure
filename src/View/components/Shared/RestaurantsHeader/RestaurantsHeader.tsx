@@ -30,13 +30,13 @@ interface RestaurantsHeaderProps {
 const primaryFilterButtons = [
   { name: "All" },
   { name: "New" },
-  { name: "MostPopular" },
-  { name: "OpenNow" },
-  { name: "MapView" },
+  { name: "Most Popular" },
+  { name: "Open Now" },
+  { name: "Map View" },
 ];
 
 const secondaryFilterButtons = [
-  { name: "PriceRange" },
+  { name: "Price Range" },
   { name: "Distance" },
   { name: "Rating" },
 ];
@@ -50,9 +50,13 @@ const RestaurantsHeader: React.FC<RestaurantsHeaderProps> = ({ primaryButton, se
       </div>
       <div className="button-wrapper">
         {secondaryFilterButtons.map(({ name }) => (
-          <button key={name} id={name} className={`additional-button ${secondaryButton === name && isPopupsOpen[name] ? "active" : ""}`} onClick={() => { setSecondaryButton(name), togglePopup(name); }}>
-            {name} <img src={DownArrow} alt="Down Arrow" className="arrow-icon" />
-          </button>))}
+          name == "Price Range" ?
+            <button key={name} id={name} className={`additional-button ${secondaryButton === name && isPopupsOpen["PriceRange"] ? "active" : ""}`} onClick={() => { setSecondaryButton(name), togglePopup(name); }}>
+              {name} <img src={DownArrow} alt="Down Arrow" className="arrow-icon" />
+            </button> :
+            <button key={name} id={name} className={`additional-button ${secondaryButton === name && isPopupsOpen[name] ? "active" : ""}`} onClick={() => { setSecondaryButton(name), togglePopup(name); }}>
+              {name} <img src={DownArrow} alt="Down Arrow" className="arrow-icon" />
+            </button>))}
       </div>
       {isPopupsOpen.PriceRange && (<MultiRangeSlider newMin={newMin} newMax={newMax} setNewMin={setNewMin} setNewMax={setNewMax} min={min} max={max} />)}
       {isPopupsOpen.Distance && (<SingleDistanceSlider newDistance={newDistance} setNewDistance={setNewDistance} maxDistance={maxDistance} />)}

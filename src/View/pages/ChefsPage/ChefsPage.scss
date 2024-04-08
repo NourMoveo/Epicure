@@ -8,7 +8,11 @@
     margin-top: 4.4vw;
     margin-bottom: 0vw;
   }
-
+  .loading-spinner {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
   .header-container {
     .chefs-header {
       display: flex;
@@ -53,7 +57,7 @@
     align-items: center;
     justify-content: center;
     @include font-style;
-    font-size: 3vw;
+    font-size: 6vw;
     font-weight: 400;
     opacity: 0.6;
   }
@@ -67,6 +71,12 @@
     width: 82.292vw;
   }
 }
+.container-content-chefs {
+  // display: flex;
+  overflow: scroll;
+  height: 170vw;
+  width: 100%;
+}
 @include mobile {
   .desktop-section {
     display: none;
@@ -76,17 +86,29 @@
 @include desktop {
   .container-content-chefs {
     display: flex;
+    // align-items: center;
+    justify-content: center;
     overflow: scroll;
     height: 75vw;
   }
   .chefs-page {
-    height: 90vw;
+    // height: 90vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: hidden;
     .chefs-title {
       display: none;
+    }
+
+    .empty-data-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include font-style;
+      font-size: 3vw;
+      font-weight: 400;
+      opacity: 0.6;
     }
 
     .header-container {

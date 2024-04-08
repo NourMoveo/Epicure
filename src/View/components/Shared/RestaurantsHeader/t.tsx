@@ -34,12 +34,12 @@ const primaryFilterButtons: ButtonData[] = [
     { name: "All", label: "All" },
     { name: "New", label: "New" },
     { name: "MostPopular", label: "Most Popular" },
-    { name: "OpenNow", label: "Open Now" },
+    { name: "Open Now", label: "Open Now" },
     { name: "MapView", label: "Map View" },
 ];
 
 const secondaryFilterButtons: ButtonData[] = [
-    { name: "PriceRange", label: "Price Range" },
+    { name: "Price Range", label: "Price Range" },
     { name: "Distance", label: "Distance" },
     { name: "Rating", label: "Rating" },
 ];

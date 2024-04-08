@@ -63,7 +63,7 @@ const RestaurantsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const togglePopup = (name: string) => {
     const updatedState: PopupsState = {
-      PriceRange: name === "PriceRange" ? !isPopupsOpen.PriceRange : false,
+      PriceRange: name === "Price Range" ? !isPopupsOpen.PriceRange : false,
       Distance: name === "Distance" ? !isPopupsOpen.Distance : false,
       Rating: name === "Rating" ? !isPopupsOpen.Rating : false,
     };
@@ -82,7 +82,7 @@ const RestaurantsPage = () => {
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (target.id != "Rating" && target.id != "Distance" && target.id != "PriceRange" && target.id != "clear") {
+      if (target.id != "Rating" && target.id != "Distance" && target.id != "Price Range" && target.id != "clear") {
         closeAllPopups();
       }
     };
@@ -145,6 +145,7 @@ const RestaurantsPage = () => {
         }))
       }
     };
+
     const element = restaurantCardsRef.current;
     if (element) {
       element.addEventListener("scroll", handleScroll);
@@ -180,14 +181,14 @@ const RestaurantsPage = () => {
           togglePopup={togglePopup}
         />
         <div ref={restaurantCardsRef} className="container-content">
-          {primaryButton === "MapView" ? (
+          {primaryButton === "Map View" ? (
             <div className="map-image-container">
               <img className="map-img" src={Map} alt="Map" />
             </div>
           ) : (
             <Fade>
               <div className="restaurant-cards">
-                {primaryButton == "OpenNow" && Restaurants.length == 0 ? (
+                {primaryButton == "Open Now" && Restaurants.length == 0 ? (
                   renderNoData()
                 ) : page == 1 && secondaryButton == "" && Restaurants.length == 0 ? (
                   renderLoading()
