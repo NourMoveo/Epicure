@@ -21,6 +21,7 @@ const SingleDistanceSlider: FC<SingleDistanceSliderProps> = ({ newDistance, maxD
                     min={0.1}
                     max={maxDistance}
                     value={newDistance}
+                    step={0.1}
                     onChange={(event) => setNewDistance(parseFloat(event.target.value))}
                     className="distance-thumb distance-thumb--zindex-4"
                 />

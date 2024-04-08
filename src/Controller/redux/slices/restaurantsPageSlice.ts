@@ -35,7 +35,7 @@ const restaurantsPageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRestaurantsPageData.fulfilled, (state, action) => {
-      state.data = action.payload.Restaurants;
+      state.Restaurants = action.payload.Restaurants;
     });
   },
 });
