@@ -189,11 +189,12 @@ const RestaurantsPage = () => {
               <div className="restaurant-cards">
                 {primaryButton == "OpenNow" && Restaurants.length == 0 ? (
                   renderNoData()
-                ) : page == 1 && secondaryButton == "" ? (
+                ) : page == 1 && secondaryButton == "" && Restaurants.length == 0 ? (
+                  renderLoading()
+                ) : page == 1 && secondaryButton == "" && Restaurants.length > 0 ? (
                   <>
                     <CustomCardsSection cardsData={Restaurants} cardType={1} pageType={2} layoutDirection="vertical" />
                   </>
-
                 )
                   :
                   data && data.length > 0 ? (
@@ -204,20 +205,14 @@ const RestaurantsPage = () => {
                   ) : isLoading ? (
                     renderLoading()
                   ) : (
-                    <div className="no-more-data">
-                      <div className="empty-data-message">
-                        <p>No restaurants founded.</p>
-                        <img className="sad-chef" src={SadChefIcon} />
-                      </div>
-                    </div>
-
+                    renderNoData()
                   )}
               </div>
             </Fade>
           )}
         </div>
-      </Suspense>
-    </div>
+      </Suspense >
+    </div >
   );
 
   function renderLoading() {

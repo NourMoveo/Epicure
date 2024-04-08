@@ -1,7 +1,7 @@
 import { Order, User } from "@/Model/Interfaces";
 import { genericAPI } from "./GenericAPI";
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import Cookies from 'js-cookie';
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 
 interface LoginResponse {
   token: string;
@@ -22,25 +22,19 @@ class UserAPI {
   async userLogin(email: string, password: string): Promise<void> {
     try {
       const response: AxiosResponse<LoginResponse> = await genericAPI.post(`${UserAPI.endpoint}/login`, { email, password });
-      
+
       // Extract the authToken from the response
       const authToken = response.data.token;
 
-      // Store the authToken securely in a cookie with the name 'authToken'
-      // Set the cookie to be HTTP-only to prevent access from JavaScript
-      Cookies.set('authToken', authToken, { httpOnly: true });
+      Cookies.set("authToken", authToken, { httpOnly: true });
 
-      // Redirect the user to a protected page or perform other actions
-      // For example:
-      window.location.href = '/';
+      window.location.href = "/";
     } catch (error) {
-      // Handle login error (e.g., display error message to the user)
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
       throw new Error("Login failed");
     }
   }
-  
-  
+
   async addOrder(email: string, newOrderData: Order): Promise<void> {
     try {
       // Retrieve the authentication token from the cookie
@@ -49,7 +43,7 @@ class UserAPI {
         throw new Error("Authentication token is missing.");
       }
       // Set the request headers with the authentication token
-      const headers: AxiosRequestConfig['headers'] = {
+      const headers: AxiosRequestConfig["headers"] = {
         Authorization: `Bearer ${token}`,
       };
 
@@ -64,7 +58,7 @@ class UserAPI {
   }
 
   private getToken(): string | null {
-    const authToken = Cookies.get('authToken');
+    const authToken = Cookies.get("authToken");
     return authToken !== undefined ? authToken : null;
   }
 }

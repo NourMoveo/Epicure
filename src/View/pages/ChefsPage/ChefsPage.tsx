@@ -1,8 +1,7 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../../Controller/redux/store/store";
 import { fetchChefsPageData } from "../../../Controller/redux/thunks/chefsPageThunk";
-import { setChefsToShow, setPage } from "@/Controller/redux/slices/chefsPageSlice";
 import { chefAPI } from "@/Model/APIs/ChefAPI";
 import { Fade } from "react-awesome-reveal";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,102 +11,71 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { SwiperConfig, ChefCard } from "@/View/components";
 import { Chef } from "@/Model/Interfaces";
-import { LoadingGif } from "@/View/Photos";
+import { LoadingGif, SadChefIcon } from "@/View/Photos";
 
 // const ChefCard = React.lazy(() => import("@/View/components/Shared/ChefCard/ChefCard"));
 import "./ChefsPage.scss";
 
 const menuButtons = [
-  { name: "All", label: "All" },
-  { name: "New", label: "New" },
-  { name: "Most Viewed", label: "Most Viewed" },
+  { name: "All" },
+  { name: "New" },
+  { name: "Most Viewed" },
 ];
 
 const ChefsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setIsLoading] = useState(true);
   const [activeButton, setActiveButton] = useState("All");
-  const [chefs, setChefs] = useState([]);
-  const { page, limit, chefsToShow } = useSelector((state: RootState) => state.chefsPage);
-  const [pastButton, setPastButton] = useState("All");
+  const [chefs, setChefs] = useState<Chef[]>([]);
+  const [nextData, setNextData] = useState<Chef[]>([])
+  const { chefsToShow, limit } = useSelector((state: RootState) => state.chefsPage);
+  const page = Math.ceil(chefs.length / limit) + 1;
+  const chefCardsRef = useRef<HTMLDivElement>(null);
 
-  const handleClick = (buttonName: string) => {
-    setPastButton(activeButton);
-    dispatch(setPage(1));
-    setActiveButton(buttonName);
-    dispatch(setChefsToShow([]));
-  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log("Active button: ", activeButton);
-      try {
-        let res: Chef[] = [];
-        switch (activeButton) {
-          case "All":
-            res = await chefAPI.getAllChefs(page, limit);
-            if (page === 1) {
-              dispatch(setChefsToShow(res));
-            }
-            if (pastButton === activeButton && chefsToShow.length && res.length) {
-              if (chefsToShow[chefsToShow.length - 1]._id !== res[res.length - 1]._id) {
-                const newChefs = await chefAPI.getAllChefs(page, limit);
-                dispatch(setChefsToShow(chefsToShow.concat(newChefs)));
-              }
-            }
-            break; // Add break statement here
-          case "New":
-            res = await chefAPI.getNewChefs(page, limit);
-            if (page === 1) {
-              dispatch(setChefsToShow(res));
-            }
-            console.log("iin New")
-            if (pastButton === activeButton && chefsToShow.length && res.length) {
-              if (chefsToShow[chefsToShow.length - 1]._id !== res[res.length - 1]._id) {
-                const newChefs = await chefAPI.getNewChefs(page, limit);
-                dispatch(setChefsToShow(chefsToShow.concat(newChefs)));
-              }
-            }
-            break; // Add break statement here
-          case "Most Viewed":
-            res = await chefAPI.getMostViewedChefs(page, limit);
-            if (page === 1) {
-              dispatch(setChefsToShow(res));
-            }
-            if (pastButton === activeButton && chefsToShow.length && res.length) {
-              if (chefsToShow[chefsToShow.length - 1]._id !== res[res.length - 1]._id) {
-                const newChefs = await chefAPI.getMostViewedChefs(page, limit);
-                dispatch(setChefsToShow(chefsToShow.concat(newChefs)));
-              }
-            }
-            break; // Add break statement here
-          default:
-            break;
-        }
-        setIsLoading(false);
-      } catch (error) {
-        console.log("Error fetching chefs: ", error);
+    console.log("test1: ", page);
+    dispatch(fetchChefsPageData({ page: 1, limit, activeButton }));
+    console.log("chefsToShow1: ", chefsToShow)
+  }, [dispatch, activeButton]);
+
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchDataAsync = async () => {
+      setChefs([]);
+      setIsLoading(true);
+      const data = await chefAPI.getFilteredChefs(1, limit, activeButton);
+      setChefs(data);
+      setIsLoading(false);
+      setNextData(await chefAPI.getFilteredChefs(2, limit, activeButton));
+    };
+    console.log("chefsToShow2: ", chefsToShow)
+    fetchDataAsync();
+  }, [activeButton]);
+
+  useEffect(() => {
+    const handleScroll = async () => {
+
+      if (!element) {
+        return;
+      }
+      if (element.scrollTop + element.clientHeight > element.scrollHeight - 1 && element.scrollTop + element.clientHeight != element.scrollHeight - 1) {
+        console.log("test 1  : ", page)
+        setChefs(chefs.concat(await chefAPI.getFilteredChefs(page, limit, activeButton)));
+        setNextData(await chefAPI.getFilteredChefs(page + 1, limit, activeButton))
       }
     };
+    const element = chefCardsRef.current;
+    if (element) {
+      element.addEventListener("scroll", handleScroll);
+      return () => {
+        element.removeEventListener("scroll", handleScroll);
+        document.body.style.overflow = "auto";
+      };
+    }
+  }, [chefs.length]);
 
-
-    fetchData();
-
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
-      if (scrollTop + clientHeight >= scrollHeight - 1) {
-        dispatch(setPage(page + 1));
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [activeButton, page]);
 
   function renderLoading() {
     return (
@@ -117,53 +85,108 @@ const ChefsPage = () => {
     );
   }
 
+  function renderNoMoreData() {
+    return (
+      <div className="no-more-data">
+        <div className="empty-data-message">
+          <p>No More Chefs.</p>
+        </div>
+      </div>
+    );
+  }
+  function renderNoData() {
+    return (
+      <div className="no-more-data">
+        <div className="empty-data-message">
+          <p>No Chefs Found.</p>
+          <img className="sad-chef" src={SadChefIcon} />
+        </div>
+      </div>
+    );
+  }
+
+
   return (
     <div className="chefs-page">
       <Suspense fallback={renderLoading()}>
         <h2 className="chefs-title">Chefs</h2>
         <div className="header-container">
           <div className="chefs-header">
-            {menuButtons.map(({ name, label }) => (
+            {menuButtons.map(({ name }) => (
               <button
                 key={name}
                 className={`menu-button ${activeButton === name ? "active" : ""}`}
-                onClick={() => handleClick(name)}
+                onClick={() => setActiveButton(name)}
               >
-                {label}
+                {name}
               </button>
             ))}
           </div>
         </div>
-        {isLoading && chefsToShow.length === 0 ? (
-          renderLoading()
-        ) : chefsToShow && chefsToShow.length > 0 ? (
-          <div className="chefs-card">
-            <Fade>
-              <Swiper className="swiper" {...SwiperConfig("vertical")}>
-                {chefsToShow.map((chef: Chef) => (
-                  <SwiperSlide className="swiper-slide" key={chef.fName}>
-                    <div>
+        <div ref={chefCardsRef} className="container-content-chefs">
+          {page == 1 && chefsToShow.length == 0 ? (
+            renderLoading()
+          ) : page == 1 && chefsToShow.length > 0 ? (
+            console.log("chefsToShow3: ", chefsToShow),
+            <div className="chefs-card">
+              <Fade>
+                <Swiper className="swiper" {...SwiperConfig("vertical")}>
+                  {chefsToShow.map((chef: Chef) => (
+                    <SwiperSlide className="swiper-slide" key={chef.fName}>
+                      <div>
+                        <ChefCard chef={chef} />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+
+                <div className="desktop-section">
+                  {chefsToShow.map((chef: Chef) => (
+                    <div key={chef.fName}>
                       <ChefCard chef={chef} />
                     </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </Fade>
-            <div className="desktop-section">
-              {chefsToShow.map((chef: Chef) => (
-                <div key={chef.fName}>
-                  <ChefCard chef={chef} />
+                  ))}
                 </div>
-              ))}
+                {nextData.length === 0 && renderNoMoreData()}
+              </Fade>
             </div>
-          </div>
-        ) : (
-          <div className="empty-data-message">
-            <p>No Chefs found.</p>
-          </div>
-        )}
-      </Suspense>
-    </div>
+          )
+            :
+            chefs && chefs.length > 0 && page > 1 ? (
+              <>
+                <div className="chefs-card">
+                  <Fade>
+                    <Swiper className="swiper" {...SwiperConfig("vertical")}>
+                      {chefsToShow.map((chef: Chef) => (
+                        <SwiperSlide className="swiper-slide" key={chef.fName}>
+                          <div>
+                            <ChefCard chef={chef} />
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+
+                    <div className="desktop-section">
+                      {chefsToShow.map((chef: Chef) => (
+                        <div key={chef.fName}>
+                          <ChefCard chef={chef} />
+                        </div>
+                      ))}
+                    </div>
+                    {nextData.length === 0 && renderNoMoreData()}
+                  </Fade>
+                </div>
+                {/* {nextData.length == 0 && renderNoMoreData()} */}
+              </>
+
+            ) : isLoading ? (
+              renderLoading()
+            ) : (
+              renderNoData()
+            )}
+        </div>
+      </Suspense >
+    </div >
   );
 };
 

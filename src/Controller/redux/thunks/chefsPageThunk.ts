@@ -1,20 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Chef } from "@/Model/Interfaces";
-import  {chefAPI}  from "@/Model/APIs/ChefAPI";
+import { chefAPI } from "@/Model/APIs/ChefAPI";
 
-
-interface ChefsPageData {
-  allChefs: Chef[];
-  newChefs: Chef[];
-  mostViewedChefs: Chef[];
+interface FetchChefsDataParams {
+  page: number;
+  limit: number;
+  activeButton: string;
 }
-export const fetchChefsPageData = createAsyncThunk("chefsPage/fetchData", async (): Promise<ChefsPageData> => {
-  const allChefs = await chefAPI.getAllChefs();
-  const newChefs = await chefAPI.getNewChefs();
-  const mostViewedChefs = await chefAPI.getMostViewedChefs();
-  return {
-    allChefs: allChefs,
-    newChefs: newChefs,
-    mostViewedChefs: mostViewedChefs,
-  };
+
+export const fetchChefsPageData = createAsyncThunk("chefsPage/fetchData", async ({ page, limit, activeButton }: FetchChefsDataParams) => {
+  try {
+    const chefsToShow: Chef[] = await chefAPI.getFilteredChefs(page, limit, activeButton);
+    return chefsToShow;
+  } catch (error) {
+    console.error("Error fetching chefs page data:", error);
+    throw error;
+  }
 });

@@ -1,7 +1,6 @@
 @import "../../themes/mixins";
 
 .chefs-page {
-
   .chefs-title {
     @include titles_style;
     letter-spacing: 0.3vw;
@@ -30,7 +29,6 @@
         border-bottom: 0.5vw solid $secondary-orange-color;
         /* Orange line under active link */
         border-radius: 4%;
-        
       }
     }
   }
@@ -47,28 +45,60 @@
       }
     }
   }
+  .no-data {
+    font-size: 1vw;
+  }
+  .empty-data-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include font-style;
+    font-size: 3vw;
+    font-weight: 400;
+    opacity: 0.6;
+  }
+  .sad-chef {
+    height: 20vw;
+    opacity: 0.6;
+  }
+  .container-content {
+    overflow: scroll;
+    height: 67vw;
+    width: 82.292vw;
+  }
 }
 @include mobile {
   .desktop-section {
     display: none;
-  }}
-@include desktop {
+  }
+}
 
+@include desktop {
+  .container-content-chefs {
+    display: flex;
+    overflow: scroll;
+    height: 75vw;
+  }
   .chefs-page {
-    padding-bottom: 5vw;
-    overflow-y: hidden; 
+    height: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: hidden;
     .chefs-title {
       display: none;
     }
-  
+
     .header-container {
       .chefs-header {
         display: flex;
-        padding: 3.3vw vw 2.8vw 0vw;
+        padding-top: 3.3vw;
+        padding-bottom: 2.778vw;
+        // padding: 0;
         align-items: center;
         justify-content: center;
-        gap:2vw;
-        margin-bottom: -2vw;
+        gap: 2vw;
+        margin-bottom: 0vw;
         .menu-button {
           @include font-style;
           padding: 0vw;
@@ -79,39 +109,36 @@
           color: #333;
           position: relative;
         }
-  
+
         .menu-button.active {
           font-weight: 400;
           border-bottom: 2px solid transparent;
-          
+
           border-radius: 4%;
         }
       }
     }
-  
+
     .chefs-card {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       .desktop-section {
-        display: grid; 
-        grid-template-columns: repeat(3, 1fr); 
-        grid-template-rows: repeat(3, auto); 
-        row-gap:2.778vw; 
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, auto);
+        row-gap: 2.778vw;
         column-gap: 1.667vw;
-        width: 83.5vw;
-        // height: 83.3vw; 
+        // width: 83.5vw;
+        // height: 83.3vw;
         // margin-bottom: 3vw;
-        overflow-y: hidden; 
+        overflow-y: hidden;
       }
       .swiper {
         @include desktop {
           display: none;
         }
       }
-
     }
   }
-  
- 
 }
